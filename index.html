@@ -20,7 +20,7 @@
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
 
-        /* STILI PER IL TOOLTIP DI TRADUZIONE */
+        /* TOOLTIP TRADUZIONE HOVER */
         .interactive-word {
             position: relative;
             display: inline-block;
@@ -95,7 +95,7 @@
             <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
                 Vivi il primo sbarco di Giulio Cesare in Britannia attraverso la testimonianza in prima persona di Marcus, tribuno della Legio X Veneria.
             </p>
-            <p class="text-xs text-yellow-400/80 mt-3 font-sans">💡 <strong>Nuova funzionalità:</strong> Passa il mouse sopra qualsiasi parola del testo durante la lettura per vederne la traduzione istantanea!</p>
+            <p class="text-xs text-yellow-400/80 mt-3 font-sans">💡 Passa il mouse sopra le parole del testo per la traduzione istantanea!</p>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -126,7 +126,8 @@
                 <button type="button" id="btn-audio-toggle" class="bg-yellow-600 text-black px-3 py-1.5 rounded font-bold text-xs hover:bg-yellow-500 font-cinzel">⏸️ Pausa Audio</button>
                 <button type="button" id="btn-audio-replay" class="bg-gray-800 text-yellow-400 border border-yellow-600/40 px-3 py-1.5 rounded text-xs hover:bg-gray-700 font-cinzel">🔄 Riascolta</button>
             </div>
-            <div id="audio-playing-indicator" class="text-xs text-yellow-300/80 font-mono truncate max-w-[250px]">Caricamento audio...</div>
+            <!-- Riquadro risolto senza limite max-w e senza truncate -->
+            <div id="audio-playing-indicator" class="text-xs text-yellow-300/80 font-mono">Caricamento audio...</div>
         </div>
 
         <div class="parchment p-6 md:p-8 rounded-xl relative">
@@ -182,11 +183,10 @@
 
     <script>
         window.addEventListener('DOMContentLoaded', function() {
-            // GLOSSARIO TRADUZIONI ITALIANO PER HOVER TOOLTIP
             var dictionary = {
                 "tribune": "tribuno (ufficiale)", "legion": "legione", "trusted": "fidato/di fiducia",
                 "galleys": "galere (navi da guerra)", "slicing": "fendere/tagliare", "turbulent": "agitato/turbolento",
-                "unpredictable": "imprevedibile", "hardened": "temprai/induriti", "suffered": "soffrivano",
+                "unpredictable": "imprevedibile", "hardened": "temprati/induriti", "suffered": "soffrivano",
                 "sea-sickness": "mal di mare", "fog": "nebbia", "lifted": "si diradò/alzò", "gasp": "sospiro di stupore",
                 "decks": "ponti della nave", "towering": "imponenti/svettanti", "chalk": "gesso/calcare",
                 "precipices": "precipizi/scogliere", "glinted": "brillavano", "guttural": "gutturali",
@@ -211,7 +211,6 @@
                 "provisions": "provviste", "salvaging": "recuperando", "garrisons": "guarnigioni"
             };
 
-            // Funzione per avvolgere ogni parola del testo in uno span interattivo
             function makeTextInteractive(text) {
                 var words = text.split(/(\s+|[.,!?;:()"'’—]+)/);
                 return words.map(function(token) {
@@ -252,210 +251,28 @@
                 }
             ];
 
-            // 21 QUESITI TOTALI
             var questions = [
-                {
-                    section: "1. Completamento Grammaticale",
-                    type: "binary",
-                    q: "While the Roman galleys ______ through the gray ocean waters, the morning fog slowly lifted.",
-                    opts: ["A) were slicing", "B) sliced"],
-                    correct: 0,
-                    exp: "Corretto! 'Were slicing' (Past Continuous) esprime la cornice dell'azione continuata interrotta dallo sciogliersi della nebbia."
-                },
-                {
-                    section: "1. Completamento Grammaticale",
-                    type: "binary",
-                    q: "Seeing that the legionaries hesitated, the aquilifer ______ into the freezing waves with the Eagle standard.",
-                    opts: ["A) leaped", "B) was leaping"],
-                    correct: 0,
-                    exp: "Corretto! 'Leaped' (Past Simple) indica l'azione decisiva e puntuale compiuta dal portatore dell'Aquila."
-                },
-                {
-                    section: "1. Completamento Grammaticale",
-                    type: "binary",
-                    q: "The native British tribes ______ such terrifying artillery engines before Caesar ordered the barrage.",
-                    opts: ["A) had never seen", "B) never saw"],
-                    correct: 0,
-                    exp: "Corretto! Si usa il 'Past Perfect' (had never seen) per indicare un fatto avvenuto prima di un altro momento passato."
-                },
-                {
-                    section: "2. Error Spotting Grammaticale",
-                    type: "binary",
-                    q: "Quale frase rispetta la regola della forma base dopo l'ausiliare negativo al passato?",
-                    opts: ["A) Caesar didn't conquer the island of Albion in 55 BC.", "B) Caesar didn't conquered the island of Albion in 55 BC."],
-                    correct: 0,
-                    exp: "Corretto! Con l'ausiliare 'didn't' il verbo principale deve rimanere alla forma base 'conquer'."
-                },
-                {
-                    section: "2. Error Spotting Grammaticale",
-                    type: "binary",
-                    q: "Quale delle due frasi utilizza la forma corretta del verbo irregolare al passato?",
-                    opts: ["A) The British warriors fought with great courage on the beach.", "B) The British warriors fighted with great courage on the beach."],
-                    correct: 0,
-                    exp: "Corretto! Il passato di 'fight' è 'fought' (fighted è un errore di coniugazione)."
-                },
-                {
-                    section: "2. Error Spotting Grammaticale",
-                    type: "binary",
-                    q: "Quale delle due frasi presenta il corretto accordo tra soggetto e verbo?",
-                    opts: ["A) Many warships was swamped by the violent ocean tides.", "B) Many warships were swamped by the violent ocean tides."],
-                    correct: 1,
-                    exp: "Corretto! 'Warships' è sostantivo plurale e richiede l'ausiliare plurale 'were'."
-                },
-                {
-                    section: "3. Word Formation Grammaticale",
-                    type: "binary",
-                    q: "Scegli la forma corretta: 'The British chieftains fought ______ to defend their ancestral soil.'",
-                    opts: ["A) fiercely", "B) fierce"],
-                    correct: 0,
-                    exp: "Corretto! L'avverbio 'fiercely' è necessario per modificare il verbo di azione 'fought'."
-                },
-                {
-                    section: "3. Word Formation Grammaticale",
-                    type: "binary",
-                    q: "Scegli la forma derivata corretta: 'The violent autumn storm caused ______ damage to the Roman fleet.'",
-                    opts: ["A) severe", "B) severely"],
-                    correct: 0,
-                    exp: "Corretto! Per modificare il sostantivo 'damage' occorre l'aggettivo 'severe'."
-                },
-                {
-                    section: "4. Lessico Storico d'Epoca",
-                    type: "binary",
-                    q: "What was 'woad', the substance used by British warriors before entering battle?",
-                    opts: ["A) A blue plant dye used for war painting", "B) A metal used to forge heavy swords"],
-                    correct: 0,
-                    exp: "Corretto! Il guado (woad) era il pigmento vegetale blu usato dai Celti per dipingersi il corpo."
-                },
-                {
-                    section: "4. Lessico Storico d'Epoca",
-                    type: "binary",
-                    q: "Where was General Julius Caesar standing when he observed the chalk cliffs of Dover?",
-                    opts: ["A) At the prow of his flagship", "B) On top of a wooden siege tower"],
-                    correct: 0,
-                    exp: "Corretto! 'Prow' significa la prua della nave ammiraglia."
-                },
-                {
-                    section: "4. Lessico Storico d'Epoca",
-                    type: "binary",
-                    q: "What role did the 'aquilifer' play in the Tenth Legion during the landing?",
-                    opts: ["A) He carried the sacred silver Eagle standard of Rome", "B) He commanded the cavalry squadrons"],
-                    correct: 0,
-                    exp: "Corretto! L'aquilifer era il custode dell'Aquila di bronzo o argento della legione."
-                },
-                {
-                    section: "4. Lessico Storico d'Epoca",
-                    type: "binary",
-                    q: "What material did the legionaries use to repair the storm-damaged warships?",
-                    opts: ["A) Local timber and iron bolts salvaged from broken ships", "B) Stone blocks from native roundhouses"],
-                    correct: 0,
-                    exp: "Corretto! 'Timber' indica il legname ricavato dalle foreste vicine."
-                },
-                {
-                    section: "4. Lessico Storico d'Epoca",
-                    type: "binary",
-                    q: "What was the main reason Caesar decided to retreat to Gaul before winter?",
-                    opts: ["A) Lack of winter provisions and damaged ships", "B) A direct decree from the Senate in Rome"],
-                    correct: 0,
-                    exp: "Corretto! 'Provisions/Supplies' indica le scorte di cibo necessarie per superare l'inverno."
-                },
-                {
-                    section: "5. Incongruenza Storica / Comprensione",
-                    type: "binary",
-                    q: "Quale affermazione descrive la decisione tattica di Cesare dopo l'avvistamento delle scogliere di Dover?",
-                    opts: [
-                        "A) He moved the fleet 7 miles north to Deal because Dover's cliffs were too steep.",
-                        "B) He ordered an immediate uphill assault directly on the Dover cliffs."
-                    ],
-                    correct: 0,
-                    exp: "Corretto! Le scogliere di Dover offrivano una posizione difensiva imbattibile ai Celti, costringendo Cesare a cercare le spiagge aperte di Deal."
-                },
-                {
-                    section: "5. Incongruenza Storica / Comprensione",
-                    type: "binary",
-                    q: "Quale fu la reazione delle tribù celtiche di fronte all'artiglieria navale romana?",
-                    opts: [
-                        "A) They panicked and retreated when stones and missiles rained from catapults.",
-                        "B) They captured the artillery ships using their war chariots."
-                    ],
-                    correct: 0,
-                    exp: "Corretto! L'uso di catapulte e baliste dalle navi ai fianchi sorprese i Celti spezzandone la resistenza sulla spiaggia."
-                },
-                {
-                    section: "5. Incongruenza Storica / Comprensione",
-                    type: "binary",
-                    q: "Come vengono descritti i Celti da Marcus durante la breve tregua?",
-                    opts: [
-                        "A) Skilled metalworkers and brave warriors living in structured tribal communities.",
-                        "B) Primitive savages with no knowledge of iron or agriculture."
-                    ],
-                    correct: 0,
-                    exp: "Corretto! Marcus ne riconosce l'abilità nella lavorazione dei metalli (spade e torques d'oro) e la struttura sociale guidata da capi e Druidi."
-                },
-                {
-                    section: "6. Comprensione & Inferenza Critica",
-                    type: "multiple",
-                    q: "Why was the landing at Deal so dangerous for the Roman legionaries in heavy armor?",
-                    opts: [
-                        "A) The water was deep and the shifting gravel prevented them from forming cohort lines.",
-                        "B) The Roman ships caught fire before reaching the shore.",
-                        "C) The British cavalry had surrounded the fleet in deep ocean waters.",
-                        "D) Caesar had forbidden the use of swords during the landing."
-                    ],
-                    correct: 0,
-                    exp: "Corretto! La combinazione di armatura pesante, acqua profonda e ghiaia rese impossibile adottare la formazione da battaglia romana."
-                },
-                {
-                    section: "6. Comprensione & Inferenza Critica",
-                    type: "multiple",
-                    q: "What cultural detail about the British nobility is highlighted in Marcus's description?",
-                    opts: [
-                        "A) They wore delicate golden torcs around their necks.",
-                        "B) They lived in stone aqueducts built by their ancestors.",
-                        "C) They dressed in Roman toga suits imported from Gaul.",
-                        "D) They refused to fight on horseback or in chariots."
-                    ],
-                    correct: 0,
-                    exp: "Corretto! I torques d'oro erano i caratteristici collari rigidi simbolo di nobiltà e rango guerriero tra i Celti."
-                },
-                {
-                    section: "6. Comprensione & Inferenza Critica",
-                    type: "multiple",
-                    q: "What natural factor caused severe destruction to the anchored Roman transport ships?",
-                    opts: [
-                        "A) High tides and Atlantic storms caused by a sudden full moon.",
-                        "B) A submarine volcanic eruption in the English Channel.",
-                        "C) A thick fog that made all ships collide with the Dover cliffs.",
-                        "D) A sudden freezing of the sea water."
-                    ],
-                    correct: 0,
-                    exp: "Corretto! I Romani, poco abituati alle fortissime maree oceaniche del Canale della Manica, videro le navi distrutte dalle tempeste di plenilunio."
-                },
-                {
-                    section: "6. Comprensione & Inferenza Critica",
-                    type: "multiple",
-                    q: "Why did Caesar decide to return to Gaul despite having repelled the British attacks?",
-                    opts: [
-                        "A) He lacked heavy cavalry, provisions for winter, and needed to repair damaged ships.",
-                        "B) He received news of a massive rebellion in Rome.",
-                        "C) The British Druids converted the entire Tenth Legion.",
-                        "D) His army was completely surrounded and stripped of weapons."
-                    ],
-                    correct: 0,
-                    exp: "Corretto! Senza cavalleria pesante, con la flotta danneggiata e senza scorte per l'inverno, rimanere avrebbe significato l'annientamento per fame."
-                },
-                {
-                    section: "6. Comprensione & Inferenza Critica",
-                    type: "multiple",
-                    q: "What was the ultimate historical legacy of the 55 BC expedition described by Marcus?",
-                    opts: [
-                        "A) It opened Albion to the Roman sphere of interest, paving the way for future conquest.",
-                        "B) It established a permanent Roman capital at Dover.",
-                        "C) It wiped out all Celtic language and culture in Britain.",
-                        "D) It resulted in Caesar being captured by the Celtic chieftains."
-                    ],
-                    correct: 0,
-                    exp: "Corretto! Sebbene non fu una conquista territoriale immediata, la spedizione del 55 a.C. svelò la Britannia al mondo romano aprendo la strada alla conquista di Claudio nel 43 d.C."
-                }
+                { section: "1. Completamento Grammaticale", type: "binary", q: "While the Roman galleys ______ through the gray ocean waters, the morning fog slowly lifted.", opts: ["A) were slicing", "B) sliced"], correct: 0, exp: "Corretto! 'Were slicing' (Past Continuous) esprime la cornice dell'azione continuata." },
+                { section: "1. Completamento Grammaticale", type: "binary", q: "Seeing that the legionaries hesitated, the aquilifer ______ into the freezing waves with the Eagle standard.", opts: ["A) leaped", "B) was leaping"], correct: 0, exp: "Corretto! 'Leaped' (Past Simple) indica l'azione decisiva e puntuale." },
+                { section: "1. Completamento Grammaticale", type: "binary", q: "The native British tribes ______ such terrifying artillery engines before Caesar ordered the barrage.", opts: ["A) had never seen", "B) never saw"], correct: 0, exp: "Corretto! Si usa il 'Past Perfect' (had never seen) per un evento passato precedente." },
+                { section: "2. Error Spotting Grammaticale", type: "binary", q: "Quale frase rispetta la regola della forma base dopo l'ausiliare negativo al passato?", opts: ["A) Caesar didn't conquer the island of Albion in 55 BC.", "B) Caesar didn't conquered the island of Albion in 55 BC."], correct: 0, exp: "Corretto! Con 'didn't' si usa la forma base 'conquer'." },
+                { section: "2. Error Spotting Grammaticale", type: "binary", q: "Quale delle due frasi utilizza la forma corretta del verbo irregolare al passato?", opts: ["A) The British warriors fought with great courage on the beach.", "B) The British warriors fighted with great courage on the beach."], correct: 0, exp: "Corretto! Il passato di 'fight' è 'fought'." },
+                { section: "2. Error Spotting Grammaticale", type: "binary", q: "Quale delle due frasi presenta il corretto accordo tra soggetto e verbo?", opts: ["A) Many warships was swamped by the violent ocean tides.", "B) Many warships were swamped by the violent ocean tides."], correct: 1, exp: "Corretto! 'Warships' è plurale e richiede 'were'." },
+                { section: "3. Word Formation Grammaticale", type: "binary", q: "Scegli la forma corretta: 'The British chieftains fought ______ to defend their ancestral soil.'", opts: ["A) fiercely", "B) fierce"], correct: 0, exp: "Corretto! L'avverbio 'fiercely' modifica il verbo 'fought'." },
+                { section: "3. Word Formation Grammaticale", type: "binary", q: "Scegli la forma derivata corretta: 'The violent autumn storm caused ______ damage to the Roman fleet.'", opts: ["A) severe", "B) severely"], correct: 0, exp: "Corretto! Per modificare il sostantivo 'damage' si usa l'aggettivo 'severe'." },
+                { section: "4. Lessico Storico d'Epoca", type: "binary", q: "What was 'woad', the substance used by British warriors before entering battle?", opts: ["A) A blue plant dye used for war painting", "B) A metal used to forge heavy swords"], correct: 0, exp: "Corretto! Il guado (woad) era il pigmento vegetale blu usato per dipingersi il corpo." },
+                { section: "4. Lessico Storico d'Epoca", type: "binary", q: "Where was General Julius Caesar standing when he observed the chalk cliffs of Dover?", opts: ["A) At the prow of his flagship", "B) On top of a wooden siege tower"], correct: 0, exp: "Corretto! 'Prow' significa la prua della nave ammiraglia." },
+                { section: "4. Lessico Storico d'Epoca", type: "binary", q: "What role did the 'aquilifer' play in the Tenth Legion during the landing?", opts: ["A) He carried the sacred silver Eagle standard of Rome", "B) He commanded the cavalry squadrons"], correct: 0, exp: "Corretto! L'aquilifer era il custode dell'Aquila della legione." },
+                { section: "4. Lessico Storico d'Epoca", type: "binary", q: "What material did the legionaries use to repair the storm-damaged warships?", opts: ["A) Local timber and iron bolts salvaged from broken ships", "B) Stone blocks from native roundhouses"], correct: 0, exp: "Corretto! 'Timber' indica il legname ricavato dalle foreste." },
+                { section: "4. Lessico Storico d'Epoca", type: "binary", q: "What was the main reason Caesar decided to retreat to Gaul before winter?", opts: ["A) Lack of winter provisions and damaged ships", "B) A direct decree from the Senate in Rome"], correct: 0, exp: "Corretto! 'Provisions/Supplies' indica le scorte di cibo." },
+                { section: "5. Incongruenza Storica / Comprensione", type: "binary", q: "Quale affermazione descrive la decisione tattica di Cesare dopo l'avvistamento delle scogliere di Dover?", opts: ["A) He moved the fleet 7 miles north to Deal because Dover's cliffs were too steep.", "B) He ordered an immediate uphill assault directly on the Dover cliffs."], correct: 0, exp: "Corretto! Le scogliere di Dover costrinsero Cesare a cercare le spiagge aperte di Deal." },
+                { section: "5. Incongruenza Storica / Comprensione", type: "binary", q: "Quale fu la reazione delle tribù celtiche di fronte all'artiglieria navale romana?", opts: ["A) They panicked and retreated when stones and missiles rained from catapults.", "B) They captured the artillery ships using their war chariots."], correct: 0, exp: "Corretto! Catapulte e baliste spezzarono la resistenza celtica sulla spiaggia." },
+                { section: "5. Incongruenza Storica / Comprensione", type: "binary", q: "Come vengono descritti i Celti da Marcus durante la breve tregua?", opts: ["A) Skilled metalworkers and brave warriors living in structured tribal communities.", "B) Primitive savages with no knowledge of iron or agriculture."], correct: 0, exp: "Corretto! Marcus riconosce l'abilità celtica nella lavorazione dei metalli e la struttura sociale." },
+                { section: "6. Comprensione & Inferenza Critica", type: "multiple", q: "Why was the landing at Deal so dangerous for the Roman legionaries in heavy armor?", opts: ["A) The water was deep and the shifting gravel prevented them from forming cohort lines.", "B) The Roman ships caught fire before reaching the shore.", "C) The British cavalry had surrounded the fleet in deep ocean waters.", "D) Caesar had forbidden the use of swords during the landing."], correct: 0, exp: "Corretto! L'armatura pesante, l'acqua profonda e la ghiaia impedirono la formazione romana." },
+                { section: "6. Comprensione & Inferenza Critica", type: "multiple", q: "What cultural detail about the British nobility is highlighted in Marcus's description?", opts: ["A) They wore delicate golden torcs around their necks.", "B) They lived in stone aqueducts built by their ancestors.", "C) They dressed in Roman toga suits imported from Gaul.", "D) They refused to fight on horseback or in chariots."], correct: 0, exp: "Corretto! I torques d'oro erano il simbolo di nobiltà guerriera tra i Celti." },
+                { section: "6. Comprensione & Inferenza Critica", type: "multiple", q: "What natural factor caused severe destruction to the anchored Roman transport ships?", opts: ["A) High tides and Atlantic storms caused by a sudden full moon.", "B) A submarine volcanic eruption in the English Channel.", "C) A thick fog that made all ships collide with the Dover cliffs.", "D) A sudden freezing of the sea water."], correct: 0, exp: "Corretto! Le maree oceaniche eccezionali e le tempeste danneggiarono la flotta ancorata." },
+                { section: "6. Comprensione & Inferenza Critica", type: "multiple", q: "Why did Caesar decide to return to Gaul despite having repelled the British attacks?", opts: ["A) He lacked heavy cavalry, provisions for winter, and needed to repair damaged ships.", "B) He received news of a massive rebellion in Rome.", "C) The British Druids converted the entire Tenth Legion.", "D) His army was completely surrounded and stripped of weapons."], correct: 0, exp: "Corretto! Senza cavalleria, con le navi danneggiate e senza cibo per l'inverno, rimanere era rischioso." },
+                { section: "6. Comprensione & Inferenza Critica", type: "multiple", q: "What was the ultimate historical legacy of the 55 BC expedition described by Marcus?", opts: ["A) It opened Albion to the Roman sphere of interest, paving the way for future conquest.", "B) It established a permanent Roman capital at Dover.", "C) It wiped out all Celtic language and culture in Britain.", "D) It resulted in Caesar being captured by the Celtic chieftains."], correct: 0, exp: "Corretto! La spedizione del 55 a.C. svelò la Britannia al mondo romano aprendo la strada alla futura conquista." }
             ];
 
             var currentSlide = 0;
@@ -482,8 +299,6 @@
                 var data = slides[currentSlide];
                 document.getElementById('story-chapter-tag').innerText = "CAPITOLO " + (currentSlide + 1) + " DI " + slides.length;
                 document.getElementById('story-title').innerText = data.title;
-                
-                // Generazione del testo interattivo con tooltip
                 document.getElementById('story-content').innerHTML = makeTextInteractive(data.content);
                 document.getElementById('grammar-pill').innerHTML = data.grammar;
 
@@ -497,10 +312,11 @@
                 var fileName = "slide" + (currentSlide + 1) + ".mp3";
                 audioPlayer.src = "audio/" + fileName;
 
+                // Tenta di avviare l'audio dopo l'interazione iniziale dell'utente
                 audioPlayer.play().then(function() {
                     document.getElementById('audio-playing-indicator').innerText = "🔊 In riproduzione: " + fileName;
                     document.getElementById('btn-audio-toggle').innerText = "⏸️ Pausa Audio";
-                }).catch(function() {
+                }).catch(function(err) {
                     document.getElementById('audio-playing-indicator').innerText = "⚠️ Premi 'Riascolta' per avviare l'audio";
                 });
             }
