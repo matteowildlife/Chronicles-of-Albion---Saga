@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Fauna+One&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Fauna One', serif; background-color: #080c14; color: #e2e8f0; }
+        body { font-family: 'Fauna One', serif; background-color: #080c14; color: #e2e8f0; transition: font-size 0.2s ease; }
         h1, h2, h3, h4, .font-cinzel { font-family: 'Cinzel', serif; }
         
         .bg-hero {
@@ -32,7 +32,12 @@
             transform: translateY(-1px);
         }
 
-        /* HOVER TRANSLATION SISTEMA AUTOMATICO E TOUCH TIMED */
+        /* ACCESSIBILITÀ E MODALITÀ DISLESSIA */
+        body.dyslexia-font { font-family: 'Comic Sans MS', 'Arial', sans-serif !important; letter-spacing: 0.05em; word-spacing: 0.1em; }
+        body.high-contrast { background-color: #000000 !important; color: #ffffff !important; }
+        body.high-contrast .parchment { background: #0a0a0a !important; border: 2px solid #ffff00 !important; }
+
+        /* HOVER E TOUCH INTERATTIVO CON DURATA CONFIGURABILE */
         .word-interactive {
             position: relative;
             display: inline-block;
@@ -91,17 +96,12 @@
     <!-- HEADER DI GIOCO -->
     <header class="flex justify-between items-center pb-4 border-b border-yellow-900/40 max-w-5xl mx-auto w-full">
         <div class="flex items-center space-x-3">
-            <!-- LOGO: SAGOMA DELLA BRITANNIA CON AQUILA SOVRAPPOSTA (SVG VETTORIALE) -->
-            <div class="w-12 h-12 rounded-full bg-yellow-950/90 border-2 border-yellow-500/70 flex items-center justify-center p-1.5 shadow-lg relative overflow-hidden group">
-                <svg class="absolute inset-0 w-full h-full opacity-30 text-yellow-600 fill-current p-1" viewBox="0 0 100 100">
-                    <path d="M45,15 C50,10 55,12 60,18 C62,25 58,30 65,38 C72,42 68,52 62,58 C58,65 65,72 58,80 C50,85 40,82 35,75 C38,65 32,58 38,48 C42,42 38,32 45,25 Z" />
-                </svg>
-                <span class="text-2xl relative z-10 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">🦅</span>
+            <div class="w-12 h-12 rounded-full bg-yellow-950/90 border-2 border-yellow-500/70 flex items-center justify-center p-1.5 shadow-lg relative overflow-hidden">
+                <span class="text-2xl relative z-10">🦅</span>
             </div>
-
             <div>
                 <h1 class="text-xl font-bold tracking-wider gold-text font-cinzel">CHRONICLES OF ALBION</h1>
-                <p class="text-xs text-gray-400">Stagione 1 • Episodio 1: The Eagle on the Misty Coast (55 B.C.)</p>
+                <p id="player-welcome-sub" class="text-xs text-gray-400">Legionario: <span id="header-player-name" class="text-yellow-400">Novizio</span></p>
             </div>
         </div>
         <div id="header-score-box" class="hidden text-xs font-cinzel bg-gray-900/90 border border-yellow-600/40 px-3 py-1.5 rounded">
@@ -109,50 +109,95 @@
         </div>
     </header>
 
-    <!-- HOMEPAGE & INTRODUZIONE STORICA -->
+    <!-- HOMEPAGE & ARRUOLAMENTO IMMERSIVO -->
     <main id="screen-menu" class="my-auto max-w-5xl mx-auto w-full py-6">
-        <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40 mb-8">
+        
+        <!-- BOX DI ARRUOLAMENTO E INGRESSO IN SCENA -->
+        <div class="parchment p-6 rounded-xl border border-yellow-500/60 mb-6 bg-gradient-to-r from-yellow-950/40 to-slate-900">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-yellow-400 font-cinzel font-bold">🏛️ Appello della Legio X</span>
+                    <h3 class="text-xl md:text-2xl font-bold gold-text font-cinzel mt-1">"Fatti avanti, soldato! Come ti chiami?"</h3>
+                    <p class="text-xs text-gray-300 mt-1">Il tribuno Marco ti fissa mentre i remi fendono la nebbia dell'Oceano. Inserisci il tuo nome per registrare il tuo giuramento negli annali di Roma.</p>
+                </div>
+                <div class="flex items-center space-x-2 w-full md:w-auto">
+                    <input type="text" id="input-player-name" placeholder="Il tuo nome o cognomen..." class="bg-gray-950 border border-yellow-600/60 rounded px-3 py-2 text-sm text-yellow-200 focus:outline-none focus:border-yellow-400 w-full md:w-48" maxlength="20">
+                    <button type="button" id="btn-save-name" class="gold-button px-4 py-2 rounded text-xs uppercase tracking-wider whitespace-nowrap">Giura a Roma</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40 mb-6">
             <div class="flex flex-col md:flex-row items-stretch gap-6">
                 
-                <!-- SCENA STORICA CINEMATOGRAFICA: GALEA ROMANA ED AVVISTAMENTO SCOGLIERE -->
                 <div class="w-full md:w-5/12 flex flex-col items-center">
-                    <div class="relative w-full h-full min-h-[280px] md:min-h-[340px] rounded-lg border-2 border-yellow-600/60 shadow-2xl bg-slate-950 overflow-hidden flex flex-col justify-between p-1">
-                        <!-- Immagine locale con estensione .jfif caricata nella repository -->
-                        <img src="hero.jfif" alt="Legionari romani a bordo della galea mentre avvistano le scogliere d'Albione" class="w-full h-48 md:h-64 object-cover rounded">
-
+                    <div class="relative w-full h-full min-h-[260px] md:min-h-[320px] rounded-lg border-2 border-yellow-600/60 shadow-2xl bg-slate-950 overflow-hidden flex flex-col justify-between p-1">
+                        <img src="hero.jfif" alt="Legionari romani" class="w-full h-44 md:h-60 object-cover rounded">
                         <div class="bg-black/90 border-t border-yellow-600/40 p-3 text-center">
                             <span class="text-[10px] text-yellow-400 font-cinzel font-bold tracking-widest uppercase block mb-1">Oceanus Britannicus • 55 a.C.</span>
-                            <p class="text-[11px] text-gray-300 italic font-serif leading-tight">Dalla prua della galea, i legionari della Legio X osservano le imponenti scogliere d'Albione.</p>
+                            <p id="recruited-banner" class="text-[11px] text-gray-300 italic font-serif leading-tight">Il tribuno Marco attende il tuo rapporto alla prua della galea.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- TESTO INTRODUTTIVO -->
                 <div class="w-full md:w-7/12 flex flex-col justify-between space-y-3">
                     <div>
-                        <span class="text-xs uppercase tracking-widest text-yellow-500 font-cinzel bg-yellow-950/60 border border-yellow-800/60 px-3 py-1 rounded-full">La Prima Invasione Romana • 55 a.C.</span>
+                        <span class="text-xs uppercase tracking-widest text-yellow-500 font-cinzel bg-yellow-950/60 border border-yellow-800/60 px-3 py-1 rounded-full">La Prima Invasione • 55 a.C.</span>
                         <h2 class="text-3xl md:text-4xl font-extrabold gold-text font-cinzel leading-tight mt-3">L'Ombra di Roma sull'Oceano</h2>
                         <p class="text-xs md:text-sm text-gray-300 leading-relaxed mt-3">
-                            Siamo nel <strong>55 a.C.</strong> La Repubblica Romana è guidata dal Triumvirato. Dalla prua dell'ammiraglia che solca le acque dell'Oceano, Giulio Cesare e il tribuno <strong>Marcus</strong> osservano per la prima volta le imponenti scogliere di gesso dell'isola di <strong>Albion</strong> (la Britannia), sulla cui cima centinaia di guerrieri celtici attendono l'invasione agitando lance e gridando sfide.
-                        </p>
-                        <p class="text-xs md:text-sm text-gray-300 leading-relaxed mt-2">
-                            Rivivi l'avvistamento della flotta romana, il drammatico sbarco della Legio X nelle acque gelide di Deal e il primo scontro contro i carri da guerra celte ai confini del mondo conosciuto.
+                            Nel <strong>55 a.C.</strong> la flotta di Giulio Cesare punta alle scogliere di <strong>Albion</strong>. Preparati allo sbarco a Deal e al primo scontro con i carri celtici.
                         </p>
                     </div>
 
-                    <div class="bg-yellow-950/40 border-l-2 border-yellow-500 p-3 rounded text-xs text-yellow-200 font-sans">
-                        💡 <strong>Come Giocare:</strong> Ascolta la voce di Marcus e leggi il racconto. Passa il mouse (o tocca col dito) su <u>qualsiasi parola</u> per la traduzione in italiano (svanisce dopo 2 secondi sul touch).
+                    <!-- PANNELLO IMPOSTAZIONI E ACCESSIBILITÀ INIZIALE (DISCRETO E PULITO) -->
+                    <div class="bg-gray-950/80 border border-yellow-900/50 p-3.5 rounded-lg space-y-3 text-xs">
+                        <div class="font-cinzel text-yellow-400 font-bold border-b border-yellow-900/40 pb-1 flex justify-between items-center">
+                            <span>⚙️ CONFIGURAZIONE TATTICA E ACCESSIBILITÀ</span>
+                            <span class="text-[10px] text-gray-400 font-sans">Personalizza la tua esperienza</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <!-- Difficoltà -->
+                            <div>
+                                <label class="block text-gray-400 mb-1 font-bold">Livello Difficoltà:</label>
+                                <select id="select-difficulty" class="bg-gray-900 border border-yellow-600/40 text-yellow-200 rounded p-1 w-full text-xs">
+                                    <option value="beginner">Principiante (Tutte le traduzioni)</option>
+                                    <option value="guided" selected>Guidata (Solo parole chiave)</option>
+                                    <option value="challenge">Sfida (Senza traduzioni + Punti extra)</option>
+                                </select>
+                            </div>
+
+                            <!-- Timer Tooltip -->
+                            <div>
+                                <label class="block text-gray-400 mb-1 font-bold">Durata Tooltip Traduzione:</label>
+                                <select id="select-tooltip-timer" class="bg-gray-900 border border-yellow-600/40 text-yellow-200 rounded p-1 w-full text-xs">
+                                    <option value="2000">2 Secondi</option>
+                                    <option value="5000">5 Secondi</option>
+                                    <option value="sticky">Fissa (finché tocchi altrove)</option>
+                                </select>
+                            </div>
+
+                            <!-- Accessibilità -->
+                            <div>
+                                <label class="block text-gray-400 mb-1 font-bold">Accessibilità & DSA:</label>
+                                <div class="flex space-x-2 pt-1">
+                                    <button type="button" id="btn-toggle-dyslexia" class="bg-gray-900 border border-yellow-600/40 px-2 py-1 rounded text-yellow-300 hover:bg-yellow-950" title="Attiva font ad alta leggibilità">Font DSA</button>
+                                    <button type="button" id="btn-toggle-contrast" class="bg-gray-900 border border-yellow-600/40 px-2 py-1 rounded text-yellow-300 hover:bg-yellow-950" title="Alto contrasto">Contrasto</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- PULSANTI AVVIO GIOCO A BLOCCHI -->
         <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <div class="parchment p-6 rounded-lg border border-yellow-600/30 flex flex-col justify-between hover:border-yellow-500/60 transition-all">
                 <div>
                     <span class="text-xs text-yellow-500 font-cinzel">MODALITÀ COOPERATIVA</span>
                     <h3 class="text-xl font-bold gold-text font-cinzel my-2">Alleanza Legionaria (Co-Op)</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-4">Unite le forze per difendere uno scudo da 100 HP. Rispondete insieme ai 21 quesiti grammaticali e storici.</p>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">Difendete lo scudo da 100 HP affrontando i micro-test alla fine di ogni capitolo.</p>
                 </div>
                 <button type="button" id="btn-start-coop" class="w-full py-3.5 rounded font-cinzel text-sm gold-button uppercase tracking-wider">Avvia Episodio (Co-Op)</button>
             </div>
@@ -161,92 +206,90 @@
                 <div>
                     <span class="text-xs text-yellow-500 font-cinzel">MODALITÀ COMPETITIVA</span>
                     <h3 class="text-xl font-bold gold-text font-cinzel my-2">Sfida 1 vs 1</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-4">Sfidatevi a turni alternati sullo stesso schermo per stabilire chi possiede la migliore padronanza dell'inglese e della storia.</p>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">Duello a turni sullo stesso schermo con verifiche a blocchi per stabilire il primato.</p>
                 </div>
                 <button type="button" id="btn-start-vs" class="w-full py-3.5 rounded font-cinzel text-sm gold-button uppercase tracking-wider">Avvia Episodio (1v1)</button>
             </div>
         </div>
     </main>
 
-    <!-- SCHERMATA STORIA CON CONTROLLI AUDIO E TEORIA ESTESA -->
+    <!-- SCHERMATA STORIA CON AUDIO, FALLBACK E MICRO-BLOCCHI DI QUIZ -->
     <main id="screen-story" class="hidden my-auto max-w-4xl mx-auto w-full py-4">
-        <div class="bg-gray-900 border border-yellow-600/40 p-3 rounded-lg mb-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <button type="button" id="btn-audio-toggle" class="bg-yellow-600 text-black px-3 py-1.5 rounded font-bold text-xs hover:bg-yellow-500 font-cinzel">▶️ Riproduci Audio</button>
+        <!-- BARRA AUDIO CON FALLBACK E STATO LOCALE -->
+        <div class="bg-gray-900 border border-yellow-600/40 p-3 rounded-lg mb-4 flex flex-col md:flex-row items-center justify-between gap-2">
+            <div class="flex items-center space-x-3 w-full md:w-auto">
+                <button type="button" id="btn-audio-toggle" class="bg-yellow-600 text-black px-3 py-1.5 rounded font-bold text-xs hover:bg-yellow-500 font-cinzel whitespace-nowrap">▶️ Riproduci Audio</button>
                 <button type="button" id="btn-audio-replay" class="bg-gray-800 text-yellow-400 border border-yellow-600/40 px-3 py-1.5 rounded text-xs hover:bg-gray-700 font-cinzel">🔄 Riascolta</button>
             </div>
-            <div id="audio-playing-indicator" class="text-xs text-yellow-300/80 font-mono">In attesa dell'audio...</div>
+            <!-- Fallback testuale evidente in caso di blocco audio mobile -->
+            <div id="audio-playing-indicator" class="text-xs text-yellow-300/90 font-mono text-center md:text-right">
+                🔊 Audio pronto. Se il dispositivo blocca l'audio, leggi la narrazione sottostante.
+            </div>
         </div>
 
         <div class="parchment p-6 md:p-8 rounded-xl relative">
             <div class="flex justify-between items-center text-xs text-yellow-500 font-cinzel mb-4 pb-2 border-b border-yellow-900/30">
                 <span id="story-chapter-tag">CAPITOLO 1 DI 5</span>
-                <span>NARRATO DA MARCUS, TRIBUNO MILITARE</span>
+                <span id="narrator-tag">NARRATO DA MARCUS, TRIBUNO</span>
             </div>
 
             <h2 id="story-title" class="text-2xl md:text-3xl font-bold gold-text font-cinzel mb-4">Titolo</h2>
-            
             <div id="story-content" class="text-sm md:text-base text-gray-200 leading-relaxed mb-6 space-y-4 font-serif"></div>
-            
             <div id="grammar-pill" class="bg-yellow-950/40 border-l-4 border-yellow-500 p-5 rounded-r mb-6 text-xs md:text-sm text-yellow-100 space-y-3 font-sans shadow-inner"></div>
 
             <div class="flex justify-between items-center pt-4 border-t border-yellow-900/30">
                 <button type="button" id="btn-prev-slide" class="px-4 py-2 rounded bg-gray-800 text-gray-300 border border-gray-700 text-xs font-cinzel hover:bg-gray-700">← Indietro</button>
-                <button type="button" id="btn-next-slide" class="px-6 py-2.5 rounded gold-button text-xs font-cinzel tracking-wider">Avanti →</button>
+                <button type="button" id="btn-next-slide" class="px-6 py-2.5 rounded gold-button text-xs font-cinzel tracking-wider">Affronta Verifica Capitolo →</button>
             </div>
         </div>
     </main>
 
-    <!-- SCHERMATA EVALUATION / QUIZ DA 21 QUESITI -->
-    <main id="screen-quiz" class="hidden my-auto max-w-3xl mx-auto w-full py-4">
-        <div class="parchment p-6 md:p-8 rounded-xl">
+    <!-- SCHERMATA MICRO-VERIFICA DI CAPITOLO (BLOCCO DI 4-5 QUESITI) -->
+    <main id="screen-micro-quiz" class="hidden my-auto max-w-3xl mx-auto w-full py-4">
+        <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-500/60">
             <div class="flex justify-between items-center mb-6 border-b border-yellow-900/30 pb-4">
                 <div>
-                    <span id="question-section-tag" class="text-xs text-yellow-500 font-cinzel uppercase tracking-wider">SEZIONE QUIZ</span>
-                    <h3 id="turn-indicator" class="text-sm font-bold text-yellow-300 font-cinzel mt-1">Valutazione in corso</h3>
+                    <span class="text-xs text-yellow-500 font-cinzel uppercase tracking-wider">VERIFICA DI CAPITOLO</span>
+                    <h3 id="micro-quiz-title" class="text-sm font-bold text-yellow-300 font-cinzel mt-1">Rapporto tattico</h3>
                 </div>
-                <div id="hp-bar-container" class="text-right">
+                <div id="micro-hp-container" class="text-right">
                     <span class="text-xs text-red-400 font-cinzel font-bold">SCUDO LEGIONARIO</span>
-                    <div class="w-32 bg-gray-800 h-3 rounded-full border border-red-900/50 overflow-hidden mt-1">
-                        <div id="hp-bar" class="bg-red-600 h-full w-full transition-all duration-500"></div>
+                    <div class="w-28 bg-gray-800 h-2.5 rounded-full border border-red-900/50 overflow-hidden mt-1">
+                        <div id="micro-hp-bar" class="bg-red-600 h-full w-full transition-all duration-500"></div>
                     </div>
                 </div>
             </div>
 
             <div class="mb-6">
-                <div class="flex justify-between items-center text-xs text-gray-400 font-cinzel mb-1">
-                    <span id="question-number">Quesito 1 di 21</span>
-                </div>
-                <h2 id="question-text" class="text-base md:text-lg font-bold text-white mt-1 leading-snug">Testo della domanda...</h2>
+                <span id="micro-q-counter" class="text-xs text-gray-400 font-cinzel">Quesito 1 di 4</span>
+                <h2 id="micro-q-text" class="text-base md:text-lg font-bold text-white mt-1 leading-snug">Domanda...</h2>
             </div>
 
-            <div id="options-container" class="space-y-3 mb-6"></div>
-            <div id="feedback-box" class="hidden p-4 rounded text-xs md:text-sm font-sans border transition-all"></div>
+            <div id="micro-options-container" class="space-y-3 mb-6"></div>
+            <div id="micro-feedback-box" class="hidden p-4 rounded text-xs md:text-sm font-sans border mb-4"></div>
             
-            <div class="flex justify-end mt-4">
-                <button type="button" id="btn-next-question" class="hidden px-6 py-2 rounded gold-button text-xs font-cinzel">Prossimo Quesito →</button>
+            <div class="flex justify-end">
+                <button type="button" id="btn-next-micro-q" class="hidden px-6 py-2 rounded gold-button text-xs font-cinzel">Prossimo Quesito →</button>
             </div>
         </div>
     </main>
 
-    <!-- SCHERMATA FINALE RISULTATI E REVISIONE DETTAGLIATA -->
+    <!-- SCHERMATA FINALE RISULTATI -->
     <main id="screen-results" class="hidden my-auto max-w-4xl mx-auto w-full py-6">
         <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40">
             <div class="text-center mb-8">
-                <span class="text-xs text-yellow-500 font-cinzel uppercase tracking-widest">Rapporto di Battaglia</span>
+                <span class="text-xs text-yellow-500 font-cinzel uppercase tracking-widest">Rapporto di Campagna</span>
                 <h2 id="final-status-title" class="text-3xl md:text-4xl font-extrabold gold-text font-cinzel mt-2">VITTORIA PER ROMA!</h2>
-                <p id="final-score-text" class="text-gray-300 text-sm md:text-base mt-2">Punteggio ottenuto: 21 / 21</p>
+                <p id="final-score-text" class="text-gray-300 text-sm md:text-base mt-2">Punteggio ottenuto</p>
             </div>
 
             <div class="bg-gray-900/80 p-4 rounded-lg border border-yellow-900/40 mb-6">
-                <h3 class="text-sm font-bold gold-text font-cinzel mb-2">💡 Revisione delle Risposte (Passa sopra con il dito/mouse):</h3>
-                <p class="text-xs text-gray-400 mb-4">Passa sopra o tocca qualsiasi quesito della lista per leggere la spiegazione grammaticale e storica approfondita.</p>
-                
+                <h3 class="text-sm font-bold gold-text font-cinzel mb-2">💡 Revisione delle Domande:</h3>
                 <div id="review-list" class="space-y-3 max-h-96 overflow-y-auto pr-2"></div>
             </div>
 
             <div class="flex justify-center">
-                <button type="button" onclick="location.reload()" class="px-8 py-3 rounded gold-button text-xs font-cinzel uppercase tracking-wider">Rigioca Episodio 1</button>
+                <button type="button" onclick="localStorage.clear(); location.reload();" class="px-8 py-3 rounded gold-button text-xs font-cinzel uppercase tracking-wider">Nuovo Arruolamento / Rigioca</button>
             </div>
         </div>
     </main>
@@ -256,6 +299,48 @@
     <script>
         window.addEventListener('DOMContentLoaded', function() {
             
+            var playerName = localStorage.getItem('albion_player_name') || "Novizio";
+            var difficulty = localStorage.getItem('albion_difficulty') || "guided";
+            var tooltipTimerSetting = localStorage.getItem('albion_tooltip_timer') || "2000";
+            
+            document.getElementById('input-player-name').value = (playerName !== "Novizio") ? playerName : "";
+            document.getElementById('header-player-name').innerText = playerName;
+            document.getElementById('select-difficulty').value = difficulty;
+            document.getElementById('select-tooltip-timer').value = tooltipTimerSetting;
+
+            if(playerName !== "Novizio") {
+                document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario " + playerName + " sulla plancia di comando.";
+            }
+
+            document.getElementById('btn-save-name').onclick = function() {
+                var nameVal = document.getElementById('input-player-name').value.trim();
+                if(nameVal) {
+                    playerName = nameVal;
+                    localStorage.setItem('albion_player_name', playerName);
+                    document.getElementById('header-player-name').innerText = playerName;
+                    document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario " + playerName + " sulla plancia di comando.";
+                    alert("Giuramento accettato! Benvenuto nella Legio X, " + playerName + ".");
+                }
+            };
+
+            document.getElementById('select-difficulty').onchange = function() {
+                difficulty = this.value;
+                localStorage.setItem('albion_difficulty', difficulty);
+            };
+
+            document.getElementById('select-tooltip-timer').onchange = function() {
+                tooltipTimerSetting = this.value;
+                localStorage.setItem('albion_tooltip_timer', tooltipTimerSetting);
+            };
+
+            document.getElementById('btn-toggle-dyslexia').onclick = function() {
+                document.body.classList.toggle('dyslexia-font');
+            };
+
+            document.getElementById('btn-toggle-contrast').onclick = function() {
+                document.body.classList.toggle('high-contrast');
+            };
+
             var fullDictionary = {
                 "my": "mio/mia", "name": "nome", "is": "è", "marcus": "Marco", "a": "un/uno/una", "tribune": "tribuno (ufficiale)",
                 "of": "di/del", "the": "il/lo/la/i/gli/le", "tenth": "decima", "legion": "legione", "caesar’s": "di Cesare",
@@ -288,7 +373,7 @@
                 "untouched": "incontaminato", "rome": "Roma", "land": "terra", "rich": "ricca", "iron": "ferro",
                 "tin": "stagno", "fierce": "fiere/feroci", "tribes": "tribù", "who": "che/chi", "believed": "credevano",
                 "unconquerable": "invincibili", "natural": "naturale", "harbor": "porto", "beneath": "sotto", "narrow": "stretto",
-                "surrounded": "circondato", "heights": "alture", "which": "cui/quale", "britons": "Britanni", "could": "potevano",
+                "surrounded": "circondato", "heights": "alture", "which": "cui/quale", "britons": "Britansi", "could": "potevano",
                 "rain": "far piovere", "javelins": "giavellotti", "down": "giù", "upon": "sopra", "ships": "navi",
                 "recognizing": "riconoscendo", "deadly": "mortale", "trap": "trappola", "ordered": "ordinò", "signal": "segnale",
                 "horns": "corni", "sound": "suonare", "turned": "virò", "north": "nord", "rowing": "vogando",
@@ -350,7 +435,7 @@
                 "four": "quattro", "full": "piena", "moon": "luna", "brought": "portò", "exceptionally": "eccezionalmente",
                 "tides": "maree", "violent": "violente", "unseasonal": "fuori stagione", "gales": "tempeste di vento", "channel": "Canale della Manica",
                 "unaccustomed": "disabituati", "drastic": "drastiche", "atlantic": "atlantico", "left": "lasciato", "transports": "trasporti",
-                "anchored": "ancorati", "roadstead": "rada aperta", "tempest": "tempesta", "smashed": "fracassò", "one": "uno",
+                "anchored": "anchorati", "roadstead": "rada aperta", "tempest": "tempesta", "smashed": "fracassò", "one": "uno",
                 "another": "altro", "breaking": "spezzando", "tearing": "strappando", "sails": "vele", "swamping": "sommergendo",
                 "raging": "furente", "foam": "schiuma", "isolated": "isolati", "lacked": "mancavamo di", "chase": "inseguire",
                 "elusive": "sfuggenti", "granaries": "granai", "held": "tenevano", "no": "nessuna", "provisions": "scorte",
@@ -365,12 +450,16 @@
             };
 
             function makeTextInteractive(text) {
+                if (difficulty === 'challenge') return text; // Livello sfida senza traduzioni
+                
                 var tokens = text.split(/(\s+|[.,!?;:()"'’—]+)/);
                 return tokens.map(function(token) {
                     var cleanWord = token.toLowerCase().replace(/[^a-z]/g, '');
                     if (cleanWord.length > 0 && fullDictionary[cleanWord]) {
-                        var translation = fullDictionary[cleanWord];
-                        return '<span class="word-interactive" tabindex="0">' + token + '<span class="tooltip-box"><strong>' + cleanWord + '</strong>: ' + translation + '</span></span>';
+                        if (difficulty === 'beginner' || (difficulty === 'guided' && cleanWord.length > 5)) {
+                            var translation = fullDictionary[cleanWord];
+                            return '<span class="word-interactive" tabindex="0">' + token + '<span class="tooltip-box"><strong>' + cleanWord + '</strong>: ' + translation + '</span></span>';
+                        }
                     }
                     return token;
                 }).join('');
@@ -386,179 +475,91 @@
                         });
                         el.classList.add('active-touch');
                         if (timer) clearTimeout(timer);
-                        timer = setTimeout(function() {
-                            el.classList.remove('active-touch');
-                        }, 2000);
+                        
+                        if (tooltipTimerSetting !== 'sticky') {
+                            var dur = parseInt(tooltipTimerSetting) || 2000;
+                            timer = setTimeout(function() {
+                                el.classList.remove('active-touch');
+                            }, dur);
+                        }
                     }
                     el.addEventListener('touchstart', function(e) { triggerActivation(); }, {passive: true});
                     el.addEventListener('click', function(e) { triggerActivation(); });
                 });
+
+                // Se tooltip è sticky, chiudi cliccando altrove
+                if(tooltipTimerSetting === 'sticky') {
+                    document.addEventListener('click', function(e) {
+                        if(!e.target.closest('.word-interactive')) {
+                            document.querySelectorAll('.word-interactive.active-touch').forEach(function(el) {
+                                el.classList.remove('active-touch');
+                            });
+                        }
+                    });
+                }
             }
 
             var slides = [
                 {
                     title: "1. The White Cliffs (55 B.C.)",
                     content: "My name is Marcus, a tribune of the Tenth Legion, Caesar’s most trusted force. It is late August in the fifty-fifth year before the birth of Christ. For three days, our fleet of galleys had been slicing through the gray, turbulent waters of the ocean from the coast of Gaul. The sea was unpredictable, and many of our soldiers, hardened by years of war in the forests of Europe, suffered greatly from sea-sickness. Then, as the thick morning fog slowly lifted, a collective gasp echoed across the decks. There, rising directly from the cold dark water, stood the towering white cliffs of Albion. They were massive walls of brilliant chalk, reflecting the pale morning sunlight like giant shield-walls. But it was not merely the stone that caught our attention. On the edge of those high precipices, hundreds of native warriors were waiting for us. Their long hair fluttered in the wind, and their spears glinted menacingly. They shouted wild, guttural war-cries that carried across the water, warning us that this island would not yield easily. General Gaius Julius Caesar stood motionless at the prow of his flagship, wrapped in his red cloak, gazing silently through the sea mist. He knew that beyond those chalk walls lay a world untouched by Rome, a land rich in iron, tin, and fierce tribes who believed they were unconquerable.",
-                    grammar: `
-                        <div class="flex items-center space-x-2 border-b border-yellow-700/50 pb-2 mb-3">
-                            <span class="text-yellow-400 text-xs">🟡</span>
-                            <h4 class="font-bold gold-text font-cinzel text-sm">Past Narrative Tenses: Continuous vs Simple</h4>
-                        </div>
-                        <div class="space-y-3 leading-relaxed text-gray-200">
-                            <p>Nei racconti storici in inglese, la narrazione necessita di distinguere la <strong>scena di sfondo</strong> dall'<strong>azione principale</strong>:</p>
-                            <div class="grid md:grid-cols-2 gap-3 bg-gray-900/80 p-3 rounded border border-yellow-900/30">
-                                <div>
-                                    <span class="text-yellow-400 font-bold block mb-1">1. Past Continuous (was/were + -ing)</span>
-                                    <p class="text-xs text-gray-300">Descrive l'azione continuata nel passato che forma il "quadro" o lo sfondo della scena.</p>
-                                    <p class="text-xs italic text-yellow-200/90 mt-1">"The morning fog was slowly lifting... native warriors were waiting for us."</p>
-                                </div>
-                                <div>
-                                    <span class="text-yellow-400 font-bold block mb-1">2. Past Simple (Verbo -ed / 2ª Colonna)</span>
-                                    <p class="text-xs text-gray-300">Esprime l'evento puntuale e concluso che "interrompe" o completa lo sfondo.</p>
-                                    <p class="text-xs italic text-yellow-200/90 mt-1">"A collective gasp echoed... Caesar stood motionless."</p>
-                                </div>
-                            </div>
-                            <div class="text-xs bg-yellow-950/30 p-2.5 rounded border-l-2 border-yellow-500">
-                                <strong>Pillola Storico-Lessicale:</strong> Il termine <em>Chalk</em> (gesso/calcare) deriva dal latino <em>calx</em>. Le scogliere di Dover formano pareti alte fino a 110 metri composte da calcare sedimentario, visibili nelle giornate limpide anche dalla costa francese della Gallia.
-                            </div>
-                        </div>
-                    `
+                    grammar: "<strong>Pillola Grammaticale:</strong> Past Continuous (was/were + -ing) per lo sfondo narrativo vs Past Simple per l'azione puntuale.",
+                    questions: [
+                        { q: "While the Roman galleys ______ through the gray ocean waters, the morning fog slowly lifted.", opts: ["A) were slicing", "B) sliced"], correct: 0, exp: "Past Continuous per l'azione in corso di sfondo." },
+                        { q: "Seeing that the legionaries hesitated, the aquilifer ______ into the freezing waves.", opts: ["A) leaped", "B) was leaping"], correct: 0, exp: "Past Simple per l'azione puntuale e risolutiva." },
+                        { q: "The native British tribes ______ such terrifying artillery engines before.", opts: ["A) had never seen", "B) never saw"], correct: 0, exp: "Past Perfect per l'antecedenza nel passato." }
+                    ]
                 },
                 {
                     title: "2. The Leap into the Waves",
                     content: "The natural harbor beneath the white cliffs was narrow, surrounded by heights from which the Britons could easily rain javelins down upon our ships. Recognizing the deadly trap, Caesar ordered the signal horns to sound. Our fleet turned north, rowing along the coastline for seven miles until we reached the flat, open beaches near Deal. However, the Britons anticipated our maneuver. Their war chariots and swift cavalry galloped along the cliffs above us, keeping pace with our galleys. When our ships finally ran aground in the shallow water, a terrible panic began to spread through our ranks. The water was still deep, reaching up to our waists, and our legionaries were weighed down by their heavy iron lorica segmentata, large wooden scuta, and bronze helmets. The native warriors, unencumbered by heavy armor, charged directly into the freezing surf, hurling spears and riding their horses into the waves with terrifying confidence. Our men hesitated, terrified of stepping off the wooden planks into the churning sea. It was in that moment of mortal doubt that the aquilifer of the Tenth Legion stepped forward. Holding high the silver Eagle standard of Rome, he looked back at the hesitant ranks and shouted with a thunderous voice: 'Leap down, fellow soldiers, unless you wish to betray your Eagle to the enemy! I, at least, shall perform my duty to Rome and my general!' With those words, he plunged into the icy waves. Inspired by his immense courage, the legionaries threw themselves off the ships to defend the honor of the Eagle.",
-                    grammar: `
-                        <div class="flex items-center space-x-2 border-b border-yellow-700/50 pb-2 mb-3">
-                            <span class="text-yellow-400 text-xs">🟡</span>
-                            <h4 class="font-bold gold-text font-cinzel text-sm">Verbi Irregolari di Moto & Participial Clauses</h4>
-                        </div>
-                        <div class="space-y-3 leading-relaxed text-gray-200">
-                            <p>Per dare ritmo concitato all'azione di sbarco, l'inglese sfrutta i verbi irregolari e le subordinate sintetiche al participio:</p>
-                            <ul class="list-disc list-inside space-y-1 text-xs md:text-sm">
-                                <li><strong>Verbi Irregolari al Past Simple:</strong> <em>Run aground</em> → <strong>ran aground</strong> (incagliarsi) | <em>Spread</em> → <strong>spread</strong> (diffondersi) | <em>Throw</em> → <strong>threw</strong> (scagliare).</li>
-                                <li><strong>Present Participial Clauses (-ing):</strong> Sintetizzano due azioni contemporanee compiute dallo stesso soggetto senza appesantire con congiunzioni.<br>
-                                <span class="italic text-yellow-200/95">"<u>Recognizing the deadly trap</u>, Caesar ordered..." (= Dal momento che riconobbe la trappola, Cesare ordinò...).</span></li>
-                                <li><strong>Past Participial Clauses (-ed / 3ª Colonna):</strong> Sintetizzano una causa passata o uno stato subito dal soggetto.<br>
-                                <span class="italic text-yellow-200/95">"<u>Inspired by his courage</u>, the legionaries threw themselves..." (= Poiché furono ispirati dal suo coraggio...).</span></li>
-                            </ul>
-                            <div class="text-xs bg-yellow-950/30 p-2.5 rounded border-l-2 border-yellow-500">
-                                <strong>Inquadramento Tattico:</strong> L'<em>Aquilifer</em> era l'ufficiale addetto all'Aquila legionaria (vessillo in argento o bronzo con i fulmini di Giove). La perdita dell'Aquila comportava lo scioglimento immediato e disonorevole della legione.
-                            </div>
-                        </div>
-                    `
+                    grammar: "<strong>Pillola Grammaticale:</strong> Participial clauses (-ing / -ed) per condensare proposizioni subordinate.",
+                    questions: [
+                        { q: "Quale frase rispetta la regola della forma base dopo l'ausiliare negativo al passato?", opts: ["A) Caesar didn't conquer the island in 55 BC.", "B) Caesar didn't conquered the island in 55 BC."], correct: 0, exp: "Dopo 'didn't' si usa la forma base ('conquer')." },
+                        { q: "Quale delle due frasi utilizza la forma corretta del verbo irregolare 'fight'?", opts: ["A) The warriors fought with great courage.", "B) The warriors fighted with great courage."], correct: 0, exp: "Il Past Simple di fight è 'fought'." },
+                        { q: "Quale delle due frasi presenta il corretto accordo plurale?", opts: ["A) Many warships was swamped by the tides.", "B) Many warships were swamped by the tides."], correct: 1, exp: "Warships plurale richiede 'were'." }
+                    ]
                 },
                 {
                     title: "3. Clash on the Shingle",
                     content: "What followed on the wet gravel and shifting pebbles was a brutal, chaotic slaughter. In the tide, it was impossible to maintain our traditional Roman battle formations. We could not form a tight testudo, nor could our centurions organize the cohort lines. The Britons fought with savage efficiency, driving their light two-wheeled chariots into the shallow surf, hurling iron-tipped spears, and circling around our isolated groups. Every foot of beach was contested in blood. Seeing his infantry struggling, Caesar acted with characteristic genius. He ordered the nimble, oars-powered warships — vessels equipped with catapults, ballistas, and slingshots — to pull out from the main fleet and maneuver toward the exposed flanks of the enemy. The native tribes had never seen such monstrous artillery engines before. When the heavy wooden arms swung forward, launching giant stones and lead balls into their ranks with terrifying deafening cracks, panic seized the British chieftains. The sight of missiles raining down from the sea shattered their resolve. Slowly, under the relentless pressure of our gladii and the long oars of the artillery ships, the native tribes retreated into the dense, dark oak forests that stretched infinitely into the interior.",
-                    grammar: `
-                        <div class="flex items-center space-x-2 border-b border-yellow-700/50 pb-2 mb-3">
-                            <span class="text-yellow-400 text-xs">🟡</span>
-                            <h4 class="font-bold gold-text font-cinzel text-sm">Avverbi di Modo & Past Perfect Antecedente</h4>
-                        </div>
-                        <div class="space-y-3 leading-relaxed text-gray-200">
-                            <p>Analisi delle modalità essecutive e dell'antecedenza temporale nel passato:</p>
-                            <div class="grid md:grid-cols-2 gap-3 bg-gray-900/80 p-3 rounded border border-yellow-900/30">
-                                <div>
-                                    <span class="text-yellow-400 font-bold block mb-1">Avverbi di Modo (Aggettivo + -ly)</span>
-                                    <p class="text-xs text-gray-300">Gli avverbi qualificano *come* si svolge l'azione del verbo:</p>
-                                    <p class="text-xs italic text-yellow-200/90 mt-1">Savage → <strong>Savagely</strong> | Relentless → <strong>Relentlessly</strong> | Slow → <strong>Slowly</strong>.</p>
-                                </div>
-                                <div>
-                                    <span class="text-yellow-400 font-bold block mb-1">Past Perfect (had + Participio)</span>
-                                    <p class="text-xs text-gray-300">Si usa per un'azione completata *prima* di un altro evento passato nel racconto:</p>
-                                    <p class="text-xs italic text-yellow-200/90 mt-1">"The native tribes <u>had never seen</u> such monstrous engines before."</p>
-                                </div>
-                            </div>
-                            <div class="text-xs bg-yellow-950/30 p-2.5 rounded border-l-2 border-yellow-500">
-                                <strong>Lessico Tecnico-Militare:</strong> <em>Shingle/Pebbles</em> (ghiaia bagnata e ciottoli di spiaggia) | <em>Gladius Hispaniensis</em> (spada corta romana da stocco) | <em>Testudo</em> (formazione difensiva a testuggine con scudi serrati).
-                            </div>
-                        </div>
-                    `
+                    grammar: "<strong>Pillola Grammaticale:</strong> Avverbi di modo (-ly) per qualificare le azioni belliche.",
+                    questions: [
+                        { q: "Scegli la forma corretta: 'The British chieftains fought ______ to defend their soil.'", opts: ["A) fiercely", "B) fierce"], correct: 0, exp: "Occorre l'avverbio 'fiercely' per modificare il verbo fought." },
+                        { q: "What was 'woad', used by British warriors?", opts: ["A) A blue plant dye for war painting", "B) A metal used for swords"], correct: 0, exp: "Il guado (woad) era il colorante blu vegetale." },
+                        { q: "Where was Caesar standing during the approach?", opts: ["A) At the prow of his flagship", "B) In the cavalry camp"], correct: 0, exp: "Prow indica la prua della nave ammiraglia." }
+                    ]
                 },
                 {
                     title: "4. Meeting the Tribes",
                     content: "In the uneasy days of truce that followed our bloody landing, we pitched our camp on the coastal plain and observed the inhabitants of Albion closely. They called themselves Britons, belonging to various Celtic tribes scattered across the island. To our Latin eyes, they were a fascinating contrast of savagery and sophisticated craft. Before entering battle, they painted their bare chests and faces with woad, a blue dye extracted from a native plant, creating intricate, swirling patterns designed to strike terror into their enemies' hearts. They spoke a strange, melodious Celtic language, entirely alien to the cadences of Rome. Yet, they were far from primitive barbarians. Their blacksmiths forged exquisite iron swords and delicate golden torcs worn around the necks of their nobles. Their homes were large roundhouses built of timber, woven wattle, and thick thatched straw roofs that kept out the damp northern chill. They lived in tribal communities governed by powerful chieftains and advised by mysterious priests known as Druids, who performed sacred rites deep within holy groves. We realized then that conquering this island would not be a mere military parade, but a long, grueling struggle against a proud people deeply rooted in their ancestral soil.",
-                    grammar: `
-                        <div class="flex items-center space-x-2 border-b border-yellow-700/50 pb-2 mb-3">
-                            <span class="text-yellow-400 text-xs">🟡</span>
-                            <h4 class="font-bold gold-text font-cinzel text-sm">Descrivere Abitudini Passate & Ordine degli Aggettivi</h4>
-                        </div>
-                        <div class="space-y-3 leading-relaxed text-gray-200">
-                            <p>Come descrivere usanze culturali concluse ed elenchi di aggettivi qualificativi:</p>
-                            <ul class="list-disc list-inside space-y-1 text-xs md:text-sm">
-                                <li><strong>Past Simple per Usanze Storiche Concluse:</strong> Si usa il passato semplice per esprimere abitudini quotidiane o rituali di popolazioni del passato.<br>
-                                <span class="italic text-yellow-200/90">"They painted their chests... lived in roundhouses... spoke a Celtic language."</span></li>
-                                <li><strong>Sequenza degli Aggettivi (Dimensione + Materiale + Sostantivo):</strong> L'inglese segue un ordine rigido degli aggettivi prima del sostantivo:<br>
-                                <span class="italic text-yellow-200/90">"Delicate (Opinione) + Golden (Materiale) + Torcs (Sostantivo)" / "Large (Dimensione) + Wooden (Materiale) + Roundhouses (Sostantivo)."</span></li>
-                            </ul>
-                            <div class="text-xs bg-yellow-950/30 p-2.5 rounded border-l-2 border-yellow-500">
-                                <strong>Inquadramento Culturale:</strong> Il <em>Woad</em> (Guado, Isatis tinctoria) è la pianta da cui i Celti estraevano l'indaco per i dipinti di guerra | Il <em>Torc</em> era il collare rigido in oro simboleggiante il rango di nobiltà.
-                            </div>
-                        </div>
-                    `
+                    grammar: "<strong>Pillola Grammaticale:</strong> Ordine degli aggettivi (Dimensione + Materiale + Sostantivo).",
+                    questions: [
+                        { q: "What role did the 'aquilifer' play in the Tenth Legion?", opts: ["A) He carried the silver Eagle standard", "B) He commanded the cavalry"], correct: 0, exp: "L'aquilifer custodiva l'insegna sacra della legione." },
+                        { q: "What material did legionaries use to repair ships?", opts: ["A) Timber and iron bolts salvaged from wrecks", "B) Stone blocks"], correct: 0, exp: "Timber (legname) e perni recuperati." },
+                        { q: "What was the main reason Caesar decided to retreat?", opts: ["A) Lack of winter provisions and damaged fleet", "B) A direct senate decree"], correct: 0, exp: "Mancanza di scorte per l'inverno." }
+                    ]
                 },
                 {
                     title: "5. The Autumn Storms",
                     content: "Our foothold in Albion, however, was destined to be short-lived. Four days after our landing, a sudden full moon brought exceptionally high tides and violent, unseasonal autumn gales across the Channel. Unaccustomed to the drastic tides of the Atlantic Ocean, we had left our heavy transports anchored in the open roadstead. The tempest smashed our galleys against one another, breaking oars, tearing sails, and swamping many vessels in the raging foam. On land, we were isolated: we lacked heavy cavalry to chase the elusive British war chariots, and our granaries held no provisions for the approaching winter. Caesar, ever the pragmatic strategist, understood that remaining on the island meant starvation and inevitable destruction. For days, our legionaries worked tirelessly, salvaging iron bolts and timber from the most damaged ships to repair the rest of the fleet. On a quiet midnight, under the dark autumn sky, we boarded our repaired vessels and set sail back to Gaul. Caesar did not conquer Britain in fifty-five BC; he left no garrisons, no brick forts, and no tribute-paying provinces. Yet, as our ships glided away from those glowing white cliffs, we knew that Rome had planted her banner on the edge of the known world. The door to Albion had been unlocked, and one day, the legions would return.",
-                    grammar: `
-                        <div class="flex items-center space-x-2 border-b border-yellow-700/50 pb-2 mb-3">
-                            <span class="text-yellow-400 text-xs">🟡</span>
-                            <h4 class="font-bold gold-text font-cinzel text-sm">Forma Negativa al Past Simple & Proposizioni di Scopo</h4>
-                        </div>
-                        <div class="space-y-3 leading-relaxed text-gray-200">
-                            <p>Regola dell'ausiliare negativo al passato ed espressione dello scopo/conseguenza:</p>
-                            <div class="grid md:grid-cols-2 gap-3 bg-gray-900/80 p-3 rounded border border-yellow-900/30">
-                                <div>
-                                    <span class="text-yellow-400 font-bold block mb-1">Past Simple Negative (did NOT + Base Form)</span>
-                                    <p class="text-xs text-gray-300">L'ausiliare <em>did</em> assorbe il tempo passato, quindi il verbo principale torna *sempre* alla forma base (non coniugata):</p>
-                                    <p class="text-xs italic text-yellow-200/90 mt-1">"Caesar <u>did not conquer</u> Britain..." (NON "did not conquered").</p>
-                                </div>
-                                <div>
-                                    <span class="text-yellow-400 font-bold block mb-1">Proposizioni di Scopo (Infinitive of Purpose)</span>
-                                    <p class="text-xs text-gray-300">Si usa l'infinito preceduto da <em>to</em> per spiegare la finalità o l'obiettivo dell'azione:</p>
-                                    <p class="text-xs italic text-yellow-200/90 mt-1">"...salvaging iron bolts and timber <u>to repair</u> the rest of the fleet."</p>
-                                </div>
-                            </div>
-                            <div class="text-xs bg-yellow-950/30 p-2.5 rounded border-l-2 border-yellow-500">
-                                <strong>Conclusione Storica:</strong> La prima spedizione di Cesare (55 a.C.) fu un'esplorazione armata per dimostrare la forza di Roma. La conquista reale e permanente avverrà quasi 100 anni dopo (43 d.C.) sotto l'Imperatore Claudio.
-                            </div>
-                        </div>
-                    `
+                    grammar: "<strong>Pillola Grammaticale:</strong> Infinitive of purpose (to + verbo) per esprimere lo scopo.",
+                    questions: [
+                        { q: "Quale fu la conseguenza delle maree e tempeste autunnali?", opts: ["A) The transport ships were smashed and damaged.", "B) The Roman fleet sailed around Ireland."], correct: 0, exp: "Le tempeste distrussero le navi ancorate nella rada." },
+                        { q: "What did Caesar do to save the army from winter starvation?", opts: ["A) Repaired the fleet overnight and sailed back to Gaul", "B) Built stone castles"], correct: 0, exp: "Riparò le navi e fece ritorno in Gallia." },
+                        { q: "What was the historical legacy of the 55 BC expedition?", opts: ["A) It paved the way for the future permanent conquest.", "B) It established permanent Roman colonies."], correct: 0, exp: "Aprì la strada alla futura conquista di Claudio." }
+                    ]
                 }
-            ];
-
-            var questions = [
-                { section: "1. Grammatica", type: "binary", q: "While the Roman galleys ______ through the gray ocean waters, the morning fog slowly lifted.", opts: ["A) were slicing", "B) sliced"], correct: 0, exp: "Si usa il Past Continuous ('were slicing') per descrivere l'azione continuata di sottofondo, mentre la nebbia che si dirada ('lifted') rappresenta l'evento puntuale." },
-                { section: "1. Grammatica", type: "binary", q: "Seeing that the legionaries hesitated, the aquilifer ______ into the freezing waves with the Eagle standard.", opts: ["A) leaped", "B) was leaping"], correct: 0, exp: "Il verbo puntuale al Past Simple ('leaped') esprime l'azione istantanea e decisiva del portatore dell'Aquila." },
-                { section: "1. Grammatica", type: "binary", q: "The native British tribes ______ such terrifying artillery engines before Caesar ordered the barrage.", opts: ["A) had never seen", "B) never saw"], correct: 0, exp: "Si usa il Past Perfect ('had never seen') per indicare un fatto antecedente rispetto ad un altro momento passato della narrazione." },
-                { section: "2. Error Spotting", type: "binary", q: "Quale frase rispetta la regola della forma base dopo l'ausiliare negativo al passato?", opts: ["A) Caesar didn't conquer the island of Albion in 55 BC.", "B) Caesar didn't conquered the island of Albion in 55 BC."], correct: 0, exp: "Dopo l'ausiliare negativo 'didn't', il verbo principale va espresso alla forma base ('conquer'), non al passato ('conquered')." },
-                { section: "2. Error Spotting", type: "binary", q: "Quale delle due frasi utilizza la forma corretta del verbo irregolare al passato?", opts: ["A) The British warriors fought with great courage on the beach.", "B) The British warriors fighted with great courage on the beach."], correct: 0, exp: "Il verbo 'fight' è irregolare: la sua forma al Past Simple è 'fought' ('fighted' è un errore di coniugazione)." },
-                { section: "2. Error Spotting", type: "binary", q: "Quale delle due frasi presenta il corretto accordo tra soggetto e verbo?", opts: ["A) Many warships was swamped by the violent ocean tides.", "B) Many warships were swamped by the violent ocean tides."], correct: 1, exp: "Il sostantivo plurale 'warships' richiede l'ausiliare plurale 'were swamped'." },
-                { section: "3. Word Formation", type: "binary", q: "Scegli la forma corretta: 'The British chieftains fought ______ to defend their ancestral soil.'", opts: ["A) fiercely", "B) fierce"], correct: 0, exp: "Per modificare un verbo d'azione ('fought') occorre l'avverbio di modo ('fiercely'), non l'aggettivo qualificativo." },
-                { section: "3. Word Formation", type: "binary", q: "Scegli la forma derivata corretta: 'The violent autumn storm caused ______ damage to the Roman fleet.'", opts: ["A) severe", "B) severely"], correct: 0, exp: "Per modificare il sostantivo 'damage' occorre l'aggettivo qualificativo ('severe')." },
-                { section: "4. Lessico d'Epoca", type: "binary", q: "What was 'woad', the substance used by British warriors before entering battle?", opts: ["A) A blue plant dye used for war painting", "B) A metal used to forge heavy swords"], correct: 0, exp: "Il 'woad' (guado) era il pigmento vegetale estratto dalla pianta Isatis tinctoria usato dai Celti per dipingersi il corpo di blu prima del combattimento." },
-                { section: "4. Lessico d'Epoca", type: "binary", q: "Where was General Julius Caesar standing when he observed the chalk cliffs of Dover?", opts: ["A) At the prow of his flagship", "B) On top of a wooden siege tower"], correct: 0, exp: "Il termine nautico 'prow' indica la prua della nave ammiraglia." },
-                { section: "4. Lessico d'Epoca", type: "binary", q: "What role did the 'aquilifer' play in the Tenth Legion during the landing?", opts: ["A) He carried the sacred silver Eagle standard of Rome", "B) He commanded the cavalry squadrons"], correct: 0, exp: "L'aquilifer era il sottufficiale addetto al trasporto del vessillo più sacro della legione: l'Aquila d'argento o bronzo." },
-                { section: "4. Lessico d'Epoca", type: "binary", q: "What material did the legionaries use to repair the storm-damaged warships?", opts: ["A) Local timber and iron bolts salvaged from broken ships", "B) Stone blocks from native roundhouses"], correct: 0, exp: "'Timber' è il legname da costruzione ricavato dalle foreste vicine per riparare le carene delle gallee." },
-                { section: "4. Lessico d'Epoca", type: "binary", q: "What was the main reason Caesar decided to retreat to Gaul before winter?", opts: ["A) Lack of winter provisions and damaged ships", "B) A direct decree from the Senate in Rome"], correct: 0, exp: "'Provisions' indica le scorte alimentari e militari indispensabili per la sopravvivenza invernale." },
-                { section: "5. Incongruenze Storiche", type: "binary", q: "Quale affermazione descrive la decisione tattica di Cesare dopo l'avvistamento delle scogliere di Dover?", opts: ["A) He moved the fleet 7 miles north to Deal because Dover's cliffs were too steep.", "B) He ordered an immediate uphill assault directly on the Dover cliffs."], correct: 0, exp: "Le scogliere di Dover offrivano una posizione sopraelevata troppo pericolosa; Cesare spostò quindi la flotta 7 miglia a nord verso le spiagge aperte di Deal." },
-                { section: "5. Incongruenze Storiche", type: "binary", q: "Quale fu la reazione delle tribù celtiche di fronte all'artiglieria navale romana?", opts: ["A) They panicked and retreated when stones and missiles rained from catapults.", "B) They captured the artillery ships using their war chariots."], correct: 0, exp: "L'impiego di catapulte e baliste dalle navi ai fianchi sorprese i Celti, che non avevano mai visto macchine d'assedio navali." },
-                { section: "5. Incongruenze Storiche", type: "binary", q: "Come vengono descritti i Celti da Marcus durante la breve tregua?", opts: ["A) Skilled metalworkers and brave warriors living in structured tribal communities.", "B) Primitive savages with no knowledge of iron or agriculture."], correct: 0, exp: "Marcus riconosce che i Celti non erano barbari primitivi, ma abili fabbri capaci di forgiare spade d'ferro e raffinati torques d'oro." },
-                { section: "6. Comprensione Avanzata", type: "multiple", q: "Why was the landing at Deal so dangerous for the Roman legionaries in heavy armor?", opts: ["A) The water was deep and the shifting gravel prevented them from forming cohort lines.", "B) The Roman ships caught fire before reaching the shore.", "C) The British cavalry had surrounded the fleet in deep ocean waters.", "D) Caesar had forbidden the use of swords during the landing."], correct: 0, exp: "Il peso della lorica segmentata, l'acqua profonda e la ghiaia instabile impedirono ai legionari di adottare le tradizionali linee di coorte romane." },
-                { section: "6. Comprensione Avanzata", type: "multiple", q: "What cultural detail about the British nobility is highlighted in Marcus's description?", opts: ["A) They wore delicate golden torcs around their necks.", "B) They lived in stone aqueducts built by their ancestors.", "C) They dressed in Roman toga suits imported from Gaul.", "D) They refused to fight on horseback or in chariots."], correct: 0, exp: "I torques d'oro (collari rigidi in metallo prezioso) erano il simbolo distintivo di nobiltà e rango guerriero tra le tribù celtiche." },
-                { section: "6. Comprensione Avanzata", type: "multiple", q: "What natural factor caused severe destruction to the anchored Roman transport ships?", opts: ["A) High tides and Atlantic storms caused by a sudden full moon.", "B) A submarine volcanic eruption in the English Channel.", "C) A thick fog that made all ships collide with the Dover cliffs.", "D) A sudden freezing of the sea water."], correct: 0, exp: "I Romani, poco pratici delle forti maree dell'Oceano Atlantico, videro le navi fracassate dalle tempeste legate al plenilunio." },
-                { section: "6. Comprensione Avanzata", type: "multiple", q: "Why did Caesar decide to return to Gaul despite having repelled the British attacks?", opts: ["A) He lacked heavy cavalry, provisions for winter, and needed to repair damaged ships.", "B) He received news of a massive rebellion in Rome.", "C) The British Druids converted the entire Tenth Legion.", "D) His army was completely surrounded and stripped of weapons."], correct: 0, exp: "Senza cavalleria per inseguire i carri celte, con la flotta danneggiata e senza scorte per l'inverno, rimanere sull'isola avrebbe portato alla fame." },
-                { section: "6. Comprensione Avanzata", type: "multiple", q: "What was the ultimate historical legacy of the 55 BC expedition described by Marcus?", opts: ["A) It opened Albion to the Roman sphere of interest, paving the way for future conquest.", "B) It established a permanent Roman capital at Dover.", "C) It wiped out all Celtic language and culture in Britain.", "D) It resulted in Caesar being captured by the Celtic chieftains."], correct: 0, exp: "La spedizione del 55 a.C. svelò la Britannia al mondo romano e pose le basi diplomatiche e geografiche per la conquista romana avvenuta quasi un secolo dopo." }
             ];
 
             var currentSlide = 0;
             var gameMode = 'coop';
-            var currentQuestion = 0;
             var hp = 100;
             var score = 0;
             var p1Score = 0; p2Score = 0; currentPlayer = 1;
+            
+            var currentMicroQIndex = 0;
             var userAnswersLog = [];
-
             var audioPlayer = document.getElementById('audio-player');
 
             document.getElementById('btn-start-coop').onclick = function() { startGame('coop'); };
@@ -577,12 +578,13 @@
             function renderSlide() {
                 var data = slides[currentSlide];
                 document.getElementById('story-chapter-tag').innerText = "CAPITOLO " + (currentSlide + 1) + " DI " + slides.length;
+                document.getElementById('narrator-tag').innerText = "LEGIONARIO: " + playerName.toUpperCase();
                 document.getElementById('story-title').innerText = data.title;
                 document.getElementById('story-content').innerHTML = makeTextInteractive(data.content);
                 document.getElementById('grammar-pill').innerHTML = data.grammar;
 
                 document.getElementById('btn-prev-slide').style.visibility = (currentSlide === 0) ? 'hidden' : 'visible';
-                document.getElementById('btn-next-slide').innerText = (currentSlide === slides.length - 1) ? "Inizia la Valutazione (21 Q) →" : "Avanti →";
+                document.getElementById('btn-next-slide').innerText = (currentSlide === slides.length - 1) ? "Verifica Finale e Rapporto →" : "Affronta Verifica Capitolo →";
 
                 attachWordTimers();
                 playAudio();
@@ -591,14 +593,12 @@
             function loadAudioFile(filename, fallbackFilename) {
                 audioPlayer.src = filename;
                 audioPlayer.play().then(function() {
-                    document.getElementById('audio-playing-indicator').innerText = "🔊 In riproduzione: " + filename;
-                    document.getElementById('btn-audio-toggle').innerText = "⏸️ Pausa Audio";
+                    document.getElementById('audio-playing-indicator').innerText = "🔊 In riproduzione audio narrativo...";
                 }).catch(function(err) {
                     if (fallbackFilename) {
                         loadAudioFile(fallbackFilename, null);
                     } else {
-                        document.getElementById('audio-playing-indicator').innerText = "⚠️ Premi '▶️ Riproduci Audio' per avviare";
-                        document.getElementById('btn-audio-toggle').innerText = "▶️ Riproduci Audio";
+                        document.getElementById('audio-playing-indicator').innerText = "⚠️ Audio bloccato dal browser. Leggi la narrazione testuale.";
                     }
                 });
             }
@@ -612,13 +612,11 @@
             document.getElementById('btn-audio-toggle').onclick = function() {
                 if (audioPlayer.paused) {
                     audioPlayer.play().then(function() {
-                        document.getElementById('btn-audio-toggle').innerText = "⏸️ Pausa Audio";
-                        document.getElementById('audio-playing-indicator').innerText = "🔊 In riproduzione: slide" + (currentSlide + 1) + ".mp3";
-                    });
+                        this.innerText = "⏸️ Pausa Audio";
+                    }.bind(this));
                 } else {
                     audioPlayer.pause();
                     this.innerText = "▶️ Riproduci Audio";
-                    document.getElementById('audio-playing-indicator').innerText = "⏸️ Audio in pausa";
                 }
             };
 
@@ -632,102 +630,114 @@
             };
 
             document.getElementById('btn-next-slide').onclick = function() {
-                if (currentSlide < slides.length - 1) {
-                    currentSlide++;
-                    renderSlide();
-                } else {
-                    startQuiz();
-                }
+                audioPlayer.pause();
+                startMicroQuiz();
             };
 
-            function startQuiz() {
-                audioPlayer.pause();
+            // GESTIONE MICRO-VERIFICA A FINE SLIDE
+            function startMicroQuiz() {
                 document.getElementById('screen-story').classList.add('hidden');
-                document.getElementById('screen-quiz').classList.remove('hidden');
+                document.getElementById('screen-micro-quiz').classList.remove('hidden');
                 document.getElementById('header-score-box').classList.remove('hidden');
-                currentQuestion = 0;
-                hp = 100; score = 0; p1Score = 0; p2Score = 0; currentPlayer = 1;
+                currentMicroQIndex = 0;
 
                 if (gameMode === 'vs') {
-                    document.getElementById('hp-bar-container').classList.add('hidden');
+                    document.getElementById('micro-hp-container').classList.add('hidden');
                 } else {
-                    document.getElementById('hp-bar-container').classList.remove('hidden');
+                    document.getElementById('micro-hp-container').classList.remove('hidden');
                 }
-                renderQuestion();
+                renderMicroQuestion();
             }
 
-            function renderQuestion() {
-                var q = questions[currentQuestion];
-                document.getElementById('question-number').innerText = "Quesito " + (currentQuestion + 1) + " di " + questions.length;
-                document.getElementById('question-section-tag').innerText = q.section;
-                document.getElementById('question-text').innerText = q.q;
+            function renderMicroQuestion() {
+                var slideData = slides[currentSlide];
+                var q = slideData.questions[currentMicroQIndex];
 
-                document.getElementById('turn-indicator').innerText = (gameMode === 'vs') ? ("TURNO DI: GIOCATORE " + currentPlayer) : "VALUTAZIONE INTEGRATA";
+                document.getElementById('micro-quiz-title').innerText = slideData.title;
+                document.getElementById('micro-q-counter').innerText = "Quesito " + (currentMicroQIndex + 1) + " di " + slideData.questions.length + (gameMode === 'vs' ? " | Turno: G" + currentPlayer : "");
+                document.getElementById('micro-q-text').innerText = q.q;
 
-                var box = document.getElementById('options-container');
+                var box = document.getElementById('micro-options-container');
                 box.innerHTML = '';
-                document.getElementById('feedback-box').classList.add('hidden');
-                document.getElementById('btn-next-question').classList.add('hidden');
+                document.getElementById('micro-feedback-box').classList.add('hidden');
+                document.getElementById('btn-next-micro-q').classList.add('hidden');
 
                 q.opts.forEach(function(opt, idx) {
                     var btn = document.createElement('button');
                     btn.type = "button";
                     btn.className = "w-full text-left p-3.5 rounded bg-gray-800/80 hover:bg-yellow-600/20 border border-gray-700 hover:border-yellow-500/50 text-xs md:text-sm transition-all";
                     btn.innerText = opt;
-                    btn.onclick = function() { handleAnswer(idx); };
+                    btn.onclick = function() { handleMicroAnswer(idx); };
                     box.appendChild(btn);
                 });
             }
 
-            function handleAnswer(selectedIdx) {
-                var q = questions[currentQuestion];
+            function handleMicroAnswer(selectedIdx) {
+                var slideData = slides[currentSlide];
+                var q = slideData.questions[currentMicroQIndex];
                 var isCorrect = selectedIdx === q.correct;
-                var feedback = document.getElementById('feedback-box');
+                var feedback = document.getElementById('micro-feedback-box');
                 
                 userAnswersLog.push({
-                    questionIndex: currentQuestion,
+                    slide: currentSlide,
+                    qIndex: currentMicroQIndex,
+                    questionText: q.q,
                     userChoice: selectedIdx,
-                    isCorrect: isCorrect
+                    options: q.opts,
+                    correct: q.correct,
+                    isCorrect: isCorrect,
+                    exp: q.exp
                 });
 
-                var btns = document.querySelectorAll('#options-container button');
+                var btns = document.querySelectorAll('#micro-options-container button');
                 btns.forEach(function(b) { b.disabled = true; b.classList.add('opacity-50'); });
 
                 feedback.classList.remove('hidden', 'bg-green-900/60', 'bg-red-900/60', 'text-green-200', 'text-red-200', 'border-green-500', 'border-red-500');
 
                 if (isCorrect) {
                     feedback.classList.add('bg-green-900/60', 'text-green-200', 'border-green-500');
-                    feedback.innerHTML = "<strong>✅ RISPOSTA ESATTA!</strong><br>" + q.exp;
+                    feedback.innerHTML = "<strong>✅ ESATTO!</strong> " + q.exp;
                     score++;
+                    if(difficulty === 'challenge') score += 1; // bonus punti sfida
                     if (gameMode === 'vs') { if (currentPlayer === 1) p1Score++; else p2Score++; }
                 } else {
                     feedback.classList.add('bg-red-900/60', 'text-red-200', 'border-red-500');
-                    feedback.innerHTML = "<strong>❌ RISPOSTA ERRATA!</strong><br>" + q.exp;
+                    feedback.innerHTML = "<strong>❌ ERRATO.</strong> " + q.exp;
                     if (gameMode === 'coop') {
-                        hp -= 5;
+                        hp -= 7;
                         if (hp < 0) hp = 0;
-                        document.getElementById('hp-bar').style.width = hp + '%';
+                        document.getElementById('micro-hp-bar').style.width = hp + '%';
                     }
                 }
 
-                document.getElementById('high-score').innerText = score + " / " + questions.length;
+                document.getElementById('high-score').innerText = score + " PT";
                 
-                var btnNext = document.getElementById('btn-next-question');
+                var btnNext = document.getElementById('btn-next-micro-q');
                 btnNext.classList.remove('hidden');
                 btnNext.onclick = function() {
                     if (gameMode === 'vs') currentPlayer = (currentPlayer === 1) ? 2 : 1;
-                    currentQuestion++;
+                    currentMicroQIndex++;
 
-                    if (currentQuestion >= questions.length || (gameMode === 'coop' && hp <= 0)) {
-                        showFinalResults();
+                    if (currentMicroQIndex >= slideData.questions.length || (gameMode === 'coop' && hp <= 0)) {
+                        if (gameMode === 'coop' && hp <= 0) {
+                            showFinalResults(false);
+                        } else if (currentSlide < slides.length - 1) {
+                            currentSlide++;
+                            document.getElementById('screen-micro-quiz').classList.add('hidden');
+                            document.getElementById('screen-story').classList.remove('hidden');
+                            renderSlide();
+                        } else {
+                            showFinalResults(true);
+                        }
                     } else {
-                        renderQuestion();
+                        renderMicroQuestion();
                     }
                 };
             }
 
-            function showFinalResults() {
-                document.getElementById('screen-quiz').classList.add('hidden');
+            function showFinalResults(isVictory) {
+                document.getElementById('screen-micro-quiz').classList.add('hidden');
+                document.getElementById('screen-story').classList.add('hidden');
                 document.getElementById('screen-results').classList.remove('hidden');
                 document.getElementById('header-score-box').classList.remove('hidden');
 
@@ -735,17 +745,17 @@
                 var scoreText = document.getElementById('final-score-text');
 
                 if (gameMode === 'coop') {
-                    if (hp > 0) {
+                    if (isVictory && hp > 0) {
                         title.innerText = "VICTORIA! ALBION È CONQUISTATA";
                         title.className = "text-3xl md:text-4xl font-extrabold text-green-400 font-cinzel mt-2";
-                        scoreText.innerText = "Scudo legionario integro! Punteggio finale: " + score + " / " + questions.length;
+                        scoreText.innerText = "Legionario " + playerName + ", scudo integro! Punteggio finale: " + score;
                     } else {
                         title.innerText = "SCONFITTA! LO SCUDO SI È SPEZZATO";
                         title.className = "text-3xl md:text-4xl font-extrabold text-red-500 font-cinzel mt-2";
-                        scoreText.innerText = "Le truppe sono state sopraffatte. Punteggio risposte: " + score + " / " + questions.length;
+                        scoreText.innerText = "Le truppe sono state sopraffatte. Punteggio: " + score;
                     }
                 } else {
-                    title.innerText = "FINALE DUELLO 1 VS 1";
+                    title.innerText = "FINE DUEL 1 VS 1 - " + playerName.toUpperCase();
                     title.className = "text-3xl md:text-4xl font-extrabold gold-text font-cinzel mt-2";
                     scoreText.innerText = "Giocatore 1: " + p1Score + " PT | Giocatore 2: " + p2Score + " PT";
                 }
@@ -754,7 +764,6 @@
                 listContainer.innerHTML = '';
 
                 userAnswersLog.forEach(function(item, idx) {
-                    var q = questions[item.questionIndex];
                     var div = document.createElement('div');
                     div.className = "p-3 rounded border text-xs transition-all " + 
                                   (item.isCorrect ? "bg-green-950/40 border-green-800/60" : "bg-red-950/40 border-red-800/60");
@@ -763,16 +772,13 @@
                     
                     div.innerHTML = `
                         <div class="flex justify-between items-center mb-1">
-                            <span class="font-bold gold-text font-cinzel">Quesito ${idx + 1}: ${q.section}</span>
+                            <span class="font-bold gold-text font-cinzel">Quesito ${idx + 1}</span>
                             ${badge}
                         </div>
-                        <p class="text-gray-200 font-medium mb-1">${q.q}</p>
-                        <p class="text-gray-400">Tua risposta: <span class="text-white">${q.opts[item.userChoice]}</span></p>
-                        ${!item.isCorrect ? `<p class="text-yellow-300">Risposta corretta: ${q.opts[q.correct]}</p>` : ''}
-                        
-                        <div class="mt-2 pt-2 border-t border-gray-800 text-gray-300 font-sans">
-                            💡 <strong>Spiegazione:</strong> ${q.exp}
-                        </div>
+                        <p class="text-gray-200 font-medium mb-1">${item.questionText}</p>
+                        <p class="text-gray-400">Tua risposta: <span class="text-white">${item.options[item.userChoice]}</span></p>
+                        ${!item.isCorrect ? `<p class="text-yellow-300">Corretta: ${item.options[item.correct]}</p>` : ''}
+                        <div class="mt-1 text-gray-300">💡 ${item.exp}</div>
                     `;
                     listContainer.appendChild(div);
                 });
