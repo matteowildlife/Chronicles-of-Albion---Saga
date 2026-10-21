@@ -101,7 +101,7 @@
             </div>
             <div>
                 <h1 class="text-xl font-bold tracking-wider gold-text font-cinzel">CHRONICLES OF ALBION</h1>
-                <p id="player-welcome-sub" class="text-xs text-gray-400">Legionario: <span id="header-player-name" class="text-yellow-400">Novizio</span></p>
+                <p id="player-welcome-sub" class="text-xs text-gray-400">Legionario/a: <span id="header-player-name" class="text-yellow-400">Novizio</span></p>
             </div>
         </div>
         <div id="header-score-box" class="hidden text-xs font-cinzel bg-gray-900/90 border border-yellow-600/40 px-3 py-1.5 rounded">
@@ -112,21 +112,7 @@
     <!-- HOMEPAGE & ARRUOLAMENTO IMMERSIVO -->
     <main id="screen-menu" class="my-auto max-w-5xl mx-auto w-full py-6">
         
-        <!-- BOX DI ARRUOLAMENTO E INGRESSO IN SCENA -->
-        <div class="parchment p-6 rounded-xl border border-yellow-500/60 mb-6 bg-gradient-to-r from-yellow-950/40 to-slate-900">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div>
-                    <span class="text-xs uppercase tracking-widest text-yellow-400 font-cinzel font-bold">🏛️ Appello della Legio X</span>
-                    <h3 class="text-xl md:text-2xl font-bold gold-text font-cinzel mt-1">"Fatti avanti, soldato! Come ti chiami?"</h3>
-                    <p class="text-xs text-gray-300 mt-1">Il tribuno Marco ti fissa mentre i remi fendono la nebbia dell'Oceano. Inserisci il tuo nome per registrare il tuo giuramento negli annali di Roma.</p>
-                </div>
-                <div class="flex items-center space-x-2 w-full md:w-auto">
-                    <input type="text" id="input-player-name" placeholder="Il tuo nome o cognomen..." class="bg-gray-950 border border-yellow-600/60 rounded px-3 py-2 text-sm text-yellow-200 focus:outline-none focus:border-yellow-400 w-full md:w-48" maxlength="20">
-                    <button type="button" id="btn-save-name" class="gold-button px-4 py-2 rounded text-xs uppercase tracking-wider whitespace-nowrap">Giura a Roma</button>
-                </div>
-            </div>
-        </div>
-
+        <!-- INTRODUZIONE STORICA ESTESA -->
         <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40 mb-6">
             <div class="flex flex-col md:flex-row items-stretch gap-6">
                 
@@ -140,16 +126,26 @@
                     </div>
                 </div>
 
-                <div class="w-full md:w-7/12 flex flex-col justify-between space-y-3">
+                <div class="w-full md:w-7/12 flex flex-col justify-between space-y-4">
                     <div>
                         <span class="text-xs uppercase tracking-widest text-yellow-500 font-cinzel bg-yellow-950/60 border border-yellow-800/60 px-3 py-1 rounded-full">La Prima Invasione • 55 a.C.</span>
                         <h2 class="text-3xl md:text-4xl font-extrabold gold-text font-cinzel leading-tight mt-3">L'Ombra di Roma sull'Oceano</h2>
                         <p class="text-xs md:text-sm text-gray-300 leading-relaxed mt-3">
-                            Nel <strong>55 a.C.</strong> la flotta di Giulio Cesare punta alle scogliere di <strong>Albion</strong>. Preparati allo sbarco a Deal e al primo scontro con i carri celtici.
+                            Nel <strong>55 a.C.</strong> la flotta di Giulio Cesare solca le acque nebbiose e turbolente dell'Oceano Atlantico per puntare alle maestose e bianche scogliere di <strong>Albion</strong>. Questa non è una semplice lezione di storia o un freddo esercizio di grammatica inglese: è un viaggio immersivo in prima persona nei panni dei legionari della Decima Legione. Vivrai la tensione dello sbarco sulle spiagge di Deal, l'impatto con i guerrieri celtici dipinti di guado blu e la furia delle tempeste autunnali.
                         </p>
                     </div>
 
-                    <!-- PANNELLO IMPOSTAZIONI E ACCESSIBILITÀ INIZIALE (DISCRETO E PULITO) -->
+                    <!-- BOX ARRUOLAMENTO NOME -->
+                    <div class="bg-yellow-950/30 border border-yellow-600/50 p-4 rounded-lg">
+                        <span class="text-xs uppercase tracking-wider text-yellow-400 font-cinzel font-bold block mb-1">🏛️ Appello della Legio X</span>
+                        <p class="text-xs text-gray-300 mb-3">Prima di salpare, il tribuno Marco esige il tuo nome per registrare il tuo giuramento negli annali di Roma:</p>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="input-player-name" placeholder="Il tuo nome o nome da legionario..." class="bg-gray-950 border border-yellow-600/60 rounded px-3 py-2 text-sm text-yellow-200 focus:outline-none focus:border-yellow-400 w-full" maxlength="25">
+                            <button type="button" id="btn-save-name" class="gold-button px-4 py-2 rounded text-xs uppercase tracking-wider whitespace-nowrap">Giura a Roma</button>
+                        </div>
+                    </div>
+
+                    <!-- PANNELLO IMPOSTAZIONI E ACCESSIBILITÀ INIZIALE -->
                     <div class="bg-gray-950/80 border border-yellow-900/50 p-3.5 rounded-lg space-y-3 text-xs">
                         <div class="font-cinzel text-yellow-400 font-bold border-b border-yellow-900/40 pb-1 flex justify-between items-center">
                             <span>⚙️ CONFIGURAZIONE TATTICA E ACCESSIBILITÀ</span>
@@ -157,7 +153,6 @@
                         </div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <!-- Difficoltà -->
                             <div>
                                 <label class="block text-gray-400 mb-1 font-bold">Livello Difficoltà:</label>
                                 <select id="select-difficulty" class="bg-gray-900 border border-yellow-600/40 text-yellow-200 rounded p-1 w-full text-xs">
@@ -167,7 +162,6 @@
                                 </select>
                             </div>
 
-                            <!-- Timer Tooltip -->
                             <div>
                                 <label class="block text-gray-400 mb-1 font-bold">Durata Tooltip Traduzione:</label>
                                 <select id="select-tooltip-timer" class="bg-gray-900 border border-yellow-600/40 text-yellow-200 rounded p-1 w-full text-xs">
@@ -177,7 +171,6 @@
                                 </select>
                             </div>
 
-                            <!-- Accessibilità -->
                             <div>
                                 <label class="block text-gray-400 mb-1 font-bold">Accessibilità & DSA:</label>
                                 <div class="flex space-x-2 pt-1">
@@ -191,37 +184,48 @@
             </div>
         </div>
 
-        <!-- PULSANTI AVVIO GIOCO A BLOCCHI -->
-        <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div class="parchment p-6 rounded-lg border border-yellow-600/30 flex flex-col justify-between hover:border-yellow-500/60 transition-all">
-                <div>
-                    <span class="text-xs text-yellow-500 font-cinzel">MODALITÀ COOPERATIVA</span>
-                    <h3 class="text-xl font-bold gold-text font-cinzel my-2">Alleanza Legionaria (Co-Op)</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-4">Difendete lo scudo da 100 HP affrontando i micro-test alla fine di ogni capitolo.</p>
-                </div>
-                <button type="button" id="btn-start-coop" class="w-full py-3.5 rounded font-cinzel text-sm gold-button uppercase tracking-wider">Avvia Episodio (Co-Op)</button>
-            </div>
+        <!-- PRESENTAZIONE APPROFONDITA DELLE MODALITÀ DI GIOCO -->
+        <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40 mb-6">
+            <h3 class="text-xl font-bold gold-text font-cinzel mb-4 text-center">📜 Scegli la tua Via di Conquista: Modalità di Gioco</h3>
+            <p class="text-xs text-gray-300 text-center max-w-2xl mx-auto mb-6">
+                Il percorso è suddiviso in 5 capitoli narrativi. Alla fine di ogni capitolo affronterai una verifica mirata (un blocco di 4-5 quesiti su storia e lingua inglese) per testare le tue competenze. Scegli come affrontare l'avventura:
+            </p>
 
-            <div class="parchment p-6 rounded-lg border border-yellow-600/30 flex flex-col justify-between hover:border-yellow-500/60 transition-all">
-                <div>
-                    <span class="text-xs text-yellow-500 font-cinzel">MODALITÀ COMPETITIVA</span>
-                    <h3 class="text-xl font-bold gold-text font-cinzel my-2">Sfida 1 vs 1</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-4">Duello a turni sullo stesso schermo con verifiche a blocchi per stabilire il primato.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Spiegazione Co-Op -->
+                <div class="bg-slate-950/80 border border-yellow-600/40 p-5 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs text-yellow-400 font-cinzel font-bold">🛡️ MODALITÀ COOPERATIVA (Co-Op)</span>
+                        <h4 class="text-lg font-bold text-white font-cinzel mt-1 mb-2">Alleanza Legionaria</h4>
+                        <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                            Ideale per lo studio individuale o per lavorare in squadra in classe. Avrai a disposizione uno <strong>Scudo Legionario con 100 HP</strong>. Ogni risposta errata nei micro-test di fine capitolo danneggerà lo scudo (-7 HP). L'obiettivo è completare tutti i capitoli mantenendo lo scudo integro e dimostrando padronanza linguistica e storica.
+                        </p>
+                    </div>
+                    <button type="button" id="btn-start-coop" class="w-full py-3 rounded font-cinzel text-xs gold-button uppercase tracking-wider">Avvia Modalità Cooperativa</button>
                 </div>
-                <button type="button" id="btn-start-vs" class="w-full py-3.5 rounded font-cinzel text-sm gold-button uppercase tracking-wider">Avvia Episodio (1v1)</button>
+
+                <!-- Spiegazione 1v1 -->
+                <div class="bg-slate-950/80 border border-yellow-600/40 p-5 rounded-lg flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs text-yellow-400 font-cinzel font-bold">⚔️ MODALITÀ COMPETITIVA (1 vs 1)</span>
+                        <h4 class="text-lg font-bold text-white font-cinzel mt-1 mb-2">Duello sullo Stesso Schermo</h4>
+                        <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                            Perfetto per stimolare la partecipazione in classe con la LIM o tra banchi vicini. Due aspiranti legionari si sfidano a turni alternati sulle stesse verifiche di capitolo. Chi totalizza più risposte corrette e dimostra la migliore rapidità tattica conquista la gloria eterna nei registri di Roma.
+                        </p>
+                    </div>
+                    <button type="button" id="btn-start-vs" class="w-full py-3 rounded font-cinzel text-xs gold-button uppercase tracking-wider">Avvia Duello 1 vs 1</button>
+                </div>
             </div>
         </div>
     </main>
 
     <!-- SCHERMATA STORIA CON AUDIO, FALLBACK E MICRO-BLOCCHI DI QUIZ -->
     <main id="screen-story" class="hidden my-auto max-w-4xl mx-auto w-full py-4">
-        <!-- BARRA AUDIO CON FALLBACK E STATO LOCALE -->
         <div class="bg-gray-900 border border-yellow-600/40 p-3 rounded-lg mb-4 flex flex-col md:flex-row items-center justify-between gap-2">
             <div class="flex items-center space-x-3 w-full md:w-auto">
                 <button type="button" id="btn-audio-toggle" class="bg-yellow-600 text-black px-3 py-1.5 rounded font-bold text-xs hover:bg-yellow-500 font-cinzel whitespace-nowrap">▶️ Riproduci Audio</button>
                 <button type="button" id="btn-audio-replay" class="bg-gray-800 text-yellow-400 border border-yellow-600/40 px-3 py-1.5 rounded text-xs hover:bg-gray-700 font-cinzel">🔄 Riascolta</button>
             </div>
-            <!-- Fallback testuale evidente in caso di blocco audio mobile -->
             <div id="audio-playing-indicator" class="text-xs text-yellow-300/90 font-mono text-center md:text-right">
                 🔊 Audio pronto. Se il dispositivo blocca l'audio, leggi la narrazione sottostante.
             </div>
@@ -230,7 +234,7 @@
         <div class="parchment p-6 md:p-8 rounded-xl relative">
             <div class="flex justify-between items-center text-xs text-yellow-500 font-cinzel mb-4 pb-2 border-b border-yellow-900/30">
                 <span id="story-chapter-tag">CAPITOLO 1 DI 5</span>
-                <span id="narrator-tag">NARRATO DA MARCUS, TRIBUNO</span>
+                <span id="narrator-tag">LEGIONARIO/A: MARCO</span>
             </div>
 
             <h2 id="story-title" class="text-2xl md:text-3xl font-bold gold-text font-cinzel mb-4">Titolo</h2>
@@ -244,7 +248,7 @@
         </div>
     </main>
 
-    <!-- SCHERMATA MICRO-VERIFICA DI CAPITOLO (BLOCCO DI 4-5 QUESITI) -->
+    <!-- SCHERMATA MICRO-VERIFICA DI CAPITOLO -->
     <main id="screen-micro-quiz" class="hidden my-auto max-w-3xl mx-auto w-full py-4">
         <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-500/60">
             <div class="flex justify-between items-center mb-6 border-b border-yellow-900/30 pb-4">
@@ -309,7 +313,7 @@
             document.getElementById('select-tooltip-timer').value = tooltipTimerSetting;
 
             if(playerName !== "Novizio") {
-                document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario " + playerName + " sulla plancia di comando.";
+                document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario/a " + playerName + " sulla plancia di comando.";
             }
 
             document.getElementById('btn-save-name').onclick = function() {
@@ -318,8 +322,8 @@
                     playerName = nameVal;
                     localStorage.setItem('albion_player_name', playerName);
                     document.getElementById('header-player-name').innerText = playerName;
-                    document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario " + playerName + " sulla plancia di comando.";
-                    alert("Giuramento accettato! Benvenuto nella Legio X, " + playerName + ".");
+                    document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario/a " + playerName + " sulla plancia di comando.";
+                    alert("Giuramento accettato! Benvenuto/a nella Legio X, " + playerName + ".");
                 }
             };
 
@@ -373,7 +377,7 @@
                 "untouched": "incontaminato", "rome": "Roma", "land": "terra", "rich": "ricca", "iron": "ferro",
                 "tin": "stagno", "fierce": "fiere/feroci", "tribes": "tribù", "who": "che/chi", "believed": "credevano",
                 "unconquerable": "invincibili", "natural": "naturale", "harbor": "porto", "beneath": "sotto", "narrow": "stretto",
-                "surrounded": "circondato", "heights": "alture", "which": "cui/quale", "britons": "Britansi", "could": "potevano",
+                "surrounded": "circondato", "heights": "alture", "which": "cui/quale", "britons": "Britanni", "could": "potevano",
                 "rain": "far piovere", "javelins": "giavellotti", "down": "giù", "upon": "sopra", "ships": "navi",
                 "recognizing": "riconoscendo", "deadly": "mortale", "trap": "trappola", "ordered": "ordinò", "signal": "segnale",
                 "horns": "corni", "sound": "suonare", "turned": "virò", "north": "nord", "rowing": "vogando",
@@ -435,7 +439,7 @@
                 "four": "quattro", "full": "piena", "moon": "luna", "brought": "portò", "exceptionally": "eccezionalmente",
                 "tides": "maree", "violent": "violente", "unseasonal": "fuori stagione", "gales": "tempeste di vento", "channel": "Canale della Manica",
                 "unaccustomed": "disabituati", "drastic": "drastiche", "atlantic": "atlantico", "left": "lasciato", "transports": "trasporti",
-                "anchored": "anchorati", "roadstead": "rada aperta", "tempest": "tempesta", "smashed": "fracassò", "one": "uno",
+                "anchored": "ancorati", "roadstead": "rada aperta", "tempest": "tempesta", "smashed": "fracassò", "one": "uno",
                 "another": "altro", "breaking": "spezzando", "tearing": "strappando", "sails": "vele", "swamping": "sommergendo",
                 "raging": "furente", "foam": "schiuma", "isolated": "isolati", "lacked": "mancavamo di", "chase": "inseguire",
                 "elusive": "sfuggenti", "granaries": "granai", "held": "tenevano", "no": "nessuna", "provisions": "scorte",
@@ -450,7 +454,7 @@
             };
 
             function makeTextInteractive(text) {
-                if (difficulty === 'challenge') return text; // Livello sfida senza traduzioni
+                if (difficulty === 'challenge') return text;
                 
                 var tokens = text.split(/(\s+|[.,!?;:()"'’—]+)/);
                 return tokens.map(function(token) {
@@ -487,7 +491,6 @@
                     el.addEventListener('click', function(e) { triggerActivation(); });
                 });
 
-                // Se tooltip è sticky, chiudi cliccando altrove
                 if(tooltipTimerSetting === 'sticky') {
                     document.addEventListener('click', function(e) {
                         if(!e.target.closest('.word-interactive')) {
@@ -578,7 +581,7 @@
             function renderSlide() {
                 var data = slides[currentSlide];
                 document.getElementById('story-chapter-tag').innerText = "CAPITOLO " + (currentSlide + 1) + " DI " + slides.length;
-                document.getElementById('narrator-tag').innerText = "LEGIONARIO: " + playerName.toUpperCase();
+                document.getElementById('narrator-tag').innerText = "LEGIONARIO/A: " + playerName.toUpperCase();
                 document.getElementById('story-title').innerText = data.title;
                 document.getElementById('story-content').innerHTML = makeTextInteractive(data.content);
                 document.getElementById('grammar-pill').innerHTML = data.grammar;
@@ -634,7 +637,6 @@
                 startMicroQuiz();
             };
 
-            // GESTIONE MICRO-VERIFICA A FINE SLIDE
             function startMicroQuiz() {
                 document.getElementById('screen-story').classList.add('hidden');
                 document.getElementById('screen-micro-quiz').classList.remove('hidden');
@@ -698,7 +700,7 @@
                     feedback.classList.add('bg-green-900/60', 'text-green-200', 'border-green-500');
                     feedback.innerHTML = "<strong>✅ ESATTO!</strong> " + q.exp;
                     score++;
-                    if(difficulty === 'challenge') score += 1; // bonus punti sfida
+                    if(difficulty === 'challenge') score += 1;
                     if (gameMode === 'vs') { if (currentPlayer === 1) p1Score++; else p2Score++; }
                 } else {
                     feedback.classList.add('bg-red-900/60', 'text-red-200', 'border-red-500');
@@ -748,7 +750,7 @@
                     if (isVictory && hp > 0) {
                         title.innerText = "VICTORIA! ALBION È CONQUISTATA";
                         title.className = "text-3xl md:text-4xl font-extrabold text-green-400 font-cinzel mt-2";
-                        scoreText.innerText = "Legionario " + playerName + ", scudo integro! Punteggio finale: " + score;
+                        scoreText.innerText = "Legionario/a " + playerName + ", scudo integro! Punteggio finale: " + score;
                     } else {
                         title.innerText = "SCONFITTA! LO SCUDO SI È SPEZZATO";
                         title.className = "text-3xl md:text-4xl font-extrabold text-red-500 font-cinzel mt-2";
