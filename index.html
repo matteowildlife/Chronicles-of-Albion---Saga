@@ -94,10 +94,17 @@
     <!-- HEADER DI GIOCO -->
     <header class="flex justify-between items-center pb-4 border-b border-yellow-900/40 max-w-5xl mx-auto w-full">
         <div class="flex items-center space-x-3">
-            <div class="w-12 h-12 rounded-full bg-yellow-950/80 border-2 border-yellow-500/70 flex items-center justify-center font-cinzel font-bold text-yellow-400 shadow-lg relative group">
-                <span class="text-xl">🛡️</span>
-                <span class="absolute -bottom-1 -right-1 text-xs bg-yellow-600 text-black px-1 rounded font-extrabold border border-yellow-300">🦅</span>
+            
+            <!-- LOGO: SAGOMA DELLA BRITANNIA CON AQUILA SOVRAPPOSTA (SVG VETTORIALE) -->
+            <div class="w-12 h-12 rounded-full bg-yellow-950/90 border-2 border-yellow-500/70 flex items-center justify-center p-1.5 shadow-lg relative overflow-hidden group">
+                <!-- SVG Mappa/Sagoma Gran Bretagna sullo sfondo -->
+                <svg class="absolute inset-0 w-full h-full opacity-30 text-yellow-600 fill-current p-1" viewBox="0 0 100 100">
+                    <path d="M45,15 C50,10 55,12 60,18 C62,25 58,30 65,38 C72,42 68,52 62,58 C58,65 65,72 58,80 C50,85 40,82 35,75 C38,65 32,58 38,48 C42,42 38,32 45,25 Z" />
+                </svg>
+                <!-- Aquila Romana sovrapposta in evidenza -->
+                <span class="text-2xl relative z-10 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">🦅</span>
             </div>
+
             <div>
                 <h1 class="text-xl font-bold tracking-wider gold-text font-cinzel">CHRONICLES OF ALBION</h1>
                 <p class="text-xs text-gray-400">Stagione 1 • Episodio 1: The Eagle on the Misty Coast (55 B.C.)</p>
@@ -112,19 +119,19 @@
     <main id="screen-menu" class="my-auto max-w-5xl mx-auto w-full py-6">
         <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40 mb-8">
             <div class="flex flex-col md:flex-row items-center gap-6">
-                <!-- IMMAGINE RIPRISTINATA E COERENTE: BUSTO / RILIEVO ROMANO CLASSICO -->
+                <!-- IMMAGINE RIPRISTINATA: BUSTO ROMANO IN ARMADURA DA GUERRA -->
                 <div class="w-full md:w-1/3 flex flex-col items-center">
-                    <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=600&q=80" alt="Marcus Tribuno della Legio X" class="rounded-lg border-2 border-yellow-600/60 shadow-2xl object-cover h-64 w-full">
+                    <img src="https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&fit=crop&w=600&q=80" alt="Marcus Tribuno della Legio X" class="rounded-lg border-2 border-yellow-600/60 shadow-2xl object-cover h-64 w-full">
                     <span class="text-xs text-yellow-500 font-cinzel mt-2 tracking-widest uppercase font-bold text-center">Marcus • Tribuno Legio X Veneria</span>
                 </div>
                 <div class="w-full md:w-2/3 space-y-3">
                     <span class="text-xs uppercase tracking-widest text-yellow-500 font-cinzel bg-yellow-950/60 border border-yellow-800/60 px-3 py-1 rounded-full">La Prima Invasione Romana • 55 a.C.</span>
                     <h2 class="text-3xl md:text-4xl font-extrabold gold-text font-cinzel leading-tight">L'Ombra di Roma sull'Oceano</h2>
                     <p class="text-xs md:text-sm text-gray-300 leading-relaxed">
-                        Siamo nel <strong>55 a.C.</strong> La Repubblica Romana è guidata dal Primo Triumvirato tra Giulio Cesare, Pompeo Magno e Licinio Crasso. Dopo aver conquistato la Gallia, le legioni di Cesare giungono sulla costa del Canale della Manica. Tuttavia, le tribù celtiche continuano a ricevere aiuti e guerrieri da un'isola misteriosa avvolta nella nebbia: <strong>Albion</strong> (la Britannia).
+                        Siamo nel <strong>55 a.C.</strong> La Repubblica Romana è guidata dal Primo Triumvirato tra Giulio Cesare, Pompeo Magno e Licinio Crasso. Dopo aver sottomesso le tribù della Gallia fino alle coste del Canale della Manica, le legioni romane si preparano a compiere l'impossibile: attraversare l'Oceano per sbarcare sull'isola di <strong>Albion</strong> (la Britannia).
                     </p>
                     <p class="text-xs md:text-sm text-gray-300 leading-relaxed">
-                        Attraverso la voce di <strong>Marcus</strong>, tribuno militare della celebre Legio X, rivivrai lo sbarco delle gallee romane, le battaglie sulla ghiaia contro i carri da guerra celti e la scoperta di una terra selvaggia ai confini del mondo conosciuto.
+                        Attraverso la voce e il diario del tribuno <strong>Marcus</strong>, rivivrai l'avvistamento delle scogliere di gesso, il drammatico sbarco della Legio X nelle acque gelide di Deal e il primo scontro contro i carri da guerra celtici.
                     </p>
                     <div class="bg-yellow-950/40 border-l-2 border-yellow-500 p-3 rounded text-xs text-yellow-200 font-sans mt-2">
                         💡 <strong>Come Giocare:</strong> Ascolta la voce di Marcus e leggi il racconto. Passa il mouse (o tocca col dito) su <u>qualsiasi parola</u> per la traduzione in italiano (svanisce dopo 4 secondi sul touch).
