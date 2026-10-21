@@ -114,60 +114,14 @@
         <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40 mb-8">
             <div class="flex flex-col md:flex-row items-stretch gap-6">
                 
-                <!-- SCENA VETTORIALE STORICA GARANTITA: GALEA ROMANA ED AVVISTAMENTO SCOGLIERE -->
+                <!-- SCENA STORICA CINEMATOGRAFICA: GALEA ROMANA ED AVVISTAMENTO SCOGLIERE -->
                 <div class="w-full md:w-5/12 flex flex-col items-center">
-                    <div class="relative w-full h-full min-h-[260px] rounded-lg border-2 border-yellow-600/60 shadow-2xl bg-slate-950 overflow-hidden flex flex-col justify-between p-2">
-                        <!-- Grafica Vettoriale SVG: Scogliere bianche, mare e galea romana -->
-                        <svg class="w-full h-48 rounded" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#0f172a"/>
-                                    <stop offset="100%" stop-color="#334155"/>
-                                </linearGradient>
-                                <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#1e293b"/>
-                                    <stop offset="100%" stop-color="#020617"/>
-                                </linearGradient>
-                                <linearGradient id="chalkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#f8fafc"/>
-                                    <stop offset="100%" stop-color="#cbd5e1"/>
-                                </linearGradient>
-                            </defs>
-                            
-                            <!-- Cielo notturno e nebbia -->
-                            <rect width="400" height="220" fill="url(#skyGrad)" />
-                            <circle cx="320" cy="40" r="25" fill="#fef08a" opacity="0.3" />
+                    <div class="relative w-full h-full min-h-[280px] md:min-h-[340px] rounded-lg border-2 border-yellow-600/60 shadow-2xl bg-slate-950 overflow-hidden flex flex-col justify-between p-1">
+                        <img src="https://i.ibb.co/L6V6dGg/image-6.png" alt="Legionari romani a bordo della galea mentre avvistano le scogliere d'Albione" class="w-full h-48 md:h-64 object-cover rounded">
 
-                            <!-- Scogliere d'Albione (Gesso Bianco) -->
-                            <polygon points="180,140 220,50 290,45 340,65 400,140 400,160 180,160" fill="url(#chalkGrad)" />
-                            <polygon points="210,60 225,140 240,140 225,55" fill="#94a3b8" opacity="0.5" />
-                            <polygon points="280,50 295,140 310,140 295,55" fill="#94a3b8" opacity="0.5" />
-
-                            <!-- Guerrieri Celtici in cima alle scogliere -->
-                            <line x1="230" y1="48" x2="230" y2="38" stroke="#ef4444" stroke-width="2" />
-                            <line x1="250" y1="46" x2="250" y2="35" stroke="#ef4444" stroke-width="2" />
-                            <line x1="270" y1="47" x2="270" y2="37" stroke="#ef4444" stroke-width="2" />
-
-                            <!-- Mare Atlantico tempestoso -->
-                            <rect y="130" width="400" height="90" fill="url(#seaGrad)" />
-                            <path d="M0 145 Q 40 135 80 145 T 160 145 T 240 145 T 320 145 T 400 145" fill="none" stroke="#475569" stroke-width="2" />
-                            <path d="M0 165 Q 50 155 100 165 T 200 165 T 300 165 T 400 165" fill="none" stroke="#334155" stroke-width="2" />
-
-                            <!-- Prua della Galea Romana e Vessillo -->
-                            <path d="M 10 180 Q 60 170 110 140 L 90 195 Z" fill="#78350f" stroke="#d97706" stroke-width="1.5" />
-                            <!-- Rostro in bronzo -->
-                            <polygon points="110,140 125,145 105,155" fill="#f59e0b" />
-                            <!-- Scudo Legionario Rosso montato sulla nave -->
-                            <ellipse cx="60" cy="170" rx="12" ry="18" fill="#b91c1c" stroke="#f59e0b" stroke-width="1.5" />
-                            <line x1="60" y1="152" x2="60" y2="188" stroke="#f59e0b" stroke-width="1" />
-                            <!-- Asta e Aquila Romana -->
-                            <line x1="30" y1="175" x2="30" y2="110" stroke="#f59e0b" stroke-width="2.5" />
-                            <polygon points="25,110 35,110 30,100" fill="#fbbf24" />
-                        </svg>
-
-                        <div class="bg-black/80 border-t border-yellow-600/40 p-2 text-center">
-                            <span class="text-[10px] text-yellow-400 font-cinzel font-bold tracking-widest uppercase block">Oceanus Britannicus • 55 a.C.</span>
-                            <p class="text-[11px] text-gray-300 italic font-serif leading-tight">La galea ammiraglia della Legio X di fronte alle scogliere d'Albione.</p>
+                        <div class="bg-black/90 border-t border-yellow-600/40 p-3 text-center">
+                            <span class="text-[10px] text-yellow-400 font-cinzel font-bold tracking-widest uppercase block mb-1">Oceanus Britannicus • 55 a.C.</span>
+                            <p class="text-[11px] text-gray-300 italic font-serif leading-tight">Dalla prua della galea, i legionari della Legio X osservano le imponenti scogliere d'Albione.</p>
                         </div>
                     </div>
                 </div>
@@ -349,7 +303,7 @@
                 "helmets": "elmi", "unencumbered": "senza ingombro", "charged": "caricarono", "freezing": "gelida", "surf": "risacca",
                 "hurling": "scagliando", "riding": "cavalcando", "horses": "cavalli", "waves": "onde", "terrifying": "terrificante",
                 "confidence": "sicurezza", "men": "uomini", "hesitated": "esitavano", "terrified": "terrorizzati", "stepping": "mettere il piede",
-                "off": "giù da", "wooden": "legno", "planks": "assi", "churning": "agitato", "moment": "momento",
+                "off": "giù da", "wooden": "legno", "planks": "assi", "churning": "agitato", "moment": "moment",
                 "mortal": "mortale", "doubt": "dubbio", "aquilifer": "portatore dell'Aquila", "stepped": "fatti avanti", "forward": "avanti",
                 "holding": "tenendo", "silver": "argento", "eagle": "Aquila", "standard": "insegna/vessillo", "looked": "guardò",
                 "back": "indietro", "hesitant": "esitanti", "voice": "voce", "leap": "saltate", "unless": "a meno che",
@@ -433,7 +387,7 @@
                         if (timer) clearTimeout(timer);
                         timer = setTimeout(function() {
                             el.classList.remove('active-touch');
-                        }, 2000); // <-- IMPOSTATO A 2 SECONDI
+                        }, 2000); // <-- IMPOSTATO A 2 SECONDI COME RICHIESTO
                     }
                     el.addEventListener('touchstart', function(e) { triggerActivation(); }, {passive: true});
                     el.addEventListener('click', function(e) { triggerActivation(); });
@@ -482,9 +436,9 @@
                             <ul class="list-disc list-inside space-y-1 text-xs md:text-sm">
                                 <li><strong>Verbi Irregolari al Past Simple:</strong> <em>Run aground</em> → <strong>ran aground</strong> (incagliarsi) | <em>Spread</em> → <strong>spread</strong> (diffondersi) | <em>Throw</em> → <strong>threw</strong> (scagliare).</li>
                                 <li><strong>Present Participial Clauses (-ing):</strong> Sintetizzano due azioni contemporanee compiute dallo stesso soggetto senza appesantire con congiunzioni.<br>
-                                <span class="italic text-yellow-200/90">"<u>Recognizing the deadly trap</u>, Caesar ordered..." (= Dal momento che riconobbe la trappola, Cesare ordinò...).</span></li>
+                                <span class="italic text-yellow-200/95">"<u>Recognizing the deadly trap</u>, Caesar ordered..." (= Dal momento che riconobbe la trappola, Cesare ordinò...).</span></li>
                                 <li><strong>Past Participial Clauses (-ed / 3ª Colonna):</strong> Sintetizzano una causa passata o uno stato subito dal soggetto.<br>
-                                <span class="italic text-yellow-200/90">"<u>Inspired by his courage</u>, the legionaries threw themselves..." (= Poiché furono ispirati dal suo coraggio...).</span></li>
+                                <span class="italic text-yellow-200/95">"<u>Inspired by his courage</u>, the legionaries threw themselves..." (= Poiché furono ispirati dal suo coraggio...).</span></li>
                             </ul>
                             <div class="text-xs bg-yellow-950/30 p-2.5 rounded border-l-2 border-yellow-500">
                                 <strong>Inquadramento Tattico:</strong> L'<em>Aquilifer</em> era l'ufficiale addetto all'Aquila legionaria (vessillo in argento o bronzo con i fulmini di Giove). La perdita dell'Aquila comportava lo scioglimento immediato e disonorevole della legione.
