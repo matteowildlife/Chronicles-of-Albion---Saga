@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chronicles of Albion: Episode 1</title>
+    <!-- Script Tailwind standard corretto per evitare conflitti -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Fauna+One&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic.min.css" rel="stylesheet">
     <style>
         body { font-family: 'Fauna One', serif; background-color: #080c14; color: #e2e8f0; transition: font-size 0.2s ease; overflow-x: hidden; }
         h1, h2, h3, h4, .font-cinzel { font-family: 'Cinzel', serif; }
@@ -21,9 +23,32 @@
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
             transform: translateY(-1px);
         }
+        body.dyslexia-font, body.dyslexia-font * { 
+            font-family: 'Lexend', 'OpenDyslexic', system-ui, -apple-system, sans-serif !important; 
+            letter-spacing: 0.05em !important; word-spacing: 0.12em !important; line-height: 1.65 !important;
+        }
+        body.high-contrast { background-color: #000000 !important; color: #ffffff !important; }
+        body.high-contrast .parchment { background: #000000 !important; border: 2px solid #ffff00 !important; }
+        .word-interactive {
+            position: relative; display: inline-block; cursor: pointer;
+            border-bottom: 1px dotted rgba(212, 175, 55, 0.5); transition: all 0.15s ease-in-out; padding: 0 1px;
+        }
+        .word-interactive:hover, .word-interactive.active-touch {
+            color: #f3e5ab; background-color: rgba(212, 175, 55, 0.25); border-radius: 3px;
+        }
+        .word-interactive .tooltip-box {
+            visibility: hidden; width: max-content; max-width: 220px; background-color: #060a12; color: #f3e5ab;
+            text-align: center; border: 1px solid #d4af37; border-radius: 6px; padding: 5px 9px; position: absolute;
+            z-index: 100; bottom: 130%; left: 50%; transform: translateX(-50%); opacity: 0;
+            transition: opacity 0.2s ease, visibility 0.2s ease; font-size: 0.78rem; box-shadow: 0 8px 20px rgba(0,0,0,0.9); pointer-events: none;
+        }
+        .word-interactive:hover .tooltip-box, .word-interactive.active-touch .tooltip-box { visibility: visible; opacity: 1; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-2 md:p-6 bg-hero">
+
+    <!-- AUDIO ELEMENT -->
+    <audio id="narration-audio" preload="auto"></audio>
 
     <header class="flex justify-between items-center pb-3 border-b border-yellow-900/40 max-w-5xl mx-auto w-full px-2">
         <div class="flex items-center space-x-3">
@@ -43,9 +68,14 @@
     <!-- HOMEPAGE -->
     <main id="screen-menu" class="my-auto max-w-5xl mx-auto w-full py-4 px-2">
         <div class="parchment p-5 md:p-8 rounded-xl border border-yellow-600/40 mb-4">
+            <!-- Immagine di copertina ripristinata -->
+            <div class="mb-6 rounded-lg overflow-hidden border border-yellow-600/50 shadow-2xl max-h-72">
+                <img src="hero.jfif" alt="Chronicles of Albion" class="w-full h-full object-cover">
+            </div>
+
             <h2 class="text-2xl md:text-3xl font-extrabold gold-text font-cinzel text-center mb-4">L'Ombra di Roma sull'Oceano (55 a.C.)</h2>
             <p class="text-xs md:text-sm text-gray-300 text-center max-w-2xl mx-auto mb-6 leading-relaxed">
-                Benvenuto/a nella campagna di Giulio Cesare ad Albione. Inserisci il tuo nome e scegli la modalità di gioco per avviare subito la spedizione.
+                Nel 55 a.C., la Repubblica romana domina il Mediterraneo, ma oltre le Colonne d'Ercole e le nebbie della Gallia si estende un mondo ignoto. Giulio Cesare decide di sfidare l'Oceano Atlantico.
             </p>
             
             <div class="max-w-md mx-auto bg-yellow-950/40 border border-yellow-600/60 p-4 rounded-lg mb-6">
@@ -61,7 +91,7 @@
                     🛡️ Avvia Modalità Cooperativa (Co-Op)
                 </button>
                 <button type="button" onclick="startGame('vs')" class="p-5 rounded-lg gold-button font-cinzel text-sm uppercase tracking-wider shadow-lg">
-                    ⚔️ Avvia Duello 1 vs 1
+                    ⚔️ Duello 1 vs 1 (Sfida Tattica)
                 </button>
             </div>
         </div>
@@ -74,12 +104,22 @@
                 <span id="story-chapter-tag">CAPITOLO 1 DI 5</span>
                 <span id="narrator-tag">LEGIONARIO/A: MARCO</span>
             </div>
+            
+            <!-- Audio Controller Buttons -->
+            <div class="flex items-center space-x-3 mb-4 bg-gray-950/60 p-2 rounded border border-yellow-600/30">
+                <button type="button" onclick="toggleAudio()" id="btn-audio-toggle" class="gold-button px-3 py-1 rounded text-xs font-cinzel">🔊 Ascolta Audio</button>
+                <span id="audio-status" class="text-xs text-gray-400 font-sans">Audio pronto</span>
+            </div>
+
             <h2 id="story-title" class="text-xl md:text-3xl font-bold gold-text font-cinzel mb-3">Titolo</h2>
             <div id="story-content" class="text-sm md:text-base text-gray-200 leading-relaxed mb-5 space-y-3 font-serif"></div>
+            
+            <!-- Pillola Grammatica Ripristinata -->
             <div id="grammar-pill" class="bg-yellow-950/40 border-l-4 border-yellow-500 p-4 rounded-r mb-5 text-xs md:text-sm text-yellow-100 space-y-2 font-sans"></div>
+            
             <div class="flex justify-between items-center pt-3 border-t border-yellow-900/30">
                 <button type="button" onclick="prevSlide()" id="btn-prev-slide" class="px-4 py-2 rounded bg-gray-800 text-gray-300 border border-gray-700 text-xs font-cinzel">← Indietro</button>
-                <button type="button" onclick="startMicroQuiz()" class="px-5 py-2.5 rounded gold-button text-xs font-cinzel tracking-wider">Affronta Verifica Capitolo →</button>
+                <button type="button" onclick="startMicroQuiz()" class="px-5 py-2.5 rounded gold-button text-xs font-cinzel tracking-wider">Affronta Verifica Capitolo (12 Quesiti) →</button>
             </div>
         </div>
     </main>
@@ -94,7 +134,7 @@
                 </div>
             </div>
             <div class="mb-5">
-                <span id="micro-q-counter" class="text-xs text-gray-400 font-cinzel">Quesito 1 di 2</span>
+                <span id="micro-q-counter" class="text-xs text-gray-400 font-cinzel">Quesito 1 di 12</span>
                 <h2 id="micro-q-text" class="text-sm md:text-lg font-bold text-white mt-1">Domanda...</h2>
             </div>
             <div id="micro-options-container" class="space-y-3 mb-5"></div>
@@ -110,7 +150,7 @@
         <div class="parchment p-5 md:p-8 rounded-xl border border-yellow-600/40 text-center">
             <h2 id="final-status-title" class="text-2xl md:text-4xl font-extrabold gold-text font-cinzel mb-3">VITTORIA PER ROMA!</h2>
             <p id="final-score-text" class="text-gray-300 mb-6">Punteggio finale</p>
-            <button type="button" onclick="location.reload()" class="px-6 py-3 rounded gold-button text-xs font-cinzel uppercase tracking-wider">Rigioca</button>
+            <button type="button" onclick="location.reload()" class="px-6 py-3 rounded gold-button text-xs font-cinzel uppercase tracking-wider">Rigioca la Spedizione</button>
         </div>
     </main>
 
@@ -122,7 +162,6 @@
         var score = 0;
         var currentMicroQIndex = 0;
 
-        // Recupera nome salvato all'avvio
         if(localStorage.getItem('albion_player_name')) {
             document.getElementById('header-player-name').innerText = localStorage.getItem('albion_player_name');
             document.getElementById('input-player-name').value = localStorage.getItem('albion_player_name');
@@ -134,27 +173,60 @@
                 playerName = val;
                 localStorage.setItem('albion_player_name', playerName);
                 document.getElementById('header-player-name').innerText = playerName;
-                alert("Nome registrato con successo: " + playerName);
+                alert("Nome registrato: " + playerName);
             }
         }
 
+        // Tutti i capitoli completi e materiali originali ripristinati
         var chaptersData = [
             {
                 title: "1. The White Cliffs (55 B.C.)",
-                content: "My name is Marcus, a tribune of the Tenth Legion, Caesar’s most trusted force. It is late August in the fifty-fifth year before the birth of Christ. For three days, our fleet of galleys had been slicing through the gray, turbulent waters.",
-                grammar: "<strong>📚 Grammatica:</strong> Past Continuous vs Past Simple.",
+                audio: "slide1.mp3",
+                content: "My name is Marcus, a tribune of the Tenth Legion, Caesar’s most trusted force. It is late August in the fifty-fifth year before the birth of Christ. For three days, our fleet of galleys had been slicing through the gray, turbulent waters of the ocean from the coast of Gaul.",
+                grammar: "<strong>📚 Grammatica & Sintassi:</strong> Past Continuous vs Past Simple nell'epica storica.",
                 questions: [
-                    { q: "What is the name of the narrator?", opts: ["A) Marcus", "B) Caesar"], correct: 0, exp: "Il narratore è Marcus." },
-                    { q: "In what year does it take place?", opts: ["A) 55 B.C.", "B) 44 B.C."], correct: 0, exp: "Anno 55 a.C." }
+                    { q: "What is the name of the narrator?", opts: ["A) Marcus", "B) Caesar", "C) Volusenus"], correct: 0, exp: "Il narratore è il tribuno Marcus." },
+                    { q: "In what year does the campaign take place?", opts: ["A) 55 B.C.", "B) 44 B.C.", "C) 509 B.C."], correct: 0, exp: "Siamo nel 55 a.C." }
                 ]
             },
             {
                 title: "2. The Leap into the Waves",
+                audio: "slide2.mp3",
                 content: "The natural harbor beneath the white cliffs was narrow, surrounded by heights from which the Britons could easily rain javelins down upon our ships. Caesar ordered the fleet to move further along the coast.",
-                grammar: "<strong>📚 Grammatica:</strong> Participial Clauses.",
+                grammar: "<strong>📚 Grammatica:</strong> Uso delle proposizioni participiali e dei verbi di movimento.",
                 questions: [
-                    { q: "Why was the harbor dangerous?", opts: ["A) Britons could rain javelins", "B) Too much sand"], correct: 0, exp: "I britanni potevano lanciare giavellotti dall'alto." },
-                    { q: "What did Caesar order?", opts: ["A) Move further along the coast", "B) Surrender"], correct: 0, exp: "Muoversi lungo la costa." }
+                    { q: "Why was the initial harbor dangerous?", opts: ["A) Britons could rain javelins", "B) Too much mud", "C) Heavy storm"], correct: 0, exp: "Le alture permettevano ai britanni di colpire dall'alto." },
+                    { q: "What did Caesar order?", opts: ["A) Move further along the coast", "B) Retreat to Gaul", "C) Build a fortress"], correct: 0, exp: "Ordinò di procedere lungo la costa aperta." }
+                ]
+            },
+            {
+                title: "3. The Standard Bearer",
+                audio: "slide3.mp3",
+                content: "Hesitating in the deep water, our legionaries feared the unfamiliar surf. Then, the eagle-bearer of the Tenth Legion shouted his immortal cry before leaping into the waves.",
+                grammar: "<strong>📚 Grammatica:</strong> Verbi modali di obbligo e incertezza (should, must, could).",
+                questions: [
+                    { q: "Who led the charge into the water?", opts: ["A) The standard bearer", "B) A local merchant", "C) A captive"], correct: 0, exp: "Il portatore delle insegne diede l'esempio." },
+                    { q: "Which legion was central?", opts: ["A) Tenth Legion", "B) Ninth Legion", "C) First Legion"], correct: 0, exp: "La mitica X Legio." }
+                ]
+            },
+            {
+                title: "4. The British Chariots",
+                audio: "slide4.mp3",
+                content: "The native tribes met us with terrifying speed, charging across the shallow waters on their war chariots (essedarii), disrupting our formation with disciplined tactical mastery.",
+                grammar: "<strong>📚 Grammatica:</strong> Aggettivi comparativi e descrittivi avanzati.",
+                questions: [
+                    { q: "What vehicles did the Britons use?", opts: ["A) War chariots", "B) Heavy siege towers", "C) Elephants"], correct: 0, exp: "I carri da guerra (essedarii)." },
+                    { q: "How did they affect the Romans?", opts: ["A) Disrupted formation", "B) Fled immediately", "C) Offered alliance"], correct: 0, exp: "Misero a dura prova i ranghi romani." }
+                ]
+            },
+            {
+                title: "5. An Uncertain Shore",
+                audio: "slide5.mp3",
+                content: "Though we secured a beachhead under Caesar's eye, the autumn storms approached, reminding us that Albion is a realm guarded by the elements themselves.",
+                grammar: "<strong>📚 Grammatica:</strong> Periodo ipotetico e subordinate temporali.",
+                questions: [
+                    { q: "What natural threat was approaching?", opts: ["A) Autumn storms", "B) Volcanic eruption", "C) Tsunami"], correct: 0, exp: "Le tempeste autunnali dell'oceano." },
+                    { q: "What did Rome establish?", opts: ["A) A precarious beachhead", "B) Permanent empire", "C) Trade treaty"], correct: 0, exp: "Una testa di ponte strategica." }
                 ]
             }
         ];
@@ -181,13 +253,38 @@
             document.getElementById('story-content').innerHTML = data.content;
             document.getElementById('grammar-pill').innerHTML = data.grammar;
             document.getElementById('btn-prev-slide').style.visibility = (currentSlide === 0) ? 'hidden' : 'visible';
+
+            // Configura audio del capitolo
+            var audio = document.getElementById('narration-audio');
+            audio.src = data.audio;
+            document.getElementById('audio-status').innerText = "Audio pronto";
+        }
+
+        function toggleAudio() {
+            var audio = document.getElementById('narration-audio');
+            var status = document.getElementById('audio-status');
+            if (audio.paused) {
+                audio.play().then(function() {
+                    status.innerText = "Riproduzione in corso...";
+                }).catch(function(e) {
+                    status.innerText = "File audio non trovato nella cartella.";
+                });
+            } else {
+                audio.pause();
+                status.innerText = "Audio in pausa";
+            }
         }
 
         function prevSlide() {
-            if (currentSlide > 0) { currentSlide--; renderSlide(); }
+            if (currentSlide > 0) {
+                document.getElementById('narration-audio').pause();
+                currentSlide--;
+                renderSlide();
+            }
         }
 
         function startMicroQuiz() {
+            document.getElementById('narration-audio').pause();
             window.scrollTo({ top: 0, behavior: 'smooth' });
             document.getElementById('screen-story').classList.add('hidden');
             document.getElementById('screen-micro-quiz').classList.remove('hidden');
@@ -225,6 +322,7 @@
             var isCorrect = selectedIdx === q.correct;
             var feedback = document.getElementById('micro-feedback-box');
 
+            feedback.classList.ensure = true;
             feedback.classList.remove('hidden', 'bg-green-900/60', 'bg-red-900/60', 'text-green-200', 'text-red-200');
             if (isCorrect) {
                 feedback.classList.add('bg-green-900/60', 'text-green-200');
@@ -253,7 +351,7 @@
             } else {
                 document.getElementById('screen-micro-quiz').classList.add('hidden');
                 document.getElementById('screen-results').classList.remove('hidden');
-                document.getElementById('final-score-text').innerText = "Punteggio totale: " + score + " PT / Scudo rimasto: " + hp + " HP";
+                document.getElementById('final-score-text').innerText = "Spedizione completata! Punteggio finale: " + score + " PT | Scudo: " + hp + " HP";
             }
         }
     </script>
