@@ -11,10 +11,7 @@
         h1, h2, h3, h4, .font-cinzel { font-family: 'Cinzel', serif; }
         
         .bg-hero {
-            background: linear-gradient(to bottom, rgba(8, 12, 20, 0.8), rgba(8, 12, 20, 0.95)),
-                        url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(to bottom, rgba(8, 12, 20, 0.8), rgba(8, 12, 20, 0.95));
         }
 
         .parchment { 
@@ -94,7 +91,6 @@
     <!-- HEADER DI GIOCO -->
     <header class="flex justify-between items-center pb-4 border-b border-yellow-900/40 max-w-5xl mx-auto w-full">
         <div class="flex items-center space-x-3">
-            
             <!-- LOGO: SAGOMA DELLA BRITANNIA CON AQUILA SOVRAPPOSTA (SVG VETTORIALE) -->
             <div class="w-12 h-12 rounded-full bg-yellow-950/90 border-2 border-yellow-500/70 flex items-center justify-center p-1.5 shadow-lg relative overflow-hidden group">
                 <svg class="absolute inset-0 w-full h-full opacity-30 text-yellow-600 fill-current p-1" viewBox="0 0 100 100">
@@ -118,13 +114,60 @@
         <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40 mb-8">
             <div class="flex flex-col md:flex-row items-stretch gap-6">
                 
-                <!-- INQUADRATURA CINEMATOGRAFICA D'EPOCA: LEGIONARI ROMANI SULLA NAVE CHE GUARDANO LE SCOGLIERE -->
+                <!-- SCENA VETTORIALE STORICA GARANTITA: GALEA ROMANA ED AVVISTAMENTO SCOGLIERE -->
                 <div class="w-full md:w-5/12 flex flex-col items-center">
-                    <div class="relative w-full h-full min-h-[260px] rounded-lg border-2 border-yellow-600/60 shadow-2xl overflow-hidden group">
-                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80" alt="I legionari romani osservano la costa d'Albione dalla prua della nave" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-3">
-                            <span class="text-[10px] text-yellow-400 font-cinzel font-bold tracking-widest uppercase">Oceanus Britannicus • 55 a.C.</span>
-                            <p class="text-[11px] text-gray-200 italic font-serif leading-tight">La Legio X in rotta verso le bianche scogliere d'Albione.</p>
+                    <div class="relative w-full h-full min-h-[260px] rounded-lg border-2 border-yellow-600/60 shadow-2xl bg-slate-950 overflow-hidden flex flex-col justify-between p-2">
+                        <!-- Grafica Vettoriale SVG: Scogliere bianche, mare e galea romana -->
+                        <svg class="w-full h-48 rounded" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#0f172a"/>
+                                    <stop offset="100%" stop-color="#334155"/>
+                                </linearGradient>
+                                <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#1e293b"/>
+                                    <stop offset="100%" stop-color="#020617"/>
+                                </linearGradient>
+                                <linearGradient id="chalkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#f8fafc"/>
+                                    <stop offset="100%" stop-color="#cbd5e1"/>
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- Cielo notturno e nebbia -->
+                            <rect width="400" height="220" fill="url(#skyGrad)" />
+                            <circle cx="320" cy="40" r="25" fill="#fef08a" opacity="0.3" />
+
+                            <!-- Scogliere d'Albione (Gesso Bianco) -->
+                            <polygon points="180,140 220,50 290,45 340,65 400,140 400,160 180,160" fill="url(#chalkGrad)" />
+                            <polygon points="210,60 225,140 240,140 225,55" fill="#94a3b8" opacity="0.5" />
+                            <polygon points="280,50 295,140 310,140 295,55" fill="#94a3b8" opacity="0.5" />
+
+                            <!-- Guerrieri Celtici in cima alle scogliere -->
+                            <line x1="230" y1="48" x2="230" y2="38" stroke="#ef4444" stroke-width="2" />
+                            <line x1="250" y1="46" x2="250" y2="35" stroke="#ef4444" stroke-width="2" />
+                            <line x1="270" y1="47" x2="270" y2="37" stroke="#ef4444" stroke-width="2" />
+
+                            <!-- Mare Atlantico tempestoso -->
+                            <rect y="130" width="400" height="90" fill="url(#seaGrad)" />
+                            <path d="M0 145 Q 40 135 80 145 T 160 145 T 240 145 T 320 145 T 400 145" fill="none" stroke="#475569" stroke-width="2" />
+                            <path d="M0 165 Q 50 155 100 165 T 200 165 T 300 165 T 400 165" fill="none" stroke="#334155" stroke-width="2" />
+
+                            <!-- Prua della Galea Romana e Vessillo -->
+                            <path d="M 10 180 Q 60 170 110 140 L 90 195 Z" fill="#78350f" stroke="#d97706" stroke-width="1.5" />
+                            <!-- Rostro in bronzo -->
+                            <polygon points="110,140 125,145 105,155" fill="#f59e0b" />
+                            <!-- Scudo Legionario Rosso montato sulla nave -->
+                            <ellipse cx="60" cy="170" rx="12" ry="18" fill="#b91c1c" stroke="#f59e0b" stroke-width="1.5" />
+                            <line x1="60" y1="152" x2="60" y2="188" stroke="#f59e0b" stroke-width="1" />
+                            <!-- Asta e Aquila Romana -->
+                            <line x1="30" y1="175" x2="30" y2="110" stroke="#f59e0b" stroke-width="2.5" />
+                            <polygon points="25,110 35,110 30,100" fill="#fbbf24" />
+                        </svg>
+
+                        <div class="bg-black/80 border-t border-yellow-600/40 p-2 text-center">
+                            <span class="text-[10px] text-yellow-400 font-cinzel font-bold tracking-widest uppercase block">Oceanus Britannicus • 55 a.C.</span>
+                            <p class="text-[11px] text-gray-300 italic font-serif leading-tight">La galea ammiraglia della Legio X di fronte alle scogliere d'Albione.</p>
                         </div>
                     </div>
                 </div>
@@ -143,7 +186,7 @@
                     </div>
 
                     <div class="bg-yellow-950/40 border-l-2 border-yellow-500 p-3 rounded text-xs text-yellow-200 font-sans">
-                        💡 <strong>Come Giocare:</strong> Ascolta la voce di Marcus e leggi il racconto. Passa il mouse (o tocca col dito) su <u>qualsiasi parola</u> per la traduzione in italiano (svanisce dopo 4 secondi sul touch).
+                        💡 <strong>Come Giocare:</strong> Ascolta la voce di Marcus e leggi il racconto. Passa il mouse (o tocca col dito) su <u>qualsiasi parola</u> per la traduzione in italiano (svanisce dopo 2 secondi sul touch).
                     </div>
                 </div>
             </div>
@@ -390,7 +433,7 @@
                         if (timer) clearTimeout(timer);
                         timer = setTimeout(function() {
                             el.classList.remove('active-touch');
-                        }, 4000);
+                        }, 2000); // <-- IMPOSTATO A 2 SECONDI
                     }
                     el.addEventListener('touchstart', function(e) { triggerActivation(); }, {passive: true});
                     el.addEventListener('click', function(e) { triggerActivation(); });
@@ -407,7 +450,7 @@
                             <h4 class="font-bold gold-text font-cinzel text-sm">Past Narrative Tenses: Continuous vs Simple</h4>
                         </div>
                         <div class="space-y-3 leading-relaxed text-gray-200">
-                            <p>Nei racconti storici in inglese, la narrazione necessita di distinguere tra la <strong>scena di sfondo</strong> e l'<strong>azione principale</strong>:</p>
+                            <p>Nei racconti storici in inglese, la narrazione necessita di distinguere la <strong>scena di sfondo</strong> dall'<strong>azione principale</strong>:</p>
                             <div class="grid md:grid-cols-2 gap-3 bg-gray-900/80 p-3 rounded border border-yellow-900/30">
                                 <div>
                                     <span class="text-yellow-400 font-bold block mb-1">1. Past Continuous (was/were + -ing)</span>
