@@ -2,12 +2,12 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chronicles of Albion: Episode 1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Fauna+One&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Fauna One', serif; background-color: #080c14; color: #e2e8f0; transition: font-size 0.2s ease; }
+        body { font-family: 'Fauna One', serif; background-color: #080c14; color: #e2e8f0; transition: font-size 0.2s ease; overflow-x: hidden; }
         h1, h2, h3, h4, .font-cinzel { font-family: 'Cinzel', serif; }
         
         .bg-hero {
@@ -32,8 +32,8 @@
             transform: translateY(-1px);
         }
 
-        /* ACCESSIBILITÀ E MODALITÀ DISLESSIA */
-        body.dyslexia-font { font-family: 'Comic Sans MS', 'Arial', sans-serif !important; letter-spacing: 0.05em; word-spacing: 0.1em; }
+        /* ACCESSIBILITÀ E MODALITÀ DISLESSIA FORZATA SU MOBILE E PC */
+        body.dyslexia-font, body.dyslexia-font * { font-family: 'Comic Sans MS', 'Arial', sans-serif !important; letter-spacing: 0.05em !important; word-spacing: 0.1em !important; }
         body.high-contrast { background-color: #000000 !important; color: #ffffff !important; }
         body.high-contrast .parchment { background: #0a0a0a !important; border: 2px solid #ffff00 !important; }
 
@@ -91,16 +91,16 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-3 md:p-6 bg-hero">
+<body class="min-h-screen flex flex-col justify-between p-2 md:p-6 bg-hero">
 
     <!-- HEADER DI GIOCO -->
-    <header class="flex justify-between items-center pb-4 border-b border-yellow-900/40 max-w-5xl mx-auto w-full">
+    <header class="flex justify-between items-center pb-3 border-b border-yellow-900/40 max-w-5xl mx-auto w-full px-2">
         <div class="flex items-center space-x-3">
-            <div class="w-12 h-12 rounded-full bg-yellow-950/90 border-2 border-yellow-500/70 flex items-center justify-center p-1.5 shadow-lg relative overflow-hidden">
-                <span class="text-2xl relative z-10">🦅</span>
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-yellow-950/90 border-2 border-yellow-500/70 flex items-center justify-center p-1.5 shadow-lg relative overflow-hidden">
+                <span class="text-xl md:text-2xl relative z-10">🦅</span>
             </div>
             <div>
-                <h1 class="text-xl font-bold tracking-wider gold-text font-cinzel">CHRONICLES OF ALBION</h1>
+                <h1 class="text-lg md:text-xl font-bold tracking-wider gold-text font-cinzel">CHRONICLES OF ALBION</h1>
                 <p id="player-welcome-sub" class="text-xs text-gray-400">Legionario/a: <span id="header-player-name" class="text-yellow-400">Novizio</span></p>
             </div>
         </div>
@@ -110,12 +110,13 @@
     </header>
 
     <!-- HOMEPAGE & ARRUOLAMENTO IMMERSIVO -->
-    <main id="screen-menu" class="my-auto max-w-5xl mx-auto w-full py-6">
+    <main id="screen-menu" class="my-auto max-w-5xl mx-auto w-full py-4 px-2">
         
-        <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40 mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+        <div class="parchment p-5 md:p-8 rounded-xl border border-yellow-600/40 mb-4 md:mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                 
-                <div class="md:col-span-5 flex flex-col">
+                <!-- Immagine ottimizzata bilanciata su PC e Mobile -->
+                <div class="md:col-span-6 flex flex-col justify-center">
                     <div class="rounded-lg border-2 border-yellow-600/60 shadow-2xl bg-slate-950 overflow-hidden">
                         <img src="hero.jfif" alt="Legionari romani" class="w-full h-auto object-cover block">
                         <div class="bg-black/90 border-t border-yellow-600/40 p-3 text-center">
@@ -125,30 +126,31 @@
                     </div>
                 </div>
 
-                <div class="md:col-span-7 flex flex-col space-y-4">
+                <!-- Testo descrittivo storico rinnovato -->
+                <div class="md:col-span-6 flex flex-col space-y-4">
                     <div>
                         <span class="text-xs uppercase tracking-widest text-yellow-500 font-cinzel bg-yellow-950/60 border border-yellow-800/60 px-3 py-1 rounded-full">La Prima Invasione • 55 a.C.</span>
-                        <h2 class="text-3xl md:text-4xl font-extrabold gold-text font-cinzel leading-tight mt-3">L'Ombra di Roma sull'Oceano</h2>
+                        <h2 class="text-2xl md:text-3xl font-extrabold gold-text font-cinzel leading-tight mt-3">L'Ombra di Roma sull'Oceano</h2>
                         <p class="text-xs md:text-sm text-gray-300 leading-relaxed mt-3">
-                            Nel <strong>55 a.C.</strong> la flotta di Giulio Cesare solca le acque nebbiose e turbolente dell'Oceano Atlantico per puntare alle maestose e bianche scogliere di <strong>Albion</strong>. Questa non è una semplice lezione di storia o un freddo esercizio di grammatica inglese: è un viaggio immersivo in prima persona nei panni dei legionari della Decima Legione. Vivrai la tensione dello sbarco sulle spiagge di Deal, l'impatto con i guerrieri celtici dipinti di guado blu e la furia delle tempeste autunnali.
+                            Nel <strong>55 a.C.</strong> la Repubblica romana domina il Mediterraneo, ma oltre le Colonne d'Ercole e le nebbie della Gallia si estende un mondo ignoto e misterioso. Spinto dalla sete di gloria, dalla necessità di bloccare i rifornimenti che i celti britannici offrono ai ribelli gallici e dal fascino di terre leggendarie ricche di stagno e metalli preziosi, <strong>Giulio Cesare</strong> decide di sfidare l'Oceano Atlantico. Un viaggio straordinario ai confini del mondo conosciuto, dove la disciplina delle legioni incontra la fierezza dei popoli indigeni di Albion.
                         </p>
                     </div>
 
                     <div class="bg-gradient-to-r from-yellow-950/50 to-slate-900 border border-yellow-600/60 p-4 rounded-lg shadow-inner">
                         <span class="text-xs uppercase tracking-widest text-yellow-400 font-cinzel font-bold block mb-1">⚔️ Appello nella Tenda del Tribuno</span>
                         <p class="text-xs text-gray-200 mb-3 leading-relaxed">
-                            <em>"Fratello d'armi, la nebbia è fitta e l'isola di Albion ci attende oltre la prua. Prima che i corni da guerra di Cesare diano il segnale dello sbarco, dimmi: come vuoi essere ricordato nei registri della nostra centuria?"</em>
+                            <em>"Fratello d'armi, la nebbia è fitta e l'isola di Albion ci attende oltre la prua. Come vuoi essere ricordato nei registri della nostra centuria?"</em>
                         </p>
                         <div class="flex items-center space-x-2">
                             <input type="text" id="input-player-name" placeholder="Il tuo nome o nome da legionario..." class="bg-gray-950 border border-yellow-600/60 rounded px-3 py-2 text-sm text-yellow-200 focus:outline-none focus:border-yellow-400 w-full" maxlength="25">
-                            <button type="button" id="btn-save-name" class="gold-button px-4 py-2 rounded text-xs uppercase tracking-wider whitespace-nowrap">Prendi il tuo Scudo</button>
+                            <button type="button" id="btn-save-name" class="gold-button px-4 py-2 rounded text-xs uppercase tracking-wider whitespace-nowrap">Prendi lo Scudo</button>
                         </div>
                     </div>
 
                     <div class="bg-gray-950/80 border border-yellow-900/50 p-3.5 rounded-lg space-y-3 text-xs">
                         <div class="font-cinzel text-yellow-400 font-bold border-b border-yellow-900/40 pb-1 flex justify-between items-center">
                             <span>⚙️ CONFIGURAZIONE TATTICA E ACCESSIBILITÀ</span>
-                            <span class="text-[10px] text-gray-400 font-sans">Personalizza la tua esperienza</span>
+                            <span class="text-[10px] text-gray-400 font-sans">Personalizza esperienza</span>
                         </div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -184,30 +186,30 @@
             </div>
         </div>
 
-        <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40 mb-6">
-            <h3 class="text-xl font-bold gold-text font-cinzel mb-4 text-center">📜 Scegli la tua Via di Conquista: Modalità di Gioco</h3>
-            <p class="text-xs text-gray-300 text-center max-w-2xl mx-auto mb-6">
-                Il percorso è suddiviso in 5 capitoli narrativi. Alla fine di ogni capitolo affronterai una verifica mirata (un blocco di 4-5 quesiti su storia e lingua inglese) per testare le tue competenze. Scegli come affrontare l'avventura:
+        <div class="parchment p-5 md:p-8 rounded-xl border border-yellow-600/40 mb-4">
+            <h3 class="text-lg md:text-xl font-bold gold-text font-cinzel mb-3 text-center">📜 Scegli la tua Via di Conquista: Modalità di Gioco</h3>
+            <p class="text-xs text-gray-300 text-center max-w-2xl mx-auto mb-5">
+                Il percorso è suddiviso in 5 capitoli narrativi. Alla fine di ogni capitolo affronterai una verifica mirata (4-5 quesiti su storia e lingua inglese).
             </p>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-slate-950/80 border border-yellow-600/40 p-5 rounded-lg flex flex-col justify-between">
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-slate-950/80 border border-yellow-600/40 p-4 md:p-5 rounded-lg flex flex-col justify-between">
                     <div>
                         <span class="text-xs text-yellow-400 font-cinzel font-bold">🛡️ MODALITÀ COOPERATIVA (Co-Op)</span>
-                        <h4 class="text-lg font-bold text-white font-cinzel mt-1 mb-2">Alleanza Legionaria</h4>
+                        <h4 class="text-base md:text-lg font-bold text-white font-cinzel mt-1 mb-2">Alleanza Legionaria</h4>
                         <p class="text-xs text-gray-300 leading-relaxed mb-4">
-                            Ideale per lo studio individuale o per lavorare in squadra in classe. Avrai a disposizione uno <strong>Scudo Legionario con 100 HP</strong>. Ogni risposta errata nei micro-test di fine capitolo danneggerà lo scudo (-7 HP). L'obiettivo è completare tutti i capitoli mantenendo lo scudo integro e dimostrando padronanza linguistica e storica.
+                            Scudo Legionario con 100 HP. Ogni risposta errata nei micro-test danneggia lo scudo (-7 HP). L'obiettivo è completare tutti i capitoli mantenendo lo scudo integro.
                         </p>
                     </div>
                     <button type="button" id="btn-start-coop" class="w-full py-3 rounded font-cinzel text-xs gold-button uppercase tracking-wider">Avvia Modalità Cooperativa</button>
                 </div>
 
-                <div class="bg-slate-950/80 border border-yellow-600/40 p-5 rounded-lg flex flex-col justify-between">
+                <div class="bg-slate-950/80 border border-yellow-600/40 p-4 md:p-5 rounded-lg flex flex-col justify-between">
                     <div>
                         <span class="text-xs text-yellow-400 font-cinzel font-bold">⚔️ MODALITÀ COMPETITIVA (1 vs 1)</span>
-                        <h4 class="text-lg font-bold text-white font-cinzel mt-1 mb-2">Duello sullo Stesso Schermo</h4>
+                        <h4 class="text-base md:text-lg font-bold text-white font-cinzel mt-1 mb-2">Duello sullo Stesso Schermo</h4>
                         <p class="text-xs text-gray-300 leading-relaxed mb-4">
-                            Perfetto per stimolare la partecipazione in classe con la LIM o tra banchi vicini. Due aspiranti legionari si sfidano a turni alternati sulle stesse verifiche di capitolo. Chi totalizza più risposte corrette e dimostra la migliore rapidità tattica conquista la gloria eterna nei registri di Roma.
+                            Perfetto per la LIM o tra banchi vicini. Due aspiranti legionari si sfidano a turni alternati sulle stesse verifiche di capitolo.
                         </p>
                     </div>
                     <button type="button" id="btn-start-vs" class="w-full py-3 rounded font-cinzel text-xs gold-button uppercase tracking-wider">Avvia Duello 1 vs 1</button>
@@ -217,80 +219,80 @@
     </main>
 
     <!-- SCHERMATA STORIA CON AUDIO, FALLBACK E MICRO-BLOCCHI DI QUIZ -->
-    <main id="screen-story" class="hidden my-auto max-w-4xl mx-auto w-full py-4">
-        <div class="bg-gray-900 border border-yellow-600/40 p-3 rounded-lg mb-4 flex flex-col md:flex-row items-center justify-between gap-2">
+    <main id="screen-story" class="hidden my-auto max-w-4xl mx-auto w-full py-2 px-2">
+        <div class="bg-gray-900 border border-yellow-600/40 p-3 rounded-lg mb-3 flex flex-col md:flex-row items-center justify-between gap-2">
             <div class="flex items-center space-x-3 w-full md:w-auto">
                 <button type="button" id="btn-audio-toggle" class="bg-yellow-600 text-black px-3 py-1.5 rounded font-bold text-xs hover:bg-yellow-500 font-cinzel whitespace-nowrap">▶️ Riproduci Audio</button>
                 <button type="button" id="btn-audio-replay" class="bg-gray-800 text-yellow-400 border border-yellow-600/40 px-3 py-1.5 rounded text-xs hover:bg-gray-700 font-cinzel">🔄 Riascolta</button>
             </div>
             <div id="audio-playing-indicator" class="text-xs text-yellow-300/90 font-mono text-center md:text-right">
-                🔊 Audio pronto. Se il dispositivo blocca l'audio, leggi la narrazione sottostante.
+                🔊 Audio pronto.
             </div>
         </div>
 
-        <div class="parchment p-6 md:p-8 rounded-xl relative">
-            <div class="flex justify-between items-center text-xs text-yellow-500 font-cinzel mb-4 pb-2 border-b border-yellow-900/30">
+        <div class="parchment p-5 md:p-8 rounded-xl relative">
+            <div class="flex justify-between items-center text-xs text-yellow-500 font-cinzel mb-3 pb-2 border-b border-yellow-900/30">
                 <span id="story-chapter-tag">CAPITOLO 1 DI 5</span>
                 <span id="narrator-tag">LEGIONARIO/A: MARCO</span>
             </div>
 
-            <h2 id="story-title" class="text-2xl md:text-3xl font-bold gold-text font-cinzel mb-4">Titolo</h2>
-            <div id="story-content" class="text-sm md:text-base text-gray-200 leading-relaxed mb-6 space-y-4 font-serif"></div>
-            <div id="grammar-pill" class="bg-yellow-950/40 border-l-4 border-yellow-500 p-5 rounded-r mb-6 text-xs md:text-sm text-yellow-100 space-y-3 font-sans shadow-inner"></div>
+            <h2 id="story-title" class="text-xl md:text-3xl font-bold gold-text font-cinzel mb-3">Titolo</h2>
+            <div id="story-content" class="text-sm md:text-base text-gray-200 leading-relaxed mb-5 space-y-3 font-serif"></div>
+            <div id="grammar-pill" class="bg-yellow-950/40 border-l-4 border-yellow-500 p-4 rounded-r mb-5 text-xs md:text-sm text-yellow-100 space-y-2 font-sans shadow-inner"></div>
 
-            <div class="flex justify-between items-center pt-4 border-t border-yellow-900/30">
+            <div class="flex justify-between items-center pt-3 border-t border-yellow-900/30">
                 <button type="button" id="btn-prev-slide" class="px-4 py-2 rounded bg-gray-800 text-gray-300 border border-gray-700 text-xs font-cinzel hover:bg-gray-700">← Indietro</button>
-                <button type="button" id="btn-next-slide" class="px-6 py-2.5 rounded gold-button text-xs font-cinzel tracking-wider">Affronta Verifica Capitolo →</button>
+                <button type="button" id="btn-next-slide" class="px-5 py-2.5 rounded gold-button text-xs font-cinzel tracking-wider">Affronta Verifica Capitolo →</button>
             </div>
         </div>
     </main>
 
     <!-- SCHERMATA MICRO-VERIFICA DI CAPITOLO -->
-    <main id="screen-micro-quiz" class="hidden my-auto max-w-3xl mx-auto w-full py-4">
-        <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-500/60">
-            <div class="flex justify-between items-center mb-6 border-b border-yellow-900/30 pb-4">
+    <main id="screen-micro-quiz" class="hidden my-auto max-w-3xl mx-auto w-full py-2 px-2">
+        <div class="parchment p-5 md:p-8 rounded-xl border border-yellow-500/60">
+            <div class="flex justify-between items-center mb-5 border-b border-yellow-900/30 pb-3">
                 <div>
                     <span class="text-xs text-yellow-500 font-cinzel uppercase tracking-wider">VERIFICA DI CAPITOLO</span>
-                    <h3 id="micro-quiz-title" class="text-sm font-bold text-yellow-300 font-cinzel mt-1">Rapporto tattico</h3>
+                    <h3 id="micro-quiz-title" class="text-xs md:text-sm font-bold text-yellow-300 font-cinzel mt-1">Rapporto tattico</h3>
                 </div>
                 <div id="micro-hp-container" class="text-right">
                     <span class="text-xs text-red-400 font-cinzel font-bold">SCUDO LEGIONARIO</span>
-                    <div class="w-28 bg-gray-800 h-2.5 rounded-full border border-red-900/50 overflow-hidden mt-1">
+                    <div class="w-24 md:w-28 bg-gray-800 h-2.5 rounded-full border border-red-900/50 overflow-hidden mt-1">
                         <div id="micro-hp-bar" class="bg-red-600 h-full w-full transition-all duration-500"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="mb-6">
+            <div class="mb-5">
                 <span id="micro-q-counter" class="text-xs text-gray-400 font-cinzel">Quesito 1 di 4</span>
-                <h2 id="micro-q-text" class="text-base md:text-lg font-bold text-white mt-1 leading-snug">Domanda...</h2>
+                <h2 id="micro-q-text" class="text-sm md:text-lg font-bold text-white mt-1 leading-snug">Domanda...</h2>
             </div>
 
-            <div id="micro-options-container" class="space-y-3 mb-6"></div>
-            <div id="micro-feedback-box" class="hidden p-4 rounded text-xs md:text-sm font-sans border mb-4"></div>
+            <div id="micro-options-container" class="space-y-3 mb-5"></div>
+            <div id="micro-feedback-box" class="hidden p-3.5 rounded text-xs md:text-sm font-sans border mb-4"></div>
             
             <div class="flex justify-end">
-                <button type="button" id="btn-next-micro-q" class="hidden px-6 py-2 rounded gold-button text-xs font-cinzel">Prossimo Quesito →</button>
+                <button type="button" id="btn-next-micro-q" class="hidden px-5 py-2 rounded gold-button text-xs font-cinzel">Prossimo Quesito →</button>
             </div>
         </div>
     </main>
 
     <!-- SCHERMATA FINALE RISULTATI -->
-    <main id="screen-results" class="hidden my-auto max-w-4xl mx-auto w-full py-6">
-        <div class="parchment p-6 md:p-8 rounded-xl border border-yellow-600/40">
-            <div class="text-center mb-8">
+    <main id="screen-results" class="hidden my-auto max-w-4xl mx-auto w-full py-4 px-2">
+        <div class="parchment p-5 md:p-8 rounded-xl border border-yellow-600/40">
+            <div class="text-center mb-6">
                 <span class="text-xs text-yellow-500 font-cinzel uppercase tracking-widest">Rapporto di Campagna</span>
-                <h2 id="final-status-title" class="text-3xl md:text-4xl font-extrabold gold-text font-cinzel mt-2">VITTORIA PER ROMA!</h2>
-                <p id="final-score-text" class="text-gray-300 text-sm md:text-base mt-2">Punteggio ottenuto</p>
+                <h2 id="final-status-title" class="text-2xl md:text-4xl font-extrabold gold-text font-cinzel mt-2">VITTORIA PER ROMA!</h2>
+                <p id="final-score-text" class="text-gray-300 text-xs md:text-base mt-2">Punteggio ottenuto</p>
             </div>
 
-            <div class="bg-gray-900/80 p-4 rounded-lg border border-yellow-900/40 mb-6">
-                <h3 class="text-sm font-bold gold-text font-cinzel mb-2">💡 Revisione delle Domande:</h3>
-                <div id="review-list" class="space-y-3 max-h-96 overflow-y-auto pr-2"></div>
+            <div class="bg-gray-900/80 p-4 rounded-lg border border-yellow-900/40 mb-5">
+                <h3 class="text-xs md:text-sm font-bold gold-text font-cinzel mb-2">💡 Revisione delle Domande:</h3>
+                <div id="review-list" class="space-y-3 max-h-80 overflow-y-auto pr-2"></div>
             </div>
 
             <div class="flex justify-center">
-                <button type="button" onclick="localStorage.clear(); location.reload();" class="px-8 py-3 rounded gold-button text-xs font-cinzel uppercase tracking-wider">Nuovo Arruolamento / Rigioca</button>
+                <button type="button" onclick="localStorage.clear(); location.reload();" class="px-6 py-3 rounded gold-button text-xs font-cinzel uppercase tracking-wider">Nuovo Arruolamento / Rigioca</button>
             </div>
         </div>
     </main>
@@ -298,7 +300,6 @@
     <audio id="audio-player" class="hidden"></audio>
 
     <script>
-        // URL CORRETTO E AGGIORNATO AL TUO GOOGLE APPS SCRIPT
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBhT3BlWQDu2UPpQv2sW2MMcqRY1E2Biaqn9XAPNif4GTNEQacr8mxx9msswQLYTZF/exec"; 
 
         window.addEventListener('DOMContentLoaded', function() {
@@ -306,6 +307,11 @@
             var playerName = localStorage.getItem('albion_player_name') || "Novizio";
             var difficulty = localStorage.getItem('albion_difficulty') || "guided";
             var tooltipTimerSetting = localStorage.getItem('albion_tooltip_timer') || "2000";
+            var isDyslexiaActive = localStorage.getItem('albion_dyslexia') === 'true';
+            var isContrastActive = localStorage.getItem('albion_contrast') === 'true';
+
+            if (isDyslexiaActive) document.body.classList.add('dyslexia-font');
+            if (isContrastActive) document.body.classList.add('high-contrast');
             
             document.getElementById('input-player-name').value = (playerName !== "Novizio") ? playerName : "";
             document.getElementById('header-player-name').innerText = playerName;
@@ -339,10 +345,14 @@
 
             document.getElementById('btn-toggle-dyslexia').onclick = function() {
                 document.body.classList.toggle('dyslexia-font');
+                var active = document.body.classList.contains('dyslexia-font');
+                localStorage.setItem('albion_dyslexia', active);
             };
 
             document.getElementById('btn-toggle-contrast').onclick = function() {
                 document.body.classList.toggle('high-contrast');
+                var active = document.body.classList.contains('high-contrast');
+                localStorage.setItem('albion_contrast', active);
             };
 
             var fullDictionary = {
@@ -597,6 +607,7 @@
             }
 
             function renderSlide() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 var data = slides[currentSlide];
                 document.getElementById('story-chapter-tag').innerText = "CAPITOLO " + (currentSlide + 1) + " DI " + slides.length;
                 document.getElementById('narrator-tag').innerText = "LEGIONARIO/A: " + playerName.toUpperCase();
@@ -656,6 +667,7 @@
             };
 
             function startMicroQuiz() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 document.getElementById('screen-story').classList.add('hidden');
                 document.getElementById('screen-micro-quiz').classList.remove('hidden');
                 document.getElementById('header-score-box').classList.remove('hidden');
@@ -774,6 +786,7 @@
             }
 
             function showFinalResults(isVictory) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 document.getElementById('screen-micro-quiz').classList.add('hidden');
                 document.getElementById('screen-story').classList.add('hidden');
                 document.getElementById('screen-results').classList.remove('hidden');
@@ -787,16 +800,16 @@
                 if (gameMode === 'coop') {
                     if (isVictory && hp > 0) {
                         title.innerText = "VICTORIA! ALBION È CONQUISTATA";
-                        title.className = "text-3xl md:text-4xl font-extrabold text-green-400 font-cinzel mt-2";
+                        title.className = "text-2xl md:text-4xl font-extrabold text-green-400 font-cinzel mt-2";
                         scoreText.innerText = "Legionario/a " + playerName + ", scudo integro! Punteggio finale: " + score;
                     } else {
                         title.innerText = "SCONFITTA! LO SCUDO SI È SPEZZATO";
-                        title.className = "text-3xl md:text-4xl font-extrabold text-red-500 font-cinzel mt-2";
+                        title.className = "text-2xl md:text-4xl font-extrabold text-red-500 font-cinzel mt-2";
                         scoreText.innerText = "Le truppe sono state sopraffatte. Punteggio: " + score;
                     }
                 } else {
                     title.innerText = "FINE DUEL 1 VS 1 - " + playerName.toUpperCase();
-                    title.className = "text-3xl md:text-4xl font-extrabold gold-text font-cinzel mt-2";
+                    title.className = "text-2xl md:text-4xl font-extrabold gold-text font-cinzel mt-2";
                     scoreText.innerText = "Giocatore 1: " + p1Score + " PT | Giocatore 2: " + p2Score + " PT";
                 }
 
