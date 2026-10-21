@@ -803,15 +803,31 @@
             var userAnswersLog = [];
             var audioPlayer = document.getElementById('audio-player');
 
-            document.getElementById('btn-start-coop').onclick = function() { startGame('coop'); };
-            document.getElementById('btn-start-vs').onclick = function() { startGame('vs'); };
+            // ASSEGNAZIONE CORRETTA DEI TASTI D'AVVIO PER ENTRAMBE LE MODALITÀ
+            document.getElementById('btn-start-coop').onclick = function() {
+                startGame('coop');
+            };
+
+            document.getElementById('btn-start-vs').onclick = function() {
+                startGame('vs');
+            };
 
             function startGame(mode) {
                 gameMode = mode;
                 userAnswersLog = [];
+                hp = 100;
+                score = 0;
+                p1Score = 0;
+                p2Score = 0;
+                currentPlayer = 1;
+
+                // Transizione sicura delle schermate
                 document.getElementById('screen-menu').classList.add('hidden');
-                document.getElementById('header-score-box').classList.add('hidden');
+                document.getElementById('screen-results').classList.add('hidden');
+                document.getElementById('screen-micro-quiz').classList.add('hidden');
                 document.getElementById('screen-story').classList.remove('hidden');
+                document.getElementById('header-score-box').classList.remove('hidden');
+
                 currentSlide = 0;
                 renderSlide();
             }
@@ -906,6 +922,7 @@
                     document.getElementById('micro-hp-container').classList.add('hidden');
                 } else {
                     document.getElementById('micro-hp-container').classList.remove('hidden');
+                    document.getElementById('micro-hp-bar').style.width = hp + '%';
                 }
                 renderMicroQuestion();
             }
