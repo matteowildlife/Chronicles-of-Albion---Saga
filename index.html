@@ -201,7 +201,7 @@
         <div class="parchment p-5 md:p-8 rounded-xl border border-yellow-600/40 mb-4">
             <h3 class="text-lg md:text-xl font-bold gold-text font-cinzel mb-3 text-center">📜 Scegli la tua Via di Conquista: Modalità di Gioco</h3>
             <p class="text-xs text-gray-300 text-center max-w-2xl mx-auto mb-5">
-                Il percorso è suddiviso in 5 capitoli narrativi. Alla fine di ogni capitolo affronterai una verifica mirata di 20 quesiti per mettere alla prova il tuo inglese e le tue abilità di comando.
+                Il percorso è suddiviso in 5 capitoli narrativi. Alla fine di ogni capitolo affronterai una verifica mirata di 5 quesiti per mettere alla prova il tuo inglese e le tue abilità di comando.
             </p>
 
             <div class="grid md:grid-cols-2 gap-4">
@@ -722,7 +722,7 @@
             document.getElementById('btn-prev-slide').style.visibility = (currentSlide === 0) ? 'hidden' : 'visible';
             
             var nextBtn = document.querySelector('#screen-story button:last-child');
-            nextBtn.innerText = (currentSlide === chaptersData.length - 1) ? "Verifica Finale e Rapporto (20 Quesiti) →" : "Affronta Verifica Capitolo (20 Quesiti) →";
+            nextBtn.innerText = (currentSlide === chaptersData.length - 1) ? "Verifica Finale e Rapporto (5 Quesiti) →" : "Affronta Verifica Capitolo (5 Quesiti) →";
 
             attachWordTimers();
             
