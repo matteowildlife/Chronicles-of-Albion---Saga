@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chronicles of Albion: Episode 1</title>
     <!-- Script Tailwind corretto -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -100,6 +100,11 @@
             opacity: 1;
         }
 
+        @media (hover: none) {
+            .word-interactive:not(.active-touch):hover { background-color: transparent; color: inherit; }
+            .word-interactive:not(.active-touch):hover .tooltip-box { visibility: hidden; opacity: 0; }
+        }
+
         .quiz-box-beginner { border-left: 6px solid #38bdf8; background: linear-gradient(145deg, #0f172a 0%, #090d16 100%); }
         .quiz-box-guided { border-left: 6px solid #facc15; background: linear-gradient(145deg, #181d11 0%, #0d120a 100%); }
         .quiz-box-challenge { border-left: 6px solid #ef4444; background: linear-gradient(145deg, #201212 0%, #120a0a 100%); }
@@ -132,7 +137,7 @@
                         <img src="hero.jfif" alt="Legionari romani" class="w-full h-auto object-cover block">
                         <div class="bg-black/90 border-t border-yellow-600/40 p-3 text-center">
                             <span class="text-[10px] text-yellow-400 font-cinzel font-bold tracking-widest uppercase block mb-1">Oceanus Britannicus • 55 a.C.</span>
-                            <p id="recruited-banner" class="text-[11px] text-gray-300 italic font-serif leading-tight">Il tribuno Marco attende il tuo rapporto alla prua della galea.</p>
+                            <p id="recruited-banner" class="text-[11px] text-gray-300 italic font-serif leading-tight">Il tribuno Marcus attende il tuo rapporto alla prua della galea.</p>
                         </div>
                     </div>
                 </div>
@@ -168,7 +173,7 @@
                                 <p class="text-[10px] text-gray-500 mb-2 leading-tight">Scegli il livello di traduzioni visibili nel testo.</p>
                                 <select id="select-difficulty" onchange="updateDifficulty(this)" class="bg-gray-900 border border-yellow-600/40 text-yellow-200 rounded p-1 w-full text-xs">
                                     <option value="beginner">Principiante (Tutte le traduzioni)</option>
-                                    <option value="guided" selected>Guidata (Solo parole chiave)</option>
+                                    <option value="guided" selected>Guidata (Solo parole lunghe)</option>
                                     <option value="challenge">Sfida (Senza traduzioni + Punti extra)</option>
                                 </select>
                             </div>
@@ -244,7 +249,7 @@
         <div class="parchment p-5 md:p-8 rounded-xl relative">
             <div class="flex justify-between items-center text-xs text-yellow-500 font-cinzel mb-3 pb-2 border-b border-yellow-900/30">
                 <span id="story-chapter-tag">CAPITOLO 1 DI 5</span>
-                <span id="narrator-tag">LEGIONARIO/A: MARCO</span>
+                <span id="narrator-tag">NARRATORE: MARCUS</span>
             </div>
 
             <h2 id="story-title" class="text-xl md:text-3xl font-bold gold-text font-cinzel mb-3">Titolo</h2>
@@ -254,7 +259,7 @@
 
             <div class="flex justify-between items-center pt-3 border-t border-yellow-900/30">
                 <button type="button" onclick="prevSlide()" id="btn-prev-slide" class="px-4 py-2 rounded bg-gray-800 text-gray-300 border border-gray-700 text-xs font-cinzel hover:bg-gray-700">← Indietro</button>
-                <button type="button" onclick="nextSlideFromStory()" class="px-5 py-2.5 rounded gold-button text-xs font-cinzel tracking-wider">Affronta Verifica Capitolo (12 Quesiti) →</button>
+                <button type="button" id="btn-next-slide" onclick="nextSlideFromStory()" class="px-5 py-2.5 rounded gold-button text-xs font-cinzel tracking-wider">Affronta Verifica Capitolo (12 Quesiti) →</button>
             </div>
         </div>
     </main>
@@ -304,7 +309,7 @@
             </div>
 
             <div class="flex justify-center">
-                <button type="button" onclick="localStorage.clear(); location.reload();" class="px-6 py-3 rounded gold-button text-xs font-cinzel uppercase tracking-wider">Nuovo Arruolamento / Rigioca</button>
+                <button type="button" onclick="location.reload();" class="px-6 py-3 rounded gold-button text-xs font-cinzel uppercase tracking-wider">Nuovo Arruolamento / Rigioca</button>
             </div>
         </div>
     </main>
@@ -327,13 +332,18 @@
             if (localStorage.getItem('albion_dyslexia') === 'true') document.body.classList.add('dyslexia-font');
             if (localStorage.getItem('albion_contrast') === 'true') document.body.classList.add('high-contrast');
             
+            var ap = document.getElementById('audio-player');
+            ap.addEventListener('ended', function() {
+                document.getElementById('btn-audio-toggle').innerText = "▶️ Riproduci Audio";
+                document.getElementById('audio-playing-indicator').innerText = "🔊 Audio terminato.";
+            });
             document.getElementById('input-player-name').value = (playerName !== "Novizio") ? playerName : "";
             document.getElementById('header-player-name').innerText = playerName;
             document.getElementById('select-difficulty').value = difficulty;
             document.getElementById('select-tooltip-timer').value = tooltipTimerSetting;
 
             if(playerName !== "Novizio") {
-                document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario/a " + playerName + " sulla plancia di comando.";
+                document.getElementById('recruited-banner').innerText = "Il tribuno Marcus saluta il legionario/a " + playerName + " sulla plancia di comando.";
             }
         });
 
@@ -343,7 +353,7 @@
                 playerName = nameVal;
                 localStorage.setItem('albion_player_name', playerName);
                 document.getElementById('header-player-name').innerText = playerName;
-                document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario/a " + playerName + " sulla plancia di comando.";
+                document.getElementById('recruited-banner').innerText = "Il tribuno Marcus saluta il legionario/a " + playerName + " sulla plancia di comando.";
                 alert("Giuramento accettato! Benvenuto/a nella Legio X, " + playerName + ".");
             }
         }
@@ -414,7 +424,7 @@
             "aground": "in secca", "shallow": "bassa", "terrible": "terribile", "panic": "panico", "began": "iniziò",
             "to": "a/per", "spread": "diffondersi", "ranks": "ranghi", "still": "ancora", "deep": "profonda",
             "reaching": "arrivando", "up": "fino", "waists": "fianchi/vita", "legionaries": "legionari", "weighed": "appesantiti",
-            "heavy": "pesante", "lorica": "corazza", "segmentata": "a strisce d'ferro", "scuta": "scudi", "bronze": "bronzo",
+            "heavy": "pesante", "lorica": "corazza", "hamata": "a maglia di ferro", "scuta": "scudi", "bronze": "bronzo",
             "helmets": "elmi", "unencumbered": "senza ingombro", "charged": "caricarono", "freezing": "gelida", "surf": "risacca",
             "hurling": "scagliando", "riding": "cavalcando", "horses": "cavalli", "waves": "onde", "terrifying": "terrificante",
             "confidence": "sicurezza", "men": "uomini", "hesitated": "esitavano", "terrified": "terrorizzati", "stepping": "mettere il piede",
@@ -422,7 +432,7 @@
             "mortal": "mortale", "doubt": "dubbio", "aquilifer": "portatore dell'Aquila", "stepped": "fatti avanti", "forward": "avanti",
             "holding": "tenendo", "silver": "argento", "eagle": "Aquila", "standard": "insegna/vessillo", "looked": "guardò",
             "back": "indietro", "hesitant": "esitanti", "voice": "voce", "leap": "saltate", "unless": "a meno che",
-            "you": "voi", "wish": "desideriate", "betray": "tradire", "enemy": "nemico", "I": "Io",
+            "you": "voi", "wish": "desideriate", "betray": "tradire", "enemy": "nemico", "i": "io",
             "at": "almeno", "least": "meno", "shall": "dovrò/farò", "perform": "compiere", "duty": "dovere",
             "plunged": "si tuffò", "icy": "gelide", "inspired": "ispirati", "immense": "immenso", "courage": "coraggio",
             "threw": "gettarono", "themselves": "se stessi", "defend": "difendere", "honor": "onore", "followed": "seguì",
@@ -482,7 +492,7 @@
             if (difficulty === 'challenge') return text;
             var tokens = text.split(/(\s+|[.,!?;:()"'’—]+)/);
             return tokens.map(function(token) {
-                var cleanWord = token.toLowerCase().replace(/[^a-z]/g, '');
+                var cleanWord = token.toLowerCase().replace(/[^a-z-]/g, '');
                 if (cleanWord.length > 0 && fullDictionary[cleanWord]) {
                     if (difficulty === 'beginner' || (difficulty === 'guided' && cleanWord.length > 5)) {
                         var translation = fullDictionary[cleanWord];
@@ -508,7 +518,6 @@
                         timer = setTimeout(function() { el.classList.remove('active-touch'); }, dur);
                     }
                 }
-                el.addEventListener('touchstart', function(e) { triggerActivation(); }, {passive: true});
                 el.addEventListener('click', function(e) { triggerActivation(); });
             });
         }
@@ -516,7 +525,7 @@
         var chaptersData = [
             {
                 title: "1. The White Cliffs (55 B.C.)",
-                content: "My name is Marcus, a tribune of the Tenth Legion, Caesar’s most trusted force. It is late August in the fifty-fifth year before the birth of Christ. For three days, our fleet of galleys had been slicing through the gray, turbulent waters of the ocean from the coast of Gaul. The sea was unpredictable, and many of our soldiers, hardened by years of war in the forests of Europe, suffered greatly from sea-sickness. Then, as the thick morning fog slowly lifted, a collective gasp echoed across the decks. There, rising directly from the cold dark water, stood the towering white cliffs of Albion. They were massive walls of brilliant chalk, reflecting the pale morning sunlight like giant shield-walls. But it was not merely the stone that caught our attention. On the edge of those high precipices, hundreds of native warriors were waiting for us. Their long hair fluttered in the wind, and their spears glinted menacingly. They shouted wild, guttural war-cries that carried across the water, warning us that this island would not yield easily. General Gaius Julius Caesar stood motionless at the prow of his flagship, wrapped in his red cloak, gazing silently through the sea mist. He knew that beyond those chalk walls lay a world untouched by Rome, a land rich in iron, tin, and fierce tribes who believed they were unconquerable.",
+                content: "My name is Marcus, a tribune of the Tenth Legion, Caesar’s most trusted force. It is late August in the year of the second consulship of Pompey and Crassus. For three days, our fleet of galleys had been slicing through the gray, turbulent waters of the ocean from the coast of Gaul. The sea was unpredictable, and many of our soldiers, hardened by years of war in the forests of Europe, suffered greatly from sea-sickness. Then, as the thick morning fog slowly lifted, a collective gasp echoed across the decks. There, rising directly from the cold dark water, stood the towering white cliffs of Albion. They were massive walls of brilliant chalk, reflecting the pale morning sunlight like giant shield-walls. But it was not merely the stone that caught our attention. On the edge of those high precipices, hundreds of native warriors were waiting for us. Their long hair fluttered in the wind, and their spears glinted menacingly. They shouted wild, guttural war-cries that carried across the water, warning us that this island would not yield easily. General Gaius Julius Caesar stood motionless at the prow of his flagship, wrapped in his red cloak, gazing silently through the sea mist. He knew that beyond those chalk walls lay a world untouched by Rome, a land rich in iron, tin, and fierce tribes who believed they were unconquerable.",
                 grammar: "<strong>📚 Focus Grammaticale — Capitolo 1: Past Continuous vs Past Simple</strong><br><br>Nella narrazione epica (e in inglese in generale), questi due tempi lavorano spesso in coppia per creare dinamismo e contrasto nella linea temporale:<br><br>• <strong>Past Continuous (was/were + verbo -ing):</strong> Si usa per descrivere un'azione prolungata in corso di svolgimento nel passato. Fornisce lo 'sfondo' o la cornice della scena. <em>(es. 'Our fleet was sailing...' = La nostra flotta stava navigando)</em>.<br><br>• <strong>Past Simple (verbo in -ed o forma irregolare):</strong> Indica un'azione conclusa, rapida o puntuale, che spesso 'interrompe' o si inserisce nell'azione di sfondo. <em>(es. '...when the fog lifted' = ...quando la nebbia si diradò)</em>.<br><br>💡 <strong>Esempio dal testo:</strong> Mentre l'esercito stava navigando [azione lunga in <em>Past Continuous</em>], un sospiro collettivo risuonò (echoed) [azione puntuale in <em>Past Simple</em>].",
                 questions: {
                     beginner: [
@@ -552,7 +561,7 @@
                         { q: "Evaluate the meteorological description: What stylistic effect do 'turbulent waters' and 'thick morning fog' create?", opts: ["A) A sense of psychological uncertainty and liminal boundary", "B) Pure geographical data"], correct: 0, exp: "Crea suspense e tensione psicologica ai confini del mondo." },
                         { q: "What deeper geopolitical motive drove Caesar across the Channel beyond glory?", opts: ["A) Halting Celtic supply lines supporting Gallic rebels", "B) Establishing a permanent colony immediately"], correct: 0, exp: "Tagliare i rifornimenti ai galli ribelli." },
                         { q: "Contrast the Roman perspective with the British stance on top of the cliffs:", opts: ["A) Rome as an expanding empire vs native tribes guarding ancestral sovereignty", "B) Two equal trading partners"], correct: 0, exp: "Scontro tra impero espansionista e sovranità tribale." },
-                        { q: "Select the most advanced syntactic transformation for: 'While we sailed, the fog lifted.'", opts: ["A) Our sailing being underway, the fog lifted.", "B) Sailing across the sea, the fog lifted."], correct: 1, exp: "Participial clause corretta." },
+                        { q: "Select the most advanced syntactic transformation for: 'While we sailed, the fog lifted.'", opts: ["A) Us sailing across the sea, the fog lifted.", "B) Sailing across the sea, we watched the fog lift."], correct: 1, exp: "Participial clause corretta." },
                         { q: "Identify the precise tense value in 'our fleet had been slicing':", opts: ["A) Past Perfect Continuous emphasizing duration prior to another past point", "B) Simple past action"], correct: 0, exp: "Azione continuativa precedente ad un altro evento nel passato." },
                         { q: "What literary device is implied in 'reflecting pale morning sunlight like giant shield-walls'?", opts: ["A) Epic simile connecting natural geography with military imagery", "B) Metaphorical irony"], correct: 0, exp: "Similitudine epica bellica." },
                         { q: "Examine the psychological state of Caesar at the prow:", opts: ["A) Analytical calculation combined with absolute resolve", "B) Fear and hesitation"], correct: 0, exp: "Freddo calcolo strategico e determinazione." },
@@ -565,7 +574,7 @@
             },
             {
                 title: "2. The Leap into the Waves",
-                content: "The natural harbor beneath the white cliffs was narrow, surrounded by heights from which the Britons could easily rain javelins down upon our ships. Recognizing the deadly trap, Caesar ordered the signal horns to sound. Our fleet turned north, rowing along the coastline for seven miles until we reached the flat, open beaches near Deal. However, the Britons anticipated our maneuver. Their war chariots and swift cavalry galloped along the cliffs above us, keeping pace with our galleys. When our ships finally ran aground in the shallow water, a terrible panic began to spread through our ranks. The water was still deep, reaching up to our waists, and our legionaries were weighed down by their heavy iron lorica segmentata, large wooden scuta, and bronze helmets. The native warriors, unencumbered by heavy armor, charged directly into the freezing surf, hurling spears and riding their horses into the waves with terrifying confidence. Our men hesitated, terrified of stepping off the wooden planks into the churning sea. It was in that moment of mortal doubt that the aquilifer of the Tenth Legion stepped forward. Holding high the silver Eagle standard of Rome, he looked back at the hesitant ranks and shouted with a thunderous voice: 'Leap down, fellow soldiers, unless you wish to betray your Eagle to the enemy! I, at least, shall perform my duty to Rome and my general!' With those words, he plunged into the icy waves. Inspired by his immense courage, the legionaries threw themselves off the ships to defend the honor of the Eagle.",
+                content: "The natural harbor beneath the white cliffs was narrow, surrounded by heights from which the Britons could easily rain javelins down upon our ships. Recognizing the deadly trap, Caesar ordered the signal horns to sound. Our fleet turned north, rowing along the coastline for seven miles until we reached the flat, open beaches near Deal. However, the Britons anticipated our maneuver. Their war chariots and swift cavalry galloped along the cliffs above us, keeping pace with our galleys. When our ships finally ran aground in the shallow water, a terrible panic began to spread through our ranks. The water was still deep, reaching up to our waists, and our legionaries were weighed down by their heavy iron lorica hamata, large wooden scuta, and bronze helmets. The native warriors, unencumbered by heavy armor, charged directly into the freezing surf, hurling spears and riding their horses into the waves with terrifying confidence. Our men hesitated, terrified of stepping off the wooden planks into the churning sea. It was in that moment of mortal doubt that the aquilifer of the Tenth Legion stepped forward. Holding high the silver Eagle standard of Rome, he looked back at the hesitant ranks and shouted with a thunderous voice: 'Leap down, fellow soldiers, unless you wish to betray your Eagle to the enemy! I, at least, shall perform my duty to Rome and my general!' With those words, he plunged into the icy waves. Inspired by his immense courage, the legionaries threw themselves off the ships to defend the honor of the Eagle.",
                 grammar: "<strong>📚 Focus Grammaticale — Capitolo 2: Participial Clauses (Proposizioni Participiali)</strong><br><br>Le <em>Participial Clauses</em> sono costrutti avanzati che permettono di unire due frasi condensandole. Rendo il testo più elegante, rapido ed epico, evitando ripetizioni del soggetto o un uso eccessivo di congiunzioni come <em>because</em> (poiché) o <em>while</em> (mentre).<br><br>• <strong>Participio Presente (-ing):</strong> Ha valore <strong>ATTIVO</strong>. Indica che il soggetto compie l'azione. Spesso sostituisce una causale o una temporale.<br><em>Esempio dal testo:</em> '<strong>Recognizing</strong> the deadly trap, Caesar ordered...' (Significa: <em>Poiché riconosceva la trappola mortale, Cesare ordinò...</em>).<br><br>• <strong>Participio Passato (-ed / irregolare):</strong> Ha valore <strong>PASSIVO</strong>. Indica che il soggetto subisce l'azione o si trova in uno stato derivato da essa.<br><em>Esempio dal testo:</em> '<strong>Inspired</strong> by his immense courage, the legionaries threw themselves...' (Significa: <em>Essendo stati ispirati dal suo coraggio, i legionari si gettarono...</em>).",
                 questions: {
                     beginner: [
@@ -573,7 +582,7 @@
                         { q: "What did Caesar order when he recognized the trap?", opts: ["A) Signal horns to sound and fleet to turn north", "B) Immediate full charge"], correct: 0, exp: "Ordinò di suonare i corni e virare a nord." },
                         { q: "Where did the fleet eventually land?", opts: ["A) Flat open beaches near Deal", "B) Ireland"], correct: 0, exp: "Spiagge aperte vicino a Deal." },
                         { q: "What forces did the Britons use to keep pace with the galleys?", opts: ["A) War chariots and swift cavalry", "B) War elephants"], correct: 0, exp: "Carri da guerra e cavalleria rapida." },
-                        { q: "What gear weighed down the Roman legionaries?", opts: ["A) Lorica segmentata, wooden scuta, and bronze helmets", "B) Swimming suits"], correct: 0, exp: "Pesanti armature, scudi ed elmi." },
+                        { q: "What gear weighed down the Roman legionaries?", opts: ["A) Lorica hamata, wooden scuta, and bronze helmets", "B) Swimming suits"], correct: 0, exp: "Pesanti armature, scudi ed elmi." },
                         { q: "Who stepped forward in the moment of mortal doubt?", opts: ["A) The aquilifer of the Tenth Legion", "B) A common sailor"], correct: 0, exp: "L'aquilifer con l'insegna dell'Aquila." },
                         { q: "What standard did the aquilifer hold high?", opts: ["A) Silver Eagle standard", "B) Golden Wolf standard"], correct: 0, exp: "L'Aquila d'argento di Roma." },
                         { q: "Did the legionaries follow him into the freezing waves?", opts: ["A) Yes, inspired by his immense courage", "B) No, they sailed away"], correct: 0, exp: "Si tuffarono ispirati dal suo coraggio." },
@@ -599,7 +608,7 @@
                     challenge: [
                         { q: "Analyze the tactical dilemma at the white cliffs: Why was a direct landing suicide?", opts: ["A) Enfilading terrain allowing plunging javelin fire onto cramped decks", "B) Lack of wind"], correct: 0, exp: "Terreno sfavorevole con lancio di giavellotti dall'alto." },
                         { q: "Evaluate Caesar's maneuver toward Deal: What military principle does it demonstrate?", opts: ["A) Flexibility and adaptation of operational axis upon intelligence gathering", "B) Retreat in cowardice"], correct: 0, exp: "Flessibilità tattica e ricalcolo operativo." },
-                        { q: "Examine the heavy equipment burden: How did 'lorica segmentata' impact amphibious assault dynamics?", opts: ["A) Severe hydrodynamic disadvantage causing immobilization in surf", "B) Provided flotation"], correct: 0, exp: "Grave svantaggio idrodinamico e rischio annegamento." },
+                        { q: "Examine the heavy equipment burden: How did 'lorica hamata' impact amphibious assault dynamics?", opts: ["A) Severe hydrodynamic disadvantage causing immobilization in surf", "B) Provided flotation"], correct: 0, exp: "Grave svantaggio idrodinamico e rischio annegamento." },
                         { q: "Critique the psychological turning point provided by the aquilifer:", opts: ["A) Leveraging institutional sacred symbols to override primal survival panic", "B) Pure luck"], correct: 0, exp: "Sfruttamento dei simboli sacri per superare il panico." },
                         { q: "Select the most sophisticated participial reduction for: 'Because he recognized the trap, Caesar ordered...'?", opts: ["A) Having recognized the trap, Caesar ordered...", "B) Recognized the trap, Caesar ordered..."], correct: 0, exp: "Perfect participle (Having recognized) per anteriorità." },
                         { q: "What rhetorical function does direct speech serve in Marcus's account here?", opts: ["A) Dramatic immediacy instilling epic ethos into the tactical narrative", "B) Filler text"], correct: 0, exp: "Immediatezza drammatica ed ethos epico." },
@@ -712,7 +721,7 @@
             },
             {
                 title: "5. The Autumn Storms",
-                content: "Our foothold in Albion, however, was destined to be short-lived. Four days after our landing, a sudden full moon brought exceptionally high tides and violent, unseasonal autumn gales across the Channel. Unaccustomed to the drastic tides of the Atlantic Ocean, we had left our heavy transports anchored in the open roadstead. The tempest smashed our galleys against one another, breaking oars, tearing sails, and swamping many vessels in the raging foam. On land, we were isolated: we lacked heavy cavalry to chase the elusive British war chariots, and our granaries held no provisions for the approaching winter. Caesar, ever the pragmatic strategist, understood that remaining on the island meant starvation and inevitable destruction. For days, our legionaries worked tirelessly, salvaging iron bolts and timber from the most damaged ships to repair the rest of the fleet. On a quiet midnight, under the dark autumn sky, we boarded our repaired vessels and set sail back to Gaul. Caesar did not conquer Britain in fifty-five BC; he left no garrisons, no brick forts, and no tribute-paying provinces. Yet, as our ships glided away from those glowing white cliffs, we knew that Rome had planted her banner on the edge of the known world. The door to Albion had been unlocked, and one day, the legions would return.",
+                content: "Our foothold in Albion, however, was destined to be short-lived. Four days after our landing, a sudden full moon brought exceptionally high tides and violent, unseasonal autumn gales across the Channel. Unaccustomed to the drastic tides of the Atlantic Ocean, we had left our heavy transports anchored in the open roadstead. The tempest smashed our galleys against one another, breaking oars, tearing sails, and swamping many vessels in the raging foam. On land, we were isolated: we lacked heavy cavalry to chase the elusive British war chariots, and our granaries held no provisions for the approaching winter. Caesar, ever the pragmatic strategist, understood that remaining on the island meant starvation and inevitable destruction. For days, our legionaries worked tirelessly, salvaging iron bolts and timber from the most damaged ships to repair the rest of the fleet. On a quiet midnight, under the dark autumn sky, we boarded our repaired vessels and set sail back to Gaul. Caesar did not conquer Britain that year; he left no garrisons, no brick forts, and no tribute-paying provinces. Yet, as our ships glided away from those glowing white cliffs, we knew that Rome had planted her banner on the edge of the known world. The door to Albion had been unlocked, and one day, the legions would return.",
                 grammar: "<strong>📚 Focus Grammaticale — Capitolo 5: L'Infinito di Scopo (Infinitive of Purpose)</strong><br><br>In italiano, per spiegare il <em>motivo</em> o il <em>fine</em> per cui si compie un'azione tattica o decisionale, si usa tipicamente 'per' + verbo all'infinito (es. 'Lavorarono per riparare le navi'). In inglese, questo costrutto si traduce semplicemente con l'<strong>Infinitive of Purpose</strong>.<br><br>• <strong>Costruzione Base:</strong> Si usa la particella <strong>to + verbo alla forma base</strong>.<br><em>Esempio dal testo:</em> '...salvaging iron bolts <strong>to repair</strong> the rest of the fleet' (Significa: ...recuperando bulloni <strong>per riparare</strong> il resto della flotta).<br><br>• <strong>Alternative Formali:</strong> Nei resoconti storici o nei dispacci militari, si può rafforzare l'espressione di scopo utilizzando <strong>in order to</strong> oppure <strong>so as to</strong> (es. <em>'They sailed at midnight in order to escape the storms'</em>).<br><br>⚠️ <strong>Errore imperdonabile (TRAPPOLA ITALIANA):</strong> Molti studenti traducono 'per riparare' usando 'for repair' o 'for repairing'. In inglese, per esprimere lo scopo di un'azione compiuta da una persona, NON si usa MAI la preposizione <em>'for' + verbo</em>. Va usato esclusivamente 'to'.",
                 questions: {
                     beginner: [
@@ -765,14 +774,14 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
             var data = chaptersData[currentSlide];
             document.getElementById('story-chapter-tag').innerText = "CAPITOLO " + (currentSlide + 1) + " DI " + chaptersData.length;
-            document.getElementById('narrator-tag').innerText = "LEGIONARIO/A: " + playerName.toUpperCase();
+            document.getElementById('narrator-tag').innerText = "NARRATORE: MARCUS";
             document.getElementById('story-title').innerText = data.title;
             document.getElementById('story-content').innerHTML = makeTextInteractive(data.content);
             document.getElementById('grammar-pill').innerHTML = data.grammar;
 
             document.getElementById('btn-prev-slide').style.visibility = (currentSlide === 0) ? 'hidden' : 'visible';
             
-            var nextBtn = document.querySelector('#screen-story button:last-child');
+            var nextBtn = document.getElementById('btn-next-slide');
             nextBtn.innerText = (currentSlide === chaptersData.length - 1) ? "Verifica Finale e Rapporto (12 Quesiti) →" : "Affronta Verifica Capitolo (12 Quesiti) →";
 
             attachWordTimers();
@@ -806,7 +815,12 @@
         function replayAudio() {
             var audioPlayer = document.getElementById('audio-player');
             audioPlayer.currentTime = 0;
-            audioPlayer.play();
+            audioPlayer.play().then(function() {
+                document.getElementById('btn-audio-toggle').innerText = "⏸️ Pausa Audio";
+                document.getElementById('audio-playing-indicator').innerText = "🔊 In riproduzione...";
+            }).catch(function() {
+                document.getElementById('audio-playing-indicator').innerText = "⚠️ Errore: file audio mancante o bloccato.";
+            });
         }
 
         function startGame(mode) {
@@ -889,7 +903,13 @@
             document.getElementById('micro-feedback-box').classList.add('hidden');
             document.getElementById('btn-next-micro-q').classList.add('hidden');
 
-            q.opts.forEach(function(opt, idx) {
+            var order = q.opts.map(function(_, i) { return i; });
+            for (var k = order.length - 1; k > 0; k--) {
+                var r = Math.floor(Math.random() * (k + 1));
+                var tmp = order[k]; order[k] = order[r]; order[r] = tmp;
+            }
+            order.forEach(function(idx, pos) {
+                var opt = String.fromCharCode(65 + pos) + ") " + q.opts[idx].replace(/^[A-D]\)\s*/, '');
                 var btn = document.createElement('button');
                 btn.type = "button";
                 btn.className = "w-full text-left p-3.5 rounded bg-gray-800/80 hover:bg-yellow-600/20 border border-gray-700 hover:border-yellow-500/50 text-xs md:text-sm transition-all";
@@ -914,6 +934,8 @@
                 options: q.opts,
                 correct: q.correct,
                 isCorrect: isCorrect,
+                player: currentPlayer,
+                pts: isCorrect ? (difficulty === 'challenge' ? 2 : 1) : 0,
                 exp: q.exp
             });
 
@@ -925,9 +947,9 @@
             if (isCorrect) {
                 feedback.classList.add('bg-green-900/60', 'text-green-200', 'border-green-500');
                 feedback.innerHTML = "<strong>✅ ESATTO!</strong> " + q.exp;
-                score++;
-                if(difficulty === 'challenge') score += 1;
-                if (gameMode === 'vs') { if (currentPlayer === 1) p1Score++; else p2Score++; }
+                var gained = (difficulty === 'challenge') ? 2 : 1;
+                score += gained;
+                if (gameMode === 'vs') { if (currentPlayer === 1) p1Score += gained; else p2Score += gained; }
             } else {
                 feedback.classList.add('bg-red-900/60', 'text-red-200', 'border-red-500');
                 feedback.innerHTML = "<strong>❌ ERRATO.</strong> " + q.exp;
@@ -961,6 +983,13 @@
                     showFinalResults(false);
                 } else if (chapterRatio < 0.6) {
                     alert("⚠️ Risultato inferiore al 60% (" + chapterCorrect + "/" + qList.length + "). Il Tribuno ti ordina di ripassare il capitolo prima di avanzare!");
+                    userAnswersLog.splice(chapterStartIdx);
+                    score = 0; p1Score = 0; p2Score = 0;
+                    userAnswersLog.forEach(function(it) {
+                        score += it.pts;
+                        if (it.player === 1) p1Score += it.pts; else p2Score += it.pts;
+                    });
+                    document.getElementById('high-score').innerText = score + " PT";
                     document.getElementById('screen-micro-quiz').classList.add('hidden');
                     document.getElementById('screen-story').classList.remove('hidden');
                     renderSlide();
@@ -989,7 +1018,7 @@
 
             if (gameMode === 'coop') {
                 if (isVictory && hp > 0) {
-                    title.innerText = "VICTORIA! ALBION È CONQUISTATA";
+                    title.innerText = "VICTORIA! LA PRIMA SPEDIZIONE È COMPIUTA";
                     title.className = "text-2xl md:text-4xl font-extrabold text-green-400 font-cinzel mt-2";
                     scoreText.innerText = "Legionario/a " + playerName + ", scudo integro! Punteggio finale: " + score;
                 } else {
@@ -1000,7 +1029,8 @@
             } else {
                 title.innerText = "FINE DUEL 1 VS 1 - " + playerName.toUpperCase();
                 title.className = "text-2xl md:text-4xl font-extrabold gold-text font-cinzel mt-2";
-                scoreText.innerText = "Giocatore 1: " + p1Score + " PT | Giocatore 2: " + p2Score + " PT";
+                var winner = (p1Score === p2Score) ? "Pareggio!" : (p1Score > p2Score ? "Vince il Giocatore 1!" : "Vince il Giocatore 2!");
+                scoreText.innerText = winner + "  Giocatore 1: " + p1Score + " PT | Giocatore 2: " + p2Score + " PT";
             }
 
             var listContainer = document.getElementById('review-list');
