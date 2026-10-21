@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chronicles of Albion: Episode 1</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Fauna+One&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Cinzel, Fauna One e Lexend per i DSA -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Fauna+One&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- OpenDyslexic via CDN come ulteriore opzione di sicurezza -->
+    <link href="https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic.min.css" rel="stylesheet">
     <style>
         body { font-family: 'Fauna One', serif; background-color: #080c14; color: #e2e8f0; transition: font-size 0.2s ease; overflow-x: hidden; }
         h1, h2, h3, h4, .font-cinzel { font-family: 'Cinzel', serif; }
@@ -32,8 +35,14 @@
             transform: translateY(-1px);
         }
 
-        /* ACCESSIBILITÀ E MODALITÀ DISLESSIA FORZATA SU MOBILE E PC */
-        body.dyslexia-font, body.dyslexia-font * { font-family: 'Comic Sans MS', 'Arial', sans-serif !important; letter-spacing: 0.05em !important; word-spacing: 0.1em !important; }
+        /* MODALITÀ DSA CON LEXEND E OPEN DYSLEXIC */
+        body.dyslexia-font, body.dyslexia-font * { 
+            font-family: 'Lexend', 'OpenDyslexic', 'Comic Sans MS', sans-serif !important; 
+            letter-spacing: 0.06em !important; 
+            word-spacing: 0.15em !important; 
+            line-height: 1.6 !important;
+        }
+        
         body.high-contrast { background-color: #000000 !important; color: #ffffff !important; }
         body.high-contrast .parchment { background: #0a0a0a !important; border: 2px solid #ffff00 !important; }
 
@@ -175,7 +184,7 @@
                             <div>
                                 <label class="block text-gray-400 mb-1 font-bold">Accessibilità & DSA:</label>
                                 <div class="flex space-x-2 pt-1">
-                                    <button type="button" id="btn-toggle-dyslexia" class="bg-gray-900 border border-yellow-600/40 px-2 py-1 rounded text-yellow-300 hover:bg-yellow-950" title="Attiva font ad alta leggibilità">Font DSA</button>
+                                    <button type="button" id="btn-toggle-dyslexia" class="bg-gray-900 border border-yellow-600/40 px-2 py-1 rounded text-yellow-300 hover:bg-yellow-950" title="Attiva font Lexend/OpenDyslexic">Font DSA</button>
                                     <button type="button" id="btn-toggle-contrast" class="bg-gray-900 border border-yellow-600/40 px-2 py-1 rounded text-yellow-300 hover:bg-yellow-950" title="Alto contrasto">Contrasto</button>
                                 </div>
                             </div>
