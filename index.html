@@ -363,12 +363,30 @@
             document.body.classList.toggle('dyslexia-font');
             var active = document.body.classList.contains('dyslexia-font');
             localStorage.setItem('albion_dyslexia', active);
+            
+            var btn = document.querySelector('button[onclick="toggleDyslexiaFont()"]');
+            if (active) {
+                btn.innerHTML = "✅ Font alta visibilità: ON";
+                btn.classList.add('bg-green-900/40', 'border-green-500');
+            } else {
+                btn.innerHTML = "Font alta visibilità: OFF";
+                btn.classList.remove('bg-green-900/40', 'border-green-500');
+            }
         }
 
         function toggleHighContrast() {
             document.body.classList.toggle('high-contrast');
             var active = document.body.classList.contains('high-contrast');
             localStorage.setItem('albion_contrast', active);
+            
+            var btn = document.querySelector('button[onclick="toggleHighContrast()"]');
+            if (active) {
+                btn.innerHTML = "✅ Alto contrasto: ON";
+                btn.classList.add('bg-green-900/40', 'border-green-500');
+            } else {
+                btn.innerHTML = "Alto contrasto: OFF";
+                btn.classList.remove('bg-green-900/40', 'border-green-500');
+            }
         }
 
         var fullDictionary = {
