@@ -43,8 +43,13 @@
             line-height: 1.6 !important;
         }
         
+        /* ALTO CONTRASTO ESTESO A TUTTI I RIQUADRI E TOOLTIP */
         body.high-contrast { background-color: #000000 !important; color: #ffffff !important; }
-        body.high-contrast .parchment { background: #0a0a0a !important; border: 2px solid #ffff00 !important; }
+        body.high-contrast .parchment { background: #000000 !important; border: 2px solid #ffff00 !important; }
+        body.high-contrast .word-interactive { border-bottom: 2px solid #ffff00 !important; color: #ffff00 !important; }
+        body.high-contrast .word-interactive:hover, body.high-contrast .word-interactive.active-touch { background-color: #ffff00 !important; color: #000000 !important; }
+        body.high-contrast .word-interactive .tooltip-box { background-color: #000000 !important; color: #ffff00 !important; border: 2px solid #ffff00 !important; }
+        body.high-contrast .word-interactive .tooltip-box::after { border-color: #ffff00 transparent transparent transparent !important; }
 
         /* HOVER E TOUCH INTERATTIVO CON DURATA CONFIGURABILE */
         .word-interactive {
