@@ -117,7 +117,8 @@
                 <!-- SCENA STORICA CINEMATOGRAFICA: GALEA ROMANA ED AVVISTAMENTO SCOGLIERE -->
                 <div class="w-full md:w-5/12 flex flex-col items-center">
                     <div class="relative w-full h-full min-h-[280px] md:min-h-[340px] rounded-lg border-2 border-yellow-600/60 shadow-2xl bg-slate-950 overflow-hidden flex flex-col justify-between p-1">
-                        <img src="https://i.ibb.co/L6V6dGg/image-6.png" alt="Legionari romani a bordo della galea mentre avvistano le scogliere d'Albione" class="w-full h-48 md:h-64 object-cover rounded">
+                        <!-- Immagine locale con estensione .jfif caricata nella repository -->
+                        <img src="hero.jfif" alt="Legionari romani a bordo della galea mentre avvistano le scogliere d'Albione" class="w-full h-48 md:h-64 object-cover rounded">
 
                         <div class="bg-black/90 border-t border-yellow-600/40 p-3 text-center">
                             <span class="text-[10px] text-yellow-400 font-cinzel font-bold tracking-widest uppercase block mb-1">Oceanus Britannicus • 55 a.C.</span>
@@ -303,7 +304,7 @@
                 "helmets": "elmi", "unencumbered": "senza ingombro", "charged": "caricarono", "freezing": "gelida", "surf": "risacca",
                 "hurling": "scagliando", "riding": "cavalcando", "horses": "cavalli", "waves": "onde", "terrifying": "terrificante",
                 "confidence": "sicurezza", "men": "uomini", "hesitated": "esitavano", "terrified": "terrorizzati", "stepping": "mettere il piede",
-                "off": "giù da", "wooden": "legno", "planks": "assi", "churning": "agitato", "moment": "moment",
+                "off": "giù da", "wooden": "legno", "planks": "assi", "churning": "agitato", "moment": "momento",
                 "mortal": "mortale", "doubt": "dubbio", "aquilifer": "portatore dell'Aquila", "stepped": "fatti avanti", "forward": "avanti",
                 "holding": "tenendo", "silver": "argento", "eagle": "Aquila", "standard": "insegna/vessillo", "looked": "guardò",
                 "back": "indietro", "hesitant": "esitanti", "voice": "voce", "leap": "saltate", "unless": "a meno che",
@@ -387,7 +388,7 @@
                         if (timer) clearTimeout(timer);
                         timer = setTimeout(function() {
                             el.classList.remove('active-touch');
-                        }, 2000); // <-- IMPOSTATO A 2 SECONDI COME RICHIESTO
+                        }, 2000);
                     }
                     el.addEventListener('touchstart', function(e) { triggerActivation(); }, {passive: true});
                     el.addEventListener('click', function(e) { triggerActivation(); });
