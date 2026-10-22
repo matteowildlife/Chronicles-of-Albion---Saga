@@ -869,7 +869,7 @@ function tornaAlMenu() {
 
         function renderMicroQuestion() {
             var chapterData = chaptersData[currentSlide];
-            var qList = chapterData.questions[difficulty] || chapterData.questions['guided'];
+            var qList = chapterData.questions[difficulty] || chapterData.questions['A2'];
             var q = qList[currentMicroQIndex];
 
             document.getElementById('micro-quiz-title').innerText = chapterData.title;
@@ -941,7 +941,7 @@ function tornaAlMenu() {
 
         function advanceMicroQuiz() {
             var chapterData = chaptersData[currentSlide];
-            var qList = chapterData.questions[difficulty] || chapterData.questions['guided'];
+            var qList = chapterData.questions[difficulty] || chapterData.questions['A2'];
 
             if (gameMode === 'vs') currentPlayer = (currentPlayer === 1) ? 2 : 1;
             currentMicroQIndex++;
