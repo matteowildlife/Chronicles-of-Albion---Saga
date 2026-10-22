@@ -758,7 +758,10 @@
             audioPlayer.play();
         }
 
-        function startGame(mode) {
+        function startGame(mode) {setTimeout(function() {
+    document.getElementById('audio-player').play(); 
+    // Assicurati che l'ID 'audio-player' sia quello corretto usato nel tuo codice
+}, 1000);
             gameMode = mode;
             userAnswersLog = [];
             hp = 100;
