@@ -770,7 +770,7 @@ document.getElementById('audio-player').addEventListener('timeupdate', function(
 
     // Calcola in tempo reale la percentuale dell'audio e individua la parola corrispondente
     var percentage = audio.currentTime / audio.duration;
-    var currentIndex = Math.floor(percentage * words.length);
+    var currentIndex = Math.floor(percentage * words.length)+2;
 
     // Illumina la finestra di lettura (2 parole prima, la corrente, e 2 parole dopo)
     words.forEach(function(word, index) {
