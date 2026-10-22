@@ -829,21 +829,21 @@ function tornaAlMenu() {
             var boxEl = document.getElementById('quiz-container-box');
             var badgeEl = document.getElementById('quiz-tier-badge');
             
-            boxEl.className = "parchment p-5 md:p-8 rounded-xl border ";
+            boxEl.className = "parchment p-5 md:p-8 rounded-xl border-2 border-yellow-500 bg-gray-900/90";
             if (difficulty === 'A2') {
-        boxEl.classList.add('quiz-box-beginner');
+        
         badgeEl.className = "text-xs font-cinzel uppercase tracking-wider px-2 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-700";
         badgeEl.innerText = "LIVELLO A2 (5 QUESITI)";
     } else if (difficulty === 'B1') {
-        boxEl.classList.add('quiz-box-guided');
+       
         badgeEl.className = "text-xs font-cinzel uppercase tracking-wider px-2 py-0.5 rounded bg-yellow-950 text-yellow-500 border border-yellow-700";
         badgeEl.innerText = "LIVELLO B1 (5 QUESITI)";
     } else if (difficulty === 'B2') {
-        boxEl.classList.add('quiz-box-challenge');
+        
         badgeEl.className = "text-xs font-cinzel uppercase tracking-wider px-2 py-0.5 rounded bg-orange-950 text-orange-500 border border-orange-700";
         badgeEl.innerText = "LIVELLO B2 (5 QUESITI)";
     } else {
-        boxEl.classList.add('quiz-box-challenge');
+       
         badgeEl.className = "text-xs font-cinzel uppercase tracking-wider px-2 py-0.5 rounded bg-red-950 text-red-300 border border-red-700";
         badgeEl.innerText = "LIVELLO C1 (5 QUESITI)";
     }
