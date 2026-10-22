@@ -906,18 +906,17 @@ function tornaAlMenu() {
            if (isCorrect) {
                 feedback.classList.add('bg-green-900/60', 'text-green-200', 'border-green-500');
                 feedback.innerHTML = "<strong>✅ ESATTO!</strong> " + (q.exp || "");
-                score++;
-                if(difficulty === 'C1') score += 2;
-                if (gameMode === 'vs') { if (currentPlayer === 1) p1Score++; else p2Score++; }
+               score += 2;
+        if (gameMode === 'vs') { if (currentPlayer === 1) p1Score += 2; else p2Score += 2; }
             } else {
                 feedback.classList.add('bg-red-900/60', 'text-red-200', 'border-red-500');
                 feedback.innerHTML = "<strong>❌ ERRATO.</strong> " + (q.exp || "");
                 if (gameMode === 'coop') {
                     let damage = 3; 
-                    if (difficulty === 'C1') damage = 10;
-                    else if (difficulty === 'B2') damage = 5;
-                    else if (difficulty === 'A2') damage = 1;
-                    
+                    let damage = 15; // Livello A2: Danno basso.
+            if (difficulty === 'C1') damage = 34; // Game Over al 3° errore
+            else if (difficulty === 'B2') damage = 25; // Game Over al 4° errore
+            else if (difficulty === 'B1') damage = 20; // Game Over al 5° errore
                     hp -= damage;
                     if (hp < 0) hp = 0;
                     document.getElementById('micro-hp-bar').style.width = hp + '%';
