@@ -265,7 +265,7 @@
 
     <!-- SCHERMATA MICRO-VERIFICA -->
     <main id="screen-micro-quiz" class="hidden my-auto max-w-3xl mx-auto w-full py-2 px-2">
-        <div id="quiz-container-box" class="parchment p-5 md:p-8 rounded-xl border shadow-none md:shadow-[0_0_15px_rgba(220,38,38,0.4)]">
+        <div id="quiz-container-box" class="parchment p-5 md:p-8 rounded-xl border !shadow-none md:!shadow-[0_0_15px_rgba(220,38,38,0.4)]">
             <div class="flex justify-between items-center mb-5 border-b border-yellow-900/30 pb-3">
                 <div>
                     <span id="quiz-tier-badge" class="text-xs font-cinzel uppercase tracking-wider px-2 py-0.5 rounded">LIVELLO TATTICO</span>
@@ -765,30 +765,16 @@ return token;
             audioPlayer.currentTime = 0;
             audioPlayer.play();
         }
-document.getElementById('audio-player').addEventListener('timeupdate', function() {
-    var audio = this;
-    if (!audio.duration) return; // Se l'audio non è attivo, si ferma
+var audioPlayer = document.getElementById('audio-player');
+var storyBox = document.getElementById('story-content');
 
-    // Raccoglie tutte le parole della slide (sia dizionario che normali)
-    var words = document.querySelectorAll('#story-content .word-interactive, #story-content .track-word');
-    if (words.length === 0) return;
+audioPlayer.addEventListener('play', function() {
+    storyBox.style.textShadow = '0 0 10px rgba(243, 229, 171, 0.4)';
+    storyBox.style.transition = 'text-shadow 0.8s ease';
+});
 
-    // Calcola in tempo reale la percentuale dell'audio e individua la parola corrispondente
-    var percentage = audio.currentTime / audio.duration;
-    var currentIndex = Math.floor(percentage * words.length)+2;
-
-    // Illumina la finestra di lettura (2 parole prima, la corrente, e 2 parole dopo)
-    words.forEach(function(word, index) {
-        if (index >= currentIndex - 4 && index <= currentIndex + 5) {
-            // Accende l'aura dorata
-            word.style.textShadow = '0 0 10px #f3e5ab, 0 0 20px #f3e5ab';
-            word.style.color = '#ffffff'; 
-        } else {
-            // Spegne la luce quando la voce passa oltre
-            word.style.textShadow = 'none';
-            word.style.color = ''; 
-        }
-    });
+audioPlayer.addEventListener('ended', function() {
+    storyBox.style.textShadow = 'none';
 });
         function startGame(mode) {setTimeout(function() {
     document.getElementById('audio-player').play(); 
