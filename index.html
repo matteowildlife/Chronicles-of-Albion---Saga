@@ -508,7 +508,10 @@
                         return '<span class="word-interactive" tabindex="0" data-word="' + cleanWord + '">' + token + '<span class="tooltip-box"><strong>' + cleanWord + '</strong>: ' + translation + '</span></span>';
                     }
                 }
-                return token;
+                if (cleanWord.length > 0) {
+    return '<span class="track-word" style="transition: all 0.3s ease;">' + token + '</span>';
+}
+return token;
             }).join('');
         }
 
