@@ -119,7 +119,7 @@
             </div>
         </div>
         <div id="header-score-box" class="hidden text-xs font-cinzel bg-gray-900/90 border border-yellow-600/40 px-3 py-1.5 rounded">
-            PUNTEGGIO: <span id="high-score" class="text-yellow-400 font-bold">0 / 60</span>
+            PUNTEGGIO: <span id="high-score" class="text-yellow-400 font-bold">0</span>
         </div>
     </header>
 
@@ -776,10 +776,7 @@ audioPlayer.addEventListener('play', function() {
 audioPlayer.addEventListener('ended', function() {
     storyBox.style.textShadow = 'none';
 });
-        function startGame(mode) {setTimeout(function() {
-    document.getElementById('audio-player').play(); 
-    // Assicurati che l'ID 'audio-player' sia quello corretto usato nel tuo codice
-}, 1000);
+      function startGame(mode) {
             gameMode = mode;
             userAnswersLog = [];
             hp = 100;
