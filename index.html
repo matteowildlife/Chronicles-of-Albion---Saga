@@ -797,7 +797,18 @@ document.getElementById('audio-player').addEventListener('timeupdate', function(
             p2Score = 0;
             currentPlayer = 1;
             currentSlide = 0;
-
+// Disattiva forzatamente font DSA e Contrasto
+    document.body.classList.remove('dyslexia-font');
+    // Nota: se hai un nome classe diverso per il contrasto, cambialo qui sotto
+    document.body.classList.remove('high-contrast'); 
+    
+    // Resetta i testi dei pulsanti per non confondere l'utente
+    var btnDsa = document.querySelector('button[onclick="toggleDyslexiaFont()"]');
+    if (btnDsa) btnDsa.innerHTML = 'Font alta visibilità: OFF';
+    
+    // Se hai un bottone separato per il contrasto, puoi resettarlo in modo simile:
+    // var btnContrasto = document.querySelector('button[onclick="tuaFunzioneContrasto()"]');
+    // if (btnContrasto) btnContrasto.innerHTML = 'Alto Contrasto: OFF';
             document.getElementById('screen-menu').classList.add('hidden');
             document.getElementById('screen-results').classList.add('hidden');
             document.getElementById('screen-micro-quiz').classList.add('hidden');
