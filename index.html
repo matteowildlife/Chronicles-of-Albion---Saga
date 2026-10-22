@@ -760,7 +760,31 @@ return token;
             audioPlayer.currentTime = 0;
             audioPlayer.play();
         }
+document.getElementById('audio-player').addEventListener('timeupdate', function() {
+    var audio = this;
+    if (!audio.duration) return; // Se l'audio non è attivo, si ferma
 
+    // Raccoglie tutte le parole della slide (sia dizionario che normali)
+    var words = document.querySelectorAll('#story-content .word-interactive, #story-content .track-word');
+    if (words.length === 0) return;
+
+    // Calcola in tempo reale la percentuale dell'audio e individua la parola corrispondente
+    var percentage = audio.currentTime / audio.duration;
+    var currentIndex = Math.floor(percentage * words.length);
+
+    // Illumina la finestra di lettura (2 parole prima, la corrente, e 2 parole dopo)
+    words.forEach(function(word, index) {
+        if (index >= currentIndex - 2 && index <= currentIndex + 2) {
+            // Accende l'aura dorata
+            word.style.textShadow = '0 0 10px #f3e5ab, 0 0 20px #f3e5ab';
+            word.style.color = '#ffffff'; 
+        } else {
+            // Spegne la luce quando la voce passa oltre
+            word.style.textShadow = 'none';
+            word.style.color = ''; 
+        }
+    });
+});
         function startGame(mode) {setTimeout(function() {
     document.getElementById('audio-player').play(); 
     // Assicurati che l'ID 'audio-player' sia quello corretto usato nel tuo codice
