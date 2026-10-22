@@ -770,11 +770,11 @@ document.getElementById('audio-player').addEventListener('timeupdate', function(
 
     // Calcola in tempo reale la percentuale dell'audio e individua la parola corrispondente
     var percentage = audio.currentTime / audio.duration;
-    var currentIndex = Math.floor(percentage * words.length)+2;
+    var currentIndex = Math.floor(percentage * words.length)+1;
 
     // Illumina la finestra di lettura (2 parole prima, la corrente, e 2 parole dopo)
     words.forEach(function(word, index) {
-        if (index >= currentIndex - 2 && index <= currentIndex + 2) {
+        if (index >= currentIndex - 4 && index <= currentIndex + 4) {
             // Accende l'aura dorata
             word.style.textShadow = '0 0 10px #f3e5ab, 0 0 20px #f3e5ab';
             word.style.color = '#ffffff'; 
