@@ -893,7 +893,7 @@ function tornaAlMenu() {
 
         function handleMicroAnswer(selectedIdx) {
             var chapterData = chaptersData[currentSlide];
-            var qList = chapterData.questions[difficulty] || chapterData.questions['guided'];
+            var qList = chapterData.questions[difficulty] || chapterData.questions['A2'];
             var q = qList[currentMicroQIndex];
             var isCorrect = selectedIdx === q.correct;
             var feedback = document.getElementById('micro-feedback-box');
