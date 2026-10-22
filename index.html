@@ -318,6 +318,75 @@
     <audio id="audio-player" class="hidden"></audio>
 
     <script>
+
+        // ==========================================
+// WILDLIFE ANALYTICS - SENSORI DI TRACCIAMENTO
+// ==========================================
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwGzY0YhgMrTO9s2r5tqNvk_4hjm1gvPDtynpte7UQGNtuQ3046iIxT9KweTXyg2gyG/exec';
+
+let timerSessioneInizio = null;
+let timerDomandaInizio = null;
+let tempoPausaTotale = 0;
+let tempoPausaDomanda = 0;
+let inizioPausa = null;
+let logRisposte = [];
+let logParole = [];
+let dispositivo = /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
+
+// 1. IL SENSORE DI PAUSA (Traccia se lo studente esce o spegne lo schermo)
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        inizioPausa = Date.now(); // Il gioco va in background, parte il cronometro pausa
+    } else {
+        if (inizioPausa) {
+            let durataPausa = Math.floor((Date.now() - inizioPausa) / 1000);
+            tempoPausaTotale += durataPausa;
+            tempoPausaDomanda += durataPausa;
+            inizioPausa = null; // Azzera e riprende il gioco
+        }
+    }
+});
+
+// 2. REGISTRAZIONE DELLA RISPOSTA (Da chiamare quando clicca A, B o C)
+function tracciaRisposta(slideNum, rispostaData, rispostaCorretta, esito) {
+    let tempoImpiegato = timerDomandaInizio ? Math.floor((Date.now() - timerDomandaInizio) / 1000) - tempoPausaDomanda : 0;
+    
+    logRisposte.push({
+        slide: "Slide " + slideNum,
+        tempoImpiegato: tempoImpiegato,
+        tempoPausa: tempoPausaDomanda,
+        rispostaData: rispostaData,
+        rispostaCorretta: rispostaCorretta,
+        esito: esito
+    });
+}
+
+// 3. SPEDIZIONE DEI DATI AL FOGLIO (Da chiamare a Game Over o Vittoria)
+function inviaDatiDrive(esitoPartita) {
+    let tempoTotale = timerSessioneInizio ? Math.floor((Date.now() - timerSessioneInizio) / 1000) - tempoPausaTotale : 0;
+    
+    let datiPartita = {
+        nome: typeof playerName !== 'undefined' ? playerName : "Legionario",
+        difficolta: typeof difficulty !== 'undefined' ? difficulty : "A2",
+        dispositivo: dispositivo,
+        punteggio: typeof score !== 'undefined' ? score : 0,
+        salute: typeof hp !== 'undefined' ? hp : 0,
+        esito: esitoPartita,
+        tempoTotale: tempoTotale,
+        tempoPausaTotale: tempoPausaTotale,
+        logRisposte: JSON.stringify(logRisposte),
+        logParole: JSON.stringify(logParole)
+    };
+
+    fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(datiPartita)
+    })
+    .then(r => console.log("Dati inviati con successo a Wildlife Analytics!"))
+    .catch(e => console.error("Errore invio dati:", e));
+}
+// ==========================================
         var playerName = localStorage.getItem('albion_player_name') || "Novizio";
         var difficulty = localStorage.getItem('albion_difficulty') || "A2";
         var tooltipTimerSetting = localStorage.getItem('albion_tooltip_timer') || "2000";
@@ -719,6 +788,8 @@ return token;
         ];
 
         function renderSlide() {
+            timerDomandaInizio = Date.now();
+tempoPausaDomanda = 0;
             window.scrollTo({ top: 0, behavior: 'smooth' });
             var data = chaptersData[currentSlide];
             document.getElementById('story-chapter-tag').innerText = "CAPITOLO " + (currentSlide + 1) + " DI " + chaptersData.length;
@@ -777,6 +848,7 @@ audioPlayer.addEventListener('ended', function() {
     storyBox.style.textShadow = 'none';
 });
       function startGame(mode) {
+          timerSessioneInizio = Date.now();
             gameMode = mode;
             userAnswersLog = [];
             hp = 100;
@@ -890,6 +962,11 @@ function tornaAlMenu() {
             var q = qList[currentMicroQIndex];
             var isCorrect = selectedIdx === q.correct;
             var feedback = document.getElementById('micro-feedback-box');
+            // INNESCO WILDLIFE ANALYTICS
+    let testoRispostaData = q.opts[selectedIdx];
+    let testoRispostaCorretta = q.opts[q.correct];
+    let testoEsito = isCorrect ? "Esatto" : "Errato";
+    tracciaRisposta(currentMicroQIndex + 1, testoRispostaData, testoRispostaCorretta, testoEsito);
             
             userAnswersLog.push({
                 slide: currentSlide,
