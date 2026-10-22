@@ -498,12 +498,12 @@
         };
 
         function makeTextInteractive(text) {
-            if (difficulty === 'challenge') return text;
+           if (difficulty === 'B2' || difficulty === 'C1') return text;
             var tokens = text.split(/(\s+|[.,!?;:()"'’—]+)/);
             return tokens.map(function(token) {
                 var cleanWord = token.toLowerCase().replace(/[^a-z]/g, '');
                 if (cleanWord.length > 0 && fullDictionary[cleanWord]) {
-                    if (difficulty === 'beginner' || (difficulty === 'guided' && cleanWord.length > 5)) {
+                    if (difficulty === 'A2' || (difficulty === 'B1' && cleanWord.length > 5)) {
                         var translation = fullDictionary[cleanWord];
                         return '<span class="word-interactive" tabindex="0" data-word="' + cleanWord + '">' + token + '<span class="tooltip-box"><strong>' + cleanWord + '</strong>: ' + translation + '</span></span>';
                     }
