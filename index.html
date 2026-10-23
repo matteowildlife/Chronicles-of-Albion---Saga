@@ -790,6 +790,13 @@ return token;
         function renderSlide() {
             timerDomandaInizio = Date.now();
 tempoPausaDomanda = 0;
+            // PARACADUTE: Salva il progresso in tempo reale
+    localStorage.setItem('albion_current_slide', currentSlide);
+    localStorage.setItem('albion_hp', hp);
+    localStorage.setItem('albion_score', score);
+    localStorage.setItem('albion_log_risposte', JSON.stringify(logRisposte));
+    localStorage.setItem('albion_log_parole', JSON.stringify(logParole));
+    localStorage.setItem('albion_timer_sessione', timerSessioneInizio);
             window.scrollTo({ top: 0, behavior: 'smooth' });
             var data = chaptersData[currentSlide];
             document.getElementById('story-chapter-tag').innerText = "CAPITOLO " + (currentSlide + 1) + " DI " + chaptersData.length;
@@ -848,24 +855,57 @@ audioPlayer.addEventListener('ended', function() {
     storyBox.style.textShadow = 'none';
 });
       function startGame(mode) {
-          timerSessioneInizio = Date.now();
-            gameMode = mode;
-            userAnswersLog = [];
-            hp = 100;
-            score = 0;
-            p1Score = 0;
-            p2Score = 0;
-            currentPlayer = 1;
-            currentSlide = 0;
-
+    // Controlla se c'è un salvataggio precedente per questa sessione
+    let savedSlide = localStorage.getItem('albion_current_slide');
+    if (savedSlide && savedSlide !== "0") {
+        let resume = confirm("Abbiamo trovato una partita interrotta! Vuoi riprendere da dove avevi lasciato?");
+        if (resume) {
+            currentSlide = parseInt(savedSlide);
+            hp = parseInt(localStorage.getItem('albion_hp')) || 100;
+            score = parseInt(localStorage.getItem('albion_score')) || 0;
+            logRisposte = JSON.parse(localStorage.getItem('albion_log_risposte')) || [];
+            logParole = JSON.parse(localStorage.getItem('albion_log_parole')) || [];
+            timerSessioneInizio = parseInt(localStorage.getItem('albion_timer_sessione')) || Date.now();
+            
+            // Portiamo il giocatore direttamente alla slide corretta
             document.getElementById('screen-menu').classList.add('hidden');
-            document.getElementById('screen-results').classList.add('hidden');
-            document.getElementById('screen-micro-quiz').classList.add('hidden');
             document.getElementById('screen-story').classList.remove('hidden');
-            document.getElementById('header-score-box').classList.remove('hidden');
-
             renderSlide();
+            return;
+        } else {
+            // Se rifiuta, azzeriamo il vecchio salvataggio
+            cancellaSalvataggi();
         }
+    }
+
+    // Avvio partita normale (nuova)
+    timerSessioneInizio = Date.now();
+    gameMode = mode;
+    userAnswersLog = [];
+    hp = 100;
+    score = 0;
+    p1Score = 0;
+    p2Score = 0;
+    currentPlayer = 1;
+    currentSlide = 0;
+    
+    document.getElementById('screen-menu').classList.add('hidden');
+    document.getElementById('screen-results').classList.add('hidden');
+    document.getElementById('screen-micro-quiz').classList.add('hidden');
+    document.getElementById('screen-story').classList.remove('hidden');
+    document.getElementById('header-score-box').classList.remove('hidden');
+    
+    renderSlide();
+}
+
+function cancellaSalvataggi() {
+    localStorage.removeItem('albion_current_slide');
+    localStorage.removeItem('albion_hp');
+    localStorage.removeItem('albion_score');
+    localStorage.removeItem('albion_log_risposte');
+    localStorage.removeItem('albion_log_parole');
+    localStorage.removeItem('albion_timer_sessione');
+}
 
         function prevSlide() {
             if (currentSlide > 0) { 
