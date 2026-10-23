@@ -597,6 +597,7 @@ return token;
                         if (other !== el) other.classList.remove('active-touch');
                     });
                     el.classList.add('active-touch');
+                    logParole.push({ parola: el.innerText, contesto: "Parola cliccata" });
                     if (timer) clearTimeout(timer);
                     if (tooltipTimerSetting !== 'sticky') {
                         var dur = parseInt(tooltipTimerSetting) || 2000;
