@@ -588,25 +588,30 @@ return token;
             }).join('');
         }
 
-        function attachWordTimers() {
-            var words = document.querySelectorAll('.word-interactive');
-            words.forEach(function(el) {
-                var timer = null;
-                function triggerActivation() {
-                    document.querySelectorAll('.word-interactive.active-touch').forEach(function(other) {
-                        if (other !== el) other.classList.remove('active-touch');
-                    });
-                    el.classList.add('active-touch');
-                    logParole.push({ parola: el.innerText, contesto: "Parola cliccata" });
-                    if (timer) clearTimeout(timer);
-                    if (tooltipTimerSetting !== 'sticky') {
-                        var dur = parseInt(tooltipTimerSetting) || 2000;
-                        timer = setTimeout(function() { el.classList.remove('active-touch'); }, dur);
-                    }
-                }
-                el.addEventListener('touchstart', function(e) { triggerActivation(); }, {passive: true});
-                el.addEventListener('click', function(e) { triggerActivation(); });
+       function attachWordTimers() {
+    var words = document.querySelectorAll('.word-interactive');
+    words.forEach(function(el) {
+        var timer = null;
+        function triggerActivation() {
+            document.querySelectorAll('.word-interactive.active-touch').forEach(function(other) {
+                if (other !== el) other.classList.remove('active-touch');
             });
+            el.classList.add('active-touch');
+            
+            // Registra la parola nel cassetto
+            logParole.push({ parola: el.innerText, contesto: "Interazione parola" });
+            
+            if (timer) clearTimeout(timer);
+            if (tooltipTimerSetting !== 'sticky') {
+                var dur = parseInt(tooltipTimerSetting) || 2000;
+                timer = setTimeout(function() { el.classList.remove('active-touch'); }, dur);
+            }
+        }
+        
+        // Attivo sia per il tocco da cellulare che per il click da PC
+        el.addEventListener('touchstart', function(e) { triggerActivation(); }, {passive: true});
+        el.addEventListener('click', function(e) { triggerActivation(); });
+    });
         }
 
         var chaptersData = [
