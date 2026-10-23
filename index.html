@@ -1045,20 +1045,31 @@ function tornaAlMenu() {
             document.getElementById('btn-next-micro-q').classList.remove('hidden');
         }
 
-        function advanceMicroQuiz() {
-            var chapterData = chaptersData[currentSlide];
-            var qList = chapterData.questions[difficulty] || chapterData.questions['A2'];
+       function advanceMicroQuiz() {
+        // 1. Controllo immediato: se lo scudo è rotto, vai al Game Over fermando tutto
+        if (hp <= 0) {
+            showFinalResults(false);
+            return;
+        }
 
-            if (gameMode === 'vs') currentPlayer = (currentPlayer === 1) ? 2 : 1;
-            currentMicroQIndex++;
+        var chapterData = chaptersData[currentSlide];
+        var qList = chapterData.questions[difficulty] || chapterData.questions['A2'];
 
-            if (currentMicroQIndex >= qList.length || (gameMode === 'coop' && hp <= 0)) {
-                var chapterStartIdx = userAnswersLog.length - qList.length;
-                var chapterCorrect = 0;
-                for(var i = chapterStartIdx; i < userAnswersLog.length; i++) {
-                    if(userAnswersLog[i].isCorrect) chapterCorrect++;
-                }
-                var chapterRatio = chapterCorrect / qList.length;
+        if (gameMode === 'vs') currentPlayer = (currentPlayer === 1) ? 2 : 1;
+        currentMicroQIndex++;
+
+        // 2. Controllo modificato per evitare il blocco se si perde in anticipo
+        if (currentMicroQIndex >= qList.length) {
+            // 3. Math.max evita di cercare risposte inesistenti andando sotto zero
+            var chapterStartIdx = Math.max(0, userAnswersLog.length - qList.length);
+            var chapterCorrect = 0;
+            
+            for(var i = chapterStartIdx; i < userAnswersLog.length; i++) {
+                // 4. Aggiunto controllo di sicurezza per 'isCorrect'
+                if(userAnswersLog[i] && userAnswersLog[i].isCorrect) chapterCorrect++;
+            }
+
+            var chapterRatio = chapterCorrect / qList.length;
 
                 if (gameMode === 'coop' && hp <= 0) {
                     showFinalResults(false);
