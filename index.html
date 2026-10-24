@@ -618,6 +618,9 @@ return token;
         // Attivo sia per il tocco da cellulare che per il click da PC
         el.addEventListener('touchstart', function(e) { triggerActivation(); }, {passive: true});
         el.addEventListener('click', function(e) { triggerActivation(); });
+        el.addEventListener('mouseenter', function(e) {
+    if (window.matchMedia("(hover: hover)").matches) { triggerActivation(); }
+});
     });
         }
 
