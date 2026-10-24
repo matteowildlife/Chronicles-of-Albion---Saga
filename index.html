@@ -353,7 +353,7 @@ function tracciaRisposta(slideNum, rispostaData, rispostaCorretta, esito) {
     let tempoImpiegato = timerDomandaInizio ? Math.floor((Date.now() - timerDomandaInizio) / 1000) - tempoPausaDomanda : 0;
     
     logRisposte.push({
-        slide: "Slide " + slideNum,
+       slide: "Capitolo " + (currentSlide + 1) + " - Slide " + slideNum,
         tempoImpiegato: tempoImpiegato,
         tempoPausa: tempoPausaDomanda,
         rispostaData: rispostaData,
