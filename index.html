@@ -606,7 +606,7 @@ return token;
             el.classList.add('active-touch');
             
             // Registra la parola nel cassetto
-            logParole.push({ parola: el.innerText, contesto: "Interazione parola" });
+            logParole.push({ parola: el.firstChild.textContent.trim(), contesto: "Interazione parola" });
             
             if (timer) clearTimeout(timer);
             if (tooltipTimerSetting !== 'sticky') {
