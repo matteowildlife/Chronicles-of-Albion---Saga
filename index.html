@@ -151,10 +151,11 @@
                         <p class="text-xs text-gray-200 mb-3 leading-relaxed">
                             <em>"Compagno/a d'armi, la nebbia è fitta e l'isola di Albion ci attende. Come vuoi essere ricordato nei registri della nostra centuria?"</em>
                         </p>
-                        <div class="flex items-center space-x-2">
-                            <input type="text" id="input-player-name" placeholder="Il tuo nome o nome da legionario..." class="bg-gray-950 border border-yellow-600/60 rounded px-3 py-2 text-sm text-yellow-200 focus:outline-none focus:border-yellow-400 w-full" maxlength="25">
-                            <button type="button" onclick="savePlayerName()" class="gold-button px-4 py-2 rounded text-xs uppercase tracking-wider whitespace-nowrap">Prendi lo Scudo</button>
-                        </div>
+                       <div class="flex flex-col space-y-3">
+    <input type="text" id="input-player-name" placeholder="Nickname o nome di battaglia (NON usare il vero nome)..." class="bg-gray-950 border border-yellow-900/50 p-2 rounded text-white">
+    <input type="text" id="input-player-class" placeholder="La tua classe (es. 3B)" class="bg-gray-950 border border-yellow-900/50 p-2 rounded text-white">
+    <button type="button" onclick="savePlayerName()" class="gold-button px-4 py-2 rounded text-xs uppercase tracking-wider">Conferma Identità</button>
+</div>
                     </div>
 
                     <div class="bg-gray-950/80 border border-yellow-900/50 p-3.5 rounded-lg space-y-3 text-xs">
@@ -367,6 +368,7 @@ function inviaDatiDrive(esitoPartita) {
     
     let datiPartita = {
         nome: typeof playerName !== 'undefined' ? playerName : "Legionario",
+        classe: playerClass,
         difficolta: typeof difficulty !== 'undefined' ? difficulty : "A2",
         dispositivo: dispositivo,
         punteggio: typeof score !== 'undefined' ? score : 0,
@@ -388,6 +390,7 @@ function inviaDatiDrive(esitoPartita) {
 }
 // ==========================================
         var playerName = localStorage.getItem('albion_player_name') || "Novizio";
+        var playerClass = localStorage.getItem('albion_player_class') || "Non inserita";
         var difficulty = localStorage.getItem('albion_difficulty') || "A2";
         var tooltipTimerSetting = localStorage.getItem('albion_tooltip_timer') || "2000";
         var currentSlide = 0;
@@ -413,15 +416,19 @@ function inviaDatiDrive(esitoPartita) {
         });
 
         function savePlayerName() {
-            var nameVal = document.getElementById('input-player-name').value.trim();
-            if(nameVal) {
-                playerName = nameVal;
-                localStorage.setItem('albion_player_name', playerName);
-                document.getElementById('header-player-name').innerText = playerName;
-                document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario/a " + playerName + " sulla plancia di comando.";
-                alert("Giuramento accettato! Benvenuto/a nella Legio X, " + playerName + ".");
-            }
-        }
+    var nameVal = document.getElementById('input-player-name').value.trim();
+    var classVal = document.getElementById('input-player-class').value.trim();
+    
+    if(nameVal) {
+        playerName = nameVal;
+        localStorage.setItem('albion_player_name', playerName);
+        localStorage.setItem('albion_player_class', classVal || "Non inserita");
+        
+        document.getElementById('header-player-name').innerText = playerName;
+        document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario/a " + playerName + " sulla plancia di comando";
+        alert("Giuramento accettato! Benvenuto/a nella Legio X, " + playerName + " della classe " + (classVal || "Sconosciuta") + ".");
+    }
+}
 
         function updateDifficulty(selectObj) {
             difficulty = selectObj.value;
