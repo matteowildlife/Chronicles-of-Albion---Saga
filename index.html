@@ -1074,12 +1074,12 @@ function tornaAlMenu() {
 
            if (isCorrect) {
                 feedback.classList.add('bg-green-900/60', 'text-green-200', 'border-green-500');
-                feedback.innerHTML = "<strong>✅ ESATTO!</strong> " + (q.exp || "");
+               feedback.innerHTML = "<strong>✅ ESATTO!</strong><br><span class='text-sm text-green-100 mt-2 block'><em>Conferma:</em> " + (q.expWin || "") + "</span>";
                score += 2;
         if (gameMode === 'vs') { if (currentPlayer === 1) p1Score += 2; else p2Score += 2; }
             } else {
                 feedback.classList.add('bg-red-900/60', 'text-red-200', 'border-red-500');
-                feedback.innerHTML = "<strong>❌ ERRATO.</strong> " + (q.exp || "");
+               feedback.innerHTML = "<strong>❌ ERRATO.</strong><br><span class='text-sm text-gray-300 mt-2 block'><em>Indizio:</em> " + (q.exp || "") + "</span>";
              let damage = 15; // Livello A2: Danno basso.
             if (difficulty === 'C1') damage = 34; // Game Over al 3° errore
             else if (difficulty === 'B2') damage = 25; // Game Over al 4° errore
