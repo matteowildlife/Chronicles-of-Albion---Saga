@@ -154,10 +154,14 @@
                        <div class="flex flex-col space-y-3">
     <input type="text" id="input-player-name" placeholder="Nickname o nome di battaglia (NON usare il vero nome)..." class="bg-gray-950 border border-yellow-900/50 p-2 rounded text-white">
     <input type="text" id="input-player-class" placeholder="La tua classe (es. 3B)" class="bg-gray-950 border border-yellow-900/50 p-2 rounded text-white">
-    <button type="button" onclick="savePlayerName()" class="gold-button px-4 py-2 rounded text-xs uppercase tracking-wider">Conferma Identità</button>
+    <button type="button" onclick="savePlayerName()" class="gold-button px-4 py-2 rounded text-xs uppercase tracking-wider font-bold">🛡️ Imbraccia il tuo Scudo</button>
 </div>
                     </div>
-
+<div class="bg-gradient-to-r from-yellow-900/30 to-red-900/30 border-l-4 border-yellow-500 p-4 my-4 rounded shadow-inner">
+    <p class="text-sm text-gray-200 leading-relaxed m-0">
+        📜 <strong class="text-yellow-400">Attenzione, Legionario!</strong> Leggi con estrema cura i testi prima di passare alle prove. Le domande testeranno sia la tua <strong class="text-yellow-400">comprensione della storia</strong> che la tua conoscenza della <strong class="text-yellow-400">grammatica</strong>. Affrettarti ti porterà solo alla rovina: proteggi il tuo scudo!
+    </p>
+</div>
                     <div class="bg-gray-950/80 border border-yellow-900/50 p-3.5 rounded-lg space-y-3 text-xs">
                         <div class="font-cinzel text-yellow-400 font-bold border-b border-yellow-900/40 pb-1 flex justify-between items-center">
                             <span>⚙️ CONFIGURAZIONE TATTICA E ACCESSIBILITÀ</span>
@@ -415,19 +419,49 @@ function inviaDatiDrive(esitoPartita) {
             }
         });
 
-        function savePlayerName() {
+       function savePlayerName() {
     var nameVal = document.getElementById('input-player-name').value.trim();
     var classVal = document.getElementById('input-player-class').value.trim();
-    
-    if(nameVal) {
-        playerName = nameVal;
-        localStorage.setItem('albion_player_name', playerName);
-        localStorage.setItem('albion_player_class', classVal || "Non inserita");
-        
-        document.getElementById('header-player-name').innerText = playerName;
-        document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario/a " + playerName + " sulla plancia di comando";
-        alert("Giuramento accettato! Benvenuto/a nella Legio X, " + playerName + " della classe " + (classVal || "Sconosciuta") + ".");
+
+    // Controllo campi vuoti
+    if (!nameVal || !classVal) {
+        alert("Inserisci Nome e Classe prima di imbracciare lo scudo!");
+        return;
     }
+
+    // Salvataggio dati originale
+    playerName = nameVal;
+    localStorage.setItem('albion_player_name', playerName);
+    localStorage.setItem('albion_player_class', classVal);
+
+    // Aggiornamento interfaccia originale
+    document.getElementById('header-player-name').innerText = playerName;
+    document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario/a " + playerName + " sulla plancia di comando";
+
+    // Creazione del nuovo popup dello scudo
+    var overlay = document.createElement("div");
+    overlay.id = "popup-scudo";
+    overlay.style.position = "fixed";
+    overlay.style.top = "0"; overlay.style.left = "0";
+    overlay.style.width = "100%"; overlay.style.height = "100%";
+    overlay.style.backgroundColor = "rgba(0,0,0,0.85)";
+    overlay.style.display = "flex";
+    overlay.style.alignItems = "center";
+    overlay.style.justifyContent = "center";
+    overlay.style.zIndex = "9999";
+
+    var modal = document.createElement("div");
+    modal.className = "bg-gray-950 border-2 border-yellow-600 p-6 rounded-lg text-center max-w-md mx-4 shadow-[0_0_20px_rgba(202,138,4,0.4)]";
+
+    modal.innerHTML = "<h2 class='text-yellow-400 font-cinzel font-bold text-2xl mb-4'>🛡️ Il tuo Scudo, Legionario!</h2>" +
+                      "<p class='text-gray-300 text-sm leading-relaxed mb-6'>" +
+                      "Benvenuto <strong class='text-white'>" + playerName + "</strong>. Ti è stato affidato l'antico Scudo di Albion. <br><br>" +
+                      "Fai attenzione: <strong class='text-red-400 uppercase'>ogni volta che sbaglierai una risposta, lo scudo si incrinerà</strong> perdendo salute. " +
+                      "Se si frantuma del tutto, la missione fallirà. Leggi bene i testi per proteggerlo!</p>" +
+                      "<button onclick='document.getElementById(\"popup-scudo\").remove()' class='gold-button px-6 py-3 rounded text-sm uppercase tracking-wider font-bold text-black'>Ho capito, alla battaglia!</button>";
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
 }
 
         function updateDifficulty(selectObj) {
