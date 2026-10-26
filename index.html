@@ -430,10 +430,10 @@ function inviaDatiDrive(esitoPartita) {
     }
 
     // Salvataggio dati originale
-    playerName = nameVal;
-    localStorage.setItem('albion_player_name', playerName);
-    localStorage.setItem('albion_player_class', classVal);
-
+playerName = nameVal;
+playerClass = classVal;
+localStorage.setItem('albion_player_name', playerName);
+localStorage.setItem('albion_player_class', classVal);
     // Aggiornamento interfaccia originale
     document.getElementById('header-player-name').innerText = playerName;
     document.getElementById('recruited-banner').innerText = "Il tribuno Marco saluta il legionario/a " + playerName + " sulla plancia di comando";
@@ -813,8 +813,8 @@ return token;
                 }
             ]
         }
-    }
-],     {{
+    },     
+           {
         title: "2. The Leap into the Waves",
         content: "The natural harbor beneath the white cliffs was narrow, surrounded by heights from which the Britons could easily rain javelins down upon our ships. Recognizing the deadly trap, Caesar ordered the signal horns to sound. Our fleet turned north, rowing along the coastline for seven miles until we reached the flat, open beaches near Deal. However, the Britons anticipated our maneuver. Their war chariots and swift cavalry galloped along the cliffs above us, keeping pace with our galleys. When our ships finally ran aground in the shallow water, a terrible panic began to spread through our ranks. The water was still deep, reaching up to our waists, and our legionaries were weighed down by their heavy iron lorica segmentata, large wooden scuta, and bronze helmets. The native warriors, unencumbered by heavy armor, charged directly into the freezing surf, hurling spears and riding their horses into the waves with terrifying confidence. Our men hesitated, terrified of stepping off the wooden planks into the churning sea. It was in that moment of mortal doubt that the aquilifer of the Tenth Legion stepped forward. Holding high the silver Eagle standard of Rome, he looked back at the hesitant ranks and shouted with a thunderous voice: 'Leap down, fellow soldiers, unless you wish to betray your Eagle to the enemy! I, at least, shall perform my duty to Rome and my general!' With those words, he plunged into the icy waves. Inspired by his immense courage, the legionaries threw themselves off the ships to defend the honor of the Eagle.",
         grammar: "<strong>📚 Focus Grammaticale — Capitolo 2: Participial Clauses (Proposizioni Participiali)</strong><br><br>Le <em>Participial Clauses</em> sono costrutti avanzati che permettono di unire due frasi condensandole. Rendo il testo più elegante, rapido ed epico, evitando ripetizioni del soggetto o un uso eccessivo di congiunzioni come <em>because</em> (poiché) o <em>while</em> (mentre).<br><br>• <strong>Participio Presente (-ing):</strong> Ha valore <strong>ATTIVO</strong>. Indica che il soggetto compie l'azione. Spesso sostituisce una causale o una temporale.<br><em>Esempio dal testo:</em> '<strong>Recognizing</strong> the deadly trap, Caesar ordered...' (Significa: <em>Poiché riconosceva la trappola mortale, Cesare ordinò...</em>).<br><br>• <strong>Participio Passato (-ed / irregolare):</strong> Ha valore <strong>PASSIVO</strong>. Indica che il soggetto subisce l'azione o si trova in uno stato derivato da essa.<br><em>Esempio dal testo:</em> '<strong>Inspired</strong> by his immense courage, the legionaries threw themselves...' (Significa: <em>Essendo stati ispirati dal suo coraggio, i legionari si gettarono...</em>).",
